@@ -1,0 +1,48 @@
+<!-- src/app/pages/register/register.component.html -->
+<div class="register-container">
+  <h2>Register</h2>
+  <form #registerForm="ngForm" (ngSubmit)="onRegister($event, registerForm)">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="username"
+        required
+        #usernameInput="ngModel"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        #emailInput="ngModel"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        #passwordInput="ngModel"
+      />
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
+  </form>
+
+  <p>{{ message }}</p>
+  <p>
+    Already have an account? <a [routerLink]="['/login']">Login</a>
+  </p>
+</div>
