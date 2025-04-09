@@ -1,4 +1,25 @@
 <div class="home-container">
-  <h2>Welcome to GoalQuiz!</h2>
-  <p>You have successfully logged in.</p>
+  <!-- Header với username và nút logout -->
+  <header class="header">
+    <div class="user-info">
+      <span class="username">Welcome, {{ username }}</span>
+      <button class="logout-btn" (click)="onLogout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Nội dung chính -->
+  <main class="main-content">
+    <h1>Football Quiz Challenge</h1>
+    <p>Test your football knowledge with exciting quizzes!</p>
+
+    <!-- Danh sách card quiz -->
+    <div class="quiz-grid">
+      <div class="quiz-card" *ngFor="let quiz of quizzes" (click)="startQuiz(quiz.id)">
+        <div class="quiz-content">
+          <h3>{{ quiz.title }}</h3>
+          <p>{{ quiz.description }}</p>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>

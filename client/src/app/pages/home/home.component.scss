@@ -1,16 +1,140 @@
 .home-container {
-  max-width: 300px;
-  margin: 50px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f500d 0%, #1a3c34 100%); // Gradient xanh đậm
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  padding: 20px 40px;
+  background: rgba(0, 0, 0, 0.7); // Nền mờ cho header
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1000;
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .username {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #38a565; // Màu xanh lá cây
+    }
+
+    .logout-btn {
+      padding: 8px 20px;
+      background-color: #ff4444; // Màu đỏ cho nút logout
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #cc0000; // Đậm hơn khi hover
+      }
+    }
+  }
+}
+
+.main-content {
+  padding: 100px 40px 40px;
   text-align: center;
 
-  h2 {
-    margin-bottom: 20px;
+  h1 {
+    font-size: 3rem;
+    color: #38a565;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
   }
 
   p {
-    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 40px;
+  }
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.quiz-card {
+  background: #2a2a2a; // Nền tối cho card
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px) scale(1.05); // Phóng to và nâng lên
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); // Đổ bóng mạnh hơn
+  }
+
+  .quiz-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .quiz-content {
+    padding: 20px;
+    text-align: left;
+
+    h3 {
+      font-size: 1.5rem;
+      color: #38a565;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #ccc;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .main-content {
+    padding: 80px 20px 20px;
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    padding: 15px 20px;
+
+    .user-info {
+      .username {
+        font-size: 1rem;
+      }
+
+      .logout-btn {
+        padding: 6px 15px;
+        font-size: 0.9rem;
+      }
+    }
   }
 }

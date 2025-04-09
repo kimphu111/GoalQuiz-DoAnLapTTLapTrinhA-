@@ -1,12 +1,10 @@
-// server/src/database/database.js
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Log các biến môi trường để debug
-console.log('DB_NAME:', process.env.DB_NAME);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-console.log('DB_HOST:', process.env.DB_HOST);
+// console.log('DB_NAME:', process.env.DB_NAME);
+// console.log('DB_USER:', process.env.DB_USER);
+// console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+// console.log('DB_HOST:', process.env.DB_HOST);
 
 // Kiểm tra các biến môi trường trước khi kết nối
 if (!process.env.DB_NAME || !process.env.DB_USER || !process.env.DB_HOST) {
@@ -29,7 +27,7 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('Kết nối MySQL thành công!');
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: false });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
     process.exit(1);
