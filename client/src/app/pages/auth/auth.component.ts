@@ -55,6 +55,7 @@ export class AuthComponent {
           this.message = response.message || 'Login successful!';
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
+          localStorage.setItem('username', this.username);
           console.log('Login successful:', response);
           console.log('Token:', localStorage.getItem('token'));
           setTimeout(() => {

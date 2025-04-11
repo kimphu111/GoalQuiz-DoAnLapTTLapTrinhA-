@@ -1,25 +1,68 @@
 <div class="home-container">
-  <!-- Header với username và nút logout -->
+  <!-- Header -->
   <header class="header">
+    <div class="logo">GoalQuiz</div>
+    <div class="greeting">Xin chào, chúc bạn một ngày tốt lành!</div>
     <div class="user-info">
-      <span class="username">Welcome, {{ username }}</span>
-      <button class="logout-btn" (click)="onLogout()">Logout</button>
+      <span class="username">Chào, {{ username }}</span>
+      <span class="notification-icon">🔔</span>
+      <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar" loading="lazy" />
+      <button class="logout-button" (click)="onLogout()">Đăng xuất</button>
     </div>
   </header>
 
   <!-- Nội dung chính -->
-  <main class="main-content">
-    <h1>Football Quiz Challenge</h1>
-    <p>Test your football knowledge with exciting quizzes!</p>
+  <div class="main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul>
+        <li><a [routerLink]="['/home']" class="active">🏠 Trang chủ</a></li>
+        <li><a [routerLink]="['/points']">📊 Điểm cá nhân</a></li>
+        <li><a [routerLink]="['/info']">👤 Thông tin cá nhân</a></li>
+        <li><a [routerLink]="['/edit-info']">✏️ Sửa thông tin</a></li>
+        <li><a [routerLink]="['/quiz']">📝 Quiz</a></li>
+        <li><a [routerLink]="['/review']">🔍 Xem lại</a></li>
+      </ul>
+    </aside>
 
-    <!-- Danh sách card quiz -->
-    <div class="quiz-grid">
-      <div class="quiz-card" *ngFor="let quiz of quizzes" (click)="startQuiz(quiz.id)">
-        <div class="quiz-content">
-          <h3>{{ quiz.title }}</h3>
-          <p>{{ quiz.description }}</p>
+    <!-- Nội dung -->
+    <section class="content">
+      <div class="content-row" *ngIf="!isLoading; else loadingTemplate">
+        <!-- Card minh họa -->
+        <div class="illustration-card">
+          <img src="https://via.placeholder.com/300x200?text=Quiz+Bóng+Đá" alt="Minh họa Quiz" loading="lazy" />
+          <p>QUIZ BÓNG ĐÁ</p>
+        </div>
+
+        <!-- Card biểu đồ - Chỉ render trên client -->
+        <div class="chart-card" *ngIf="isBrowser">
+          <canvas baseChart
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  type="bar">
+          </canvas>
         </div>
       </div>
-    </div>
-  </main>
+
+      <!-- Card lịch -->
+      <div class="calendar-card" *ngIf="!isLoading">
+        <div class="calendar-header">
+          <button class="nav-button" (click)="prevMonth()">⬅️</button>
+          <h3>{{ currentMonth }}</h3>
+          <button class="nav-button" (click)="nextMonth()">➡️</button>
+        </div>
+        <div class="calendar-grid">
+          <div *ngFor="let day of daysInMonth" class="calendar-day"
+               [ngClass]="{'highlighted': highlightedDays.includes(day)}">
+            {{ day }}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Template loading -->
+  <ng-template #loadingTemplate>
+    <div class="loading">Đang tải dữ liệu...</div>
+  </ng-template>
 </div>

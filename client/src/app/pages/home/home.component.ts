@@ -1,77 +1,105 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartConfiguration, ChartData } from 'chart.js';
 
 @Component({
   selector: 'app-home',
   standalone: true,
+  imports: [RouterLink, CommonModule, NgChartsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  username: string = '';
-  quizzes = [
-    {
-      id: 1,
-      title: 'Premier League Trivia',
-      description: 'Test your knowledge about the English Premier League!',
-      image: 'assets/premier-league.jpg'
-    },
-    {
-      id: 2,
-      title: 'World Cup History',
-      description: 'How well do you know the FIFA World Cup?',
-      image: 'assets/world-cup.jpg'
-    },
-    {
-      id: 3,
-      title: 'Football Legends',
-      description: 'Guess the iconic players of all time!',
-      image: 'assets/football-legends.jpg'
-    }
-  ];
+  username: string = 'Guest';
+  isLoading: boolean = false;
+  currentMonth: string = 'Tháng Tư';
+  daysInMonth: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
+  highlightedDays: number[] = [5, 10, 15, 20];
+  isBrowser: boolean; // Biến kiểm tra môi trường
 
-  constructor(private http: HttpClient, private router: Router) {}
-
-  ngOnInit() {
-    this.username = localStorage.getItem('username') || 'Guest';
-
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        // Giả sử backend trả username trong token payload
-        const decoded: any = JSON.parse(atob(token.split('.')[1])); // Decode token thủ công
-        this.username = decoded.username || 'Guest';
-      } catch (error) {
-        console.error('Error decoding token:', error);
+  // Dữ liệu biểu đồ
+  barChartData: ChartData<'bar'> = {
+    labels: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'],
+    datasets: [
+      {
+        data: [65, 59, 80, 81],
+        label: 'Điểm số',
+        backgroundColor: '#38a565',
+        borderColor: '#38a565',
+        borderWidth: 1
       }
+    ]
+  };
+
+  barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: { display: true, text: 'Điểm' }
+      }
+    },
+    plugins: {
+      legend: { display: true }
     }
+  };
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
+  ) {
+    // Kiểm tra môi trường ngay trong constructor
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  startQuiz(quizId: number) {
-    // Điều hướng đến trang quiz cụ thể (có thể thêm route sau)
-    console.log('Start quiz:', quizId);
-    this.router.navigate([`/quiz/${quizId}`]);
+  ngOnInit() {
+    this.isLoading = true;
+
+    if (this.isBrowser) {
+      this.username = localStorage.getItem('username') || 'Guest';
+      const token = localStorage.getItem('token');
+      if (!token) {
+        this.router.navigate(['/auth']);
+        return;
+      }
+    }
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 500);
+  }
+
+  prevMonth() {
+    this.currentMonth = 'Tháng Ba';
+  }
+
+  nextMonth() {
+    this.currentMonth = 'Tháng Năm';
   }
 
   onLogout() {
-    // Gọi API logout nếu backend có (tùy chọn)
     this.http.post('http://localhost:3000/api/auth/logout', {}).subscribe({
       next: () => {
-        // Xóa token và role khỏi localStorage
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        localStorage.removeItem('username'); // Xóa username nếu có
-        localStorage.removeItem('refreshToken'); // Xóa refresh token nếu có
+        if (this.isBrowser) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('role');
+          localStorage.removeItem('username');
+          localStorage.removeItem('refreshToken');
+        }
         this.router.navigate(['/auth']);
       },
       error: (error) => {
-        console.error('Logout error:', error);
-        // Vẫn xóa token và điều hướng nếu API lỗi
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        localStorage.removeItem('username');
-        localStorage.removeItem('refreshToken');
+        console.error('Lỗi đăng xuất:', error);
+        if (this.isBrowser) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('role');
+          localStorage.removeItem('username');
+          localStorage.removeItem('refreshToken');
+        }
         this.router.navigate(['/auth']);
       }
     });
