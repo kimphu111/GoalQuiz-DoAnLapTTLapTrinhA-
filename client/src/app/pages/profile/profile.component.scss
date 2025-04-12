@@ -1,0 +1,58 @@
+.profile-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #2a2a2a;
+  color: #fff;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+
+  h2 {
+    color: #38a565;
+    text-align: center;
+  }
+
+  .profile-info {
+    margin-bottom: 20px;
+
+    p {
+      margin: 10px 0;
+      font-size: 1rem;
+
+      strong {
+        color: #38a565;
+      }
+    }
+  }
+
+  button {
+    padding: 8px 16px;
+    background-color: #ff4444;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #cc0000;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #38a565;
+}
+
+:host-context(body.light-mode) {
+  .profile-container {
+    background: #ffffff;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .loading {
+    color: #38a565;
+  }
+}

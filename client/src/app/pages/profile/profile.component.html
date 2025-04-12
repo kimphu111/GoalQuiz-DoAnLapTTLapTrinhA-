@@ -1,0 +1,13 @@
+<div class="profile-container" *ngIf="!isLoading; else loadingTemplate">
+  <h2>Thông tin cá nhân</h2>
+  <div class="profile-info">
+    <p><strong>Tên người dùng:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email || 'Chưa có email' }}</p>
+    <p><strong>Vai trò:</strong> {{ user.role || 'Không xác định' }}</p>
+  </div>
+  <button (click)="logout()">Đăng xuất</button>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="loading">Đang tải dữ liệu...</div>
+</ng-template>

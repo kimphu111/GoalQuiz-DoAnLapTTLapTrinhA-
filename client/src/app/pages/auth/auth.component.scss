@@ -50,6 +50,14 @@
     display: none;
     background-color: #e2e2e2;
     color: #000;
+    p {
+      color: #000000;
+      font-size: 1rem;
+
+      .register-form & {
+        color: #000000;
+      }
+    }
   }
 
   .login-header,
@@ -80,14 +88,7 @@
     font-family: 'Leckerli One', cursive;
   }
 
-  p {
-    color: #ccc;
-    font-size: 1rem;
 
-    .register-form & {
-      color: #000000;
-    }
-  }
 
   .form-group {
     text-align: left;
@@ -192,7 +193,7 @@
     height: 50px;
     padding: 10px;
     background-color: #00c4b4;
-    color: white;
+    color: #ffffff;
     border: none;
     border-radius: 30px;
     font-size: 1rem;
@@ -206,15 +207,6 @@
   }
 
   p {
-    margin: 10px 0;
-    text-align: left;
-    font-size: 20px;
-    display: flex;
-    color: #131313;
-    justify-content: space-between;
-    font-family: 'Robuto',cursive;
-
-
     a {
       color: #38A565;
       text-decoration: none;
@@ -226,18 +218,81 @@
   }
 
   .textLogin{
-    color: #e8e8e8;
+    color: #bcf8d9;
     font-size: 20px;
     font-family: 'Robuto',cursive;
     margin-top: 20px;
     cursor: pointer;
   }
-  .success-message {
-    color: #38a565;
-    font-weight: bold;
+}
+
+.message-container{
+  margin-top: 12px;
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Robuto',cursive;
+  color: #002bff;
+
+  p{
+    &.success {
+      color: #00ff72;
+    }
+
+    &.error{
+      color: #ff0000;
+    }
   }
-  .error-message {
-    color: #ff4444;
+}
+.overlay {
+  position: fixed;
+  width: 140vw;
+  height: 140vh;
+  background-color: transparent;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  background-image: url('/assets/ball3.png');
+  background-size: cover;
+  background-position: center;
+  animation: spinAndBounce 5s cubic-bezier(0.6, -0.2, 0.4, 1.2) infinite;
+  border-radius: 50%;
+}
+
+@keyframes spinAndBounce {
+  0% {
+    transform: rotate(0deg) translateX(0) translateY(0) scale(1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  20% {
+    transform: rotate(120deg) translateX(15px) translateY(-20px) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  40% {
+    transform: rotate(240deg) translateX(5px) translateY(5px) scale(0.9);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    transform: rotate(360deg) translateX(0) translateY(0) scale(1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  70% {
+    transform: rotate(480deg) translateX(-15px) translateY(-20px) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  90% {
+    transform: rotate(600deg) translateX(-5px) translateY(5px) scale(0.9);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    transform: rotate(720deg) translateX(0) translateY(0) scale(1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   }
 }
 

@@ -11,12 +11,12 @@
           </div>
           <form #loginForm="ngForm" (ngSubmit)="onLogin($event, loginForm)">
             <div class="form-group">
-              <label class="username">Sign in with Email</label>
+              <label class="email">Sign in with Email</label>
               <input
                 type="text"
-                class="username"
-                name="username"
-                [(ngModel)]="username"
+                class="email"
+                name="email"
+                [(ngModel)]="email"
                 required
                 #usernameInput="ngModel"
                 placeholder="Enter your email"
@@ -39,15 +39,23 @@
               <input type="checkbox" id="remember" name="remember" [(ngModel)]="rememberMe">
               <label for="remember">Remember me</label>
             </div>
-
             <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
           </form>
-
-          <p [ngClass]="{'success-message': isSuccess, 'error-message': !isSuccess}">{{ message }}</p>
+          <!-- Thay đổi màu sắc của nút va spinner"Sign Up" -->
+          <div class="message-container" *ngIf="message">
+            <p
+              [ngClass]="{
+           'success': isSuccess === true,
+           'error': isSuccess === false
+            }">
+              {{ message }}
+            </p>
+          </div>
           <p class="textLogin">
             Don't have an account? <a href="#" (click)="toggleForm($event)">Sign Up</a>
           </p>
         </div>
+
       </div>
 
       <!-- Form Register -->
@@ -99,7 +107,15 @@
             <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
           </form>
 
-          <p>{{ message }}</p>
+          <div class="message-container" *ngIf="message">
+            <p
+              [ngClass]="{
+           'success': isSuccess === true,
+           'error': isSuccess === false
+            }">
+              {{ message }}
+            </p>
+          </div>
           <p>
             Already have an account? <a href="#" (click)="toggleForm($event)">Sign In</a>
           </p>
@@ -107,8 +123,10 @@
       </div>
     </div>
 
-    <div class="image-container">
-      <!-- Bỏ thẻ img và dùng background-image trong SCSS -->
+    <div class="image-container"></div> <!-- Hình ảnh bên phải va trai-->
+
+    <div class="overlay" *ngIf="showSpinner">
+      <div class="spinner" *ngIf="showSpinner"></div>
     </div>
   </div>
 </div>

@@ -11,10 +11,34 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  saveTokens(accessToken: string, refreshToken: string, role: string) {
+  // Hàm đăng nhập
+  login(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
+      map((response: any) => {
+        if (response.accessToken && response.refreshToken) {
+          this.saveTokens(
+            response.accessToken,
+            response.refreshToken,
+            response.role || 'user',
+            response.user?.username || response.user?.email || email
+          );
+        }
+        return response;
+      }),
+      catchError((error) => {
+        console.error('Đăng nhập thất bại:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  // Lưu token và username
+  saveTokens(accessToken: string, refreshToken: string, role: string, username: string) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
     localStorage.setItem('role', role);
+    localStorage.setItem('username', username);
+    console.log('Saved tokens:', { accessToken, refreshToken, role, username }); // Debug
   }
 
   getAccessToken(): string | null {
@@ -23,6 +47,10 @@ export class AuthService {
 
   getRefreshToken(): string | null {
     return localStorage.getItem('refreshToken');
+  }
+
+  getUsername(): string | null {
+    return localStorage.getItem('username');
   }
 
   refreshToken(): Observable<any> {
@@ -53,6 +81,7 @@ export class AuthService {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
     console.log('Logged out, tokens cleared');
   }
 
@@ -60,7 +89,7 @@ export class AuthService {
     return !!this.getAccessToken();
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     const token = this.getAccessToken();
     if (!token) {
       return false;
@@ -74,11 +103,15 @@ export class AuthService {
   private parseJwt(token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(atob(base64).split('').map((c) => {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join('')
+    );
 
     return JSON.parse(jsonPayload);
-
   }
 }

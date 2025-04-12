@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -13,12 +14,20 @@ import { ChartConfiguration, ChartData } from 'chart.js';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  username: string = 'Guest';
+  username: string = '';
   isLoading: boolean = false;
-  currentMonth: string = 'Tháng Tư';
-  daysInMonth: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
+  currentMonth: string = '';
+  currentYear: number = new Date().getFullYear();
+  currentMonthIndex: number = new Date().getMonth();
+  daysInMonth: number[] = [];
   highlightedDays: number[] = [5, 10, 15, 20];
-  isBrowser: boolean; // Biến kiểm tra môi trường
+  isBrowser: boolean;
+  isDarkMode: boolean = false;
+
+  private months: string[] = [
+    'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
+    'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'
+  ];
 
   // Dữ liệu biểu đồ
   barChartData: ChartData<'bar'> = {
@@ -50,10 +59,13 @@ export class HomeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
   ) {
     // Kiểm tra môi trường ngay trong constructor
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.loadTheme(); // Load theme on initialization
+    this.updateCalendar();
   }
 
   ngOnInit() {
@@ -66,6 +78,7 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/auth']);
         return;
       }
+      this.applyTheme();
     }
 
     setTimeout(() => {
@@ -73,12 +86,89 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
 
+  // Lấy thông tin người dùng từ API nếu cần
+  private fetchUserProfile() {
+    this.http.get('http://localhost:3000/api/auth', {
+      headers: { Authorization: `Bearer ${this.authService.getAccessToken()}` }
+    }).subscribe({
+      next: (response: any) => {
+        this.username = response.user.username || response.user.email || 'Guest';
+        localStorage.setItem('username', this.username);
+        console.log('Username from API:', this.username);
+      },
+      error: (error) => {
+        console.error('Lỗi lấy thông tin người dùng:', error);
+        this.username = 'Guest';
+      }
+    });
+  }
+
   prevMonth() {
-    this.currentMonth = 'Tháng Ba';
+    this.currentMonthIndex--;
+    if (this.currentMonthIndex < 0) {
+      this.currentMonthIndex = 11;
+      this.currentYear--;
+    }
+    this.updateCalendar();
   }
 
   nextMonth() {
-    this.currentMonth = 'Tháng Năm';
+    this.currentMonthIndex++;
+    if (this.currentMonthIndex > 11) {
+      this.currentMonthIndex = 0;
+      this.currentYear++;
+    }
+    this.updateCalendar();
+  }
+
+  private loadTheme() {
+    if (this.isBrowser) {
+      const savedTheme = localStorage.getItem('theme');
+      console.log('savedTheme:', savedTheme);
+      this.isDarkMode = savedTheme !== 'light';
+      this.applyTheme();
+    }
+  }
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isBrowser) {
+      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    }
+    this.applyTheme();
+  }
+
+  private applyTheme() {
+    if (this.isBrowser) {
+      document.body.classList.toggle('light-mode', !this.isDarkMode);
+    }
+  }
+
+  private updateCalendar() {
+    const date = new Date(this.currentYear, this.currentMonthIndex, 1);
+    this.currentMonth = `${this.months[this.currentMonthIndex]} ${this.currentYear}`;
+    const daysInMonth = new Date(this.currentYear, this.currentMonthIndex + 1, 0).getDate();
+    const firstDay = date.getDay();
+
+    // Điều chỉnh để bắt đầu từ thứ Hai (T2)
+    const startDay = firstDay === 0 ? 6 : firstDay - 1;
+    this.daysInMonth = [];
+
+    // Thêm ngày trống để căn chỉnh
+    for (let i = 0; i < startDay; i++) {
+      this.daysInMonth.push(0);
+    }
+    // Thêm ngày thực
+    for (let i = 1; i <= daysInMonth; i++) {
+      this.daysInMonth.push(i);
+    }
+  }
+
+  isToday(day: number): boolean {
+    const today = new Date();
+    return day === today.getDate() &&
+      this.currentMonthIndex === today.getMonth() &&
+      this.currentYear === today.getFullYear();
   }
 
   onLogout() {
@@ -99,6 +189,7 @@ export class HomeComponent implements OnInit {
           localStorage.removeItem('role');
           localStorage.removeItem('username');
           localStorage.removeItem('refreshToken');
+          localStorage.removeItem('theme');
         }
         this.router.navigate(['/auth']);
       }

@@ -4,9 +4,14 @@
     <div class="logo">GoalQuiz</div>
     <div class="greeting">Xin chào, chúc bạn một ngày tốt lành!</div>
     <div class="user-info">
-      <span class="username">Chào, {{ username }}</span>
+      <span class="username">Xin chào, {{ username }}</span>
       <span class="notification-icon">🔔</span>
-      <img src="https://via.placeholder.com/40" alt="Avatar" class="avatar" loading="lazy" />
+      <!-- Doi theme -->
+      <button class="theme-toggle-button" (click)="toggleTheme()">
+        {{ isDarkMode ? '☀️ ' : '🌙 ' }}
+      </button>
+
+
       <button class="logout-button" (click)="onLogout()">Đăng xuất</button>
     </div>
   </header>
@@ -30,7 +35,7 @@
       <div class="content-row" *ngIf="!isLoading; else loadingTemplate">
         <!-- Card minh họa -->
         <div class="illustration-card">
-          <img src="https://via.placeholder.com/300x200?text=Quiz+Bóng+Đá" alt="Minh họa Quiz" loading="lazy" />
+          <img src="assets/illustrationPiictureHome.png" alt="Minh họa Quiz" loading="lazy" />
           <p>QUIZ BÓNG ĐÁ</p>
         </div>
 
@@ -53,11 +58,12 @@
         </div>
         <div class="calendar-grid">
           <div *ngFor="let day of daysInMonth" class="calendar-day"
-               [ngClass]="{'highlighted': highlightedDays.includes(day)}">
+               [ngClass]="{'highlighted': highlightedDays.includes(day), 'today': isToday(day)}">
             {{ day }}
           </div>
         </div>
       </div>
+
     </section>
   </div>
 
