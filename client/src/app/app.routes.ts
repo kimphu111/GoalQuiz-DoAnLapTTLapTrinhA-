@@ -2,14 +2,17 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import {AuthComponent} from './pages/auth/auth.component';
 import {AuthGuard} from './guards/auth.guards';
+import {AlbumQuizComponent} from './pages/album-quiz/album-quiz.component';
+import {ProfileComponent} from './pages/profile/profile.component';
+import {PersonalPointsComponent} from './pages/personal-points/personal-points.component';
+import {ReviewComponent} from './pages/review/review.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'auth', component: AuthComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'points', component: HomeComponent }, // Placeholder route
-  { path: 'info', component: HomeComponent }, // Placeholder route
-  { path: 'edit-info', component: HomeComponent }, // Placeholder route
-  { path: 'quiz', component: HomeComponent }, // Placeholder route
-  { path: 'review', component: HomeComponent }, // Placeholder route
+  { path: 'quiz', component: AlbumQuizComponent }, // Placeholder route
+  { path: 'points', component: PersonalPointsComponent }, // Placeholder route
+  { path: 'profile', component: ProfileComponent }, // Placeholder route
+  { path: 'review', component: ReviewComponent }, // Placeholder route
 ];

@@ -24,12 +24,12 @@ export class HomeComponent implements OnInit {
   isBrowser: boolean;
   isDarkMode: boolean = false;
 
+  isSidebarVisible = true;
   private months: string[] = [
     'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
     'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'
   ];
 
-  // Dữ liệu biểu đồ
   barChartData: ChartData<'bar'> = {
     labels: ['Quiz 1', 'Quiz 2', 'Quiz 3', 'Quiz 4'],
     datasets: [
@@ -60,11 +60,10 @@ export class HomeComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    // Kiểm tra môi trường ngay trong constructor
     this.isBrowser = isPlatformBrowser(this.platformId);
-    this.loadTheme(); // Load theme on initialization
+    this.loadTheme();
     this.updateCalendar();
   }
 
@@ -86,7 +85,6 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
 
-  // Lấy thông tin người dùng từ API nếu cần
   private fetchUserProfile() {
     this.http.get('http://localhost:3000/api/auth', {
       headers: { Authorization: `Bearer ${this.authService.getAccessToken()}` }
@@ -101,6 +99,10 @@ export class HomeComponent implements OnInit {
         this.username = 'Guest';
       }
     });
+  }
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
   prevMonth() {
@@ -148,17 +150,9 @@ export class HomeComponent implements OnInit {
     const date = new Date(this.currentYear, this.currentMonthIndex, 1);
     this.currentMonth = `${this.months[this.currentMonthIndex]} ${this.currentYear}`;
     const daysInMonth = new Date(this.currentYear, this.currentMonthIndex + 1, 0).getDate();
-    const firstDay = date.getDay();
-
-    // Điều chỉnh để bắt đầu từ thứ Hai (T2)
-    const startDay = firstDay === 0 ? 6 : firstDay - 1;
     this.daysInMonth = [];
 
-    // Thêm ngày trống để căn chỉnh
-    for (let i = 0; i < startDay; i++) {
-      this.daysInMonth.push(0);
-    }
-    // Thêm ngày thực
+    // Chỉ thêm các ngày thực (bỏ qua việc thêm số 0 để căn chỉnh)
     for (let i = 1; i <= daysInMonth; i++) {
       this.daysInMonth.push(i);
     }
@@ -190,6 +184,7 @@ export class HomeComponent implements OnInit {
           localStorage.removeItem('username');
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('theme');
+          localStorage.removeItem('accessToken');
         }
         this.router.navigate(['/auth']);
       }

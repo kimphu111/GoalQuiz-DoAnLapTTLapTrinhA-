@@ -1,14 +1,16 @@
 const User = require('../models/User');
 const bcrypt =  require('bcryptjs');
 const jwt =  require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
 
-// register
+//@desc Register User
+//@route POST api/auth/register
+//@access public
 const register = async (req, res) => {
     try {
-      console.log('Request body:', req.body); // Thêm log để kiểm tra dữ liệu gửi lên
+      console.log('Request body:', req.body);
       const { username, email, password } = req.body;
 
-      // Kiểm tra dữ liệu đầu vào
       if (!username || !email || !password) {
         return res.status(400).json({ message: 'Please provide full username, email and password' });
       }
@@ -36,6 +38,10 @@ const register = async (req, res) => {
       res.status(500).json({ message: 'An error occurred', error: error.message });
     }
   };
+
+//@desc Login User
+//@route POST api/auth/login
+//@access private
 const login = async(req, res) => {
         try{
             const { username,email, password} = req.body;
@@ -112,8 +118,29 @@ const refreshToken = async (req, res) =>{
     }
 }
 
+//@desc Current User
+//@route POST /api/users/current
+//@access private
+const current = (req, res) => {
+    res.status(200).json(req.user);
+};
+
+
+//@desc Logout User
+//@route POST /api/users/logout
+//@access public
 const logout = async ( req, res) => {
+    const {email, password} = req.body;
     res.status(200).json({ message: 'Logout successfully'});
 };
 
-module.exports = {register,refreshToken, login,logout};
+//@desc Refresh User
+//@route POST /api/users/refresh
+//@access private
+const refresh = asyncHandler((req, res) => {
+    res.status(200).json({
+        message: "refresh successful",
+    });
+});
+
+module.exports = { login, register, current, logout, refresh };

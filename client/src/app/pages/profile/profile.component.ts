@@ -26,18 +26,18 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
-    if (this.isBrowser) {
-      if (!this.authService.isLoggedIn()) {
-        this.router.navigate(['/auth']);
-        this.isLoading = false;
-        return;
-      }
-      this.fetchUserProfile();
-    } else {
-      this.user = { username: 'Guest', email: '', role: '' };
-      this.isLoading = false;
-    }
+    // this.isLoading = true;
+    // if (this.isBrowser) {
+    //   if (!this.authService.isLoggedIn()) {
+    //     this.router.navigate(['/auth']);
+    //     this.isLoading = false;
+    //     return;
+    //   }
+    //   this.fetchUserProfile();
+    // } else {
+    //   this.user = { username: 'Guest', email: '', role: '' };
+    //   this.isLoading = false;
+    // }
   }
 
   private fetchUserProfile() {

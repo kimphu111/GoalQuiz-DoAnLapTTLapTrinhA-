@@ -20,7 +20,6 @@ const validateAccessToken = asyncHandler(async (req, res, next) => {
             return decoded;
         });
 
-        // Check in blacklist
         const isinBlackList = await isHaveTokenInBlackList(decodedData.user.email,token);
 
         if(isinBlackList){

@@ -19,14 +19,16 @@
   <!-- Nội dung chính -->
   <div class="main-content">
     <!-- Sidebar -->
-    <aside class="sidebar">
+
+    <aside class="sidebar" [ngClass]="{'hidden': !isSidebarVisible}">
+      <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
       <ul>
         <li><a [routerLink]="['/home']" class="active">🏠 Trang chủ</a></li>
-        <li><a [routerLink]="['/points']">📊 Điểm cá nhân</a></li>
-        <li><a [routerLink]="['/info']">👤 Thông tin cá nhân</a></li>
-        <li><a [routerLink]="['/edit-info']">✏️ Sửa thông tin</a></li>
         <li><a [routerLink]="['/quiz']">📝 Quiz</a></li>
+        <li><a [routerLink]="['/points']">📊 Điểm cá nhân</a></li>
+        <li><a [routerLink]="['/profile']">👤 Thông tin cá nhân</a></li>
         <li><a [routerLink]="['/review']">🔍 Xem lại</a></li>
+        <!--        <li><a [routerLink]="['/edit-info']">✏️</a></li>-->
       </ul>
     </aside>
 
@@ -50,16 +52,23 @@
       </div>
 
       <!-- Card lịch -->
-      <div class="calendar-card" *ngIf="!isLoading">
+      <div class="calendar-card">
         <div class="calendar-header">
-          <button class="nav-button" (click)="prevMonth()">⬅️</button>
+          <button class="nav-button" (click)="prevMonth()">←</button>
           <h3>{{ currentMonth }}</h3>
-          <button class="nav-button" (click)="nextMonth()">➡️</button>
+          <button class="nav-button" (click)="nextMonth()">→</button>
         </div>
         <div class="calendar-grid">
-          <div *ngFor="let day of daysInMonth" class="calendar-day"
-               [ngClass]="{'highlighted': highlightedDays.includes(day), 'today': isToday(day)}">
-            {{ day }}
+          <div
+            *ngFor="let day of daysInMonth"
+            class="calendar-day"
+            [ngClass]="{
+            'highlighted': highlightedDays.includes(day),
+            'today': isToday(day)
+             }"
+            >
+            <!-- Chỉ hiển thị nếu day không phải là 0 -->
+            {{ day !== 0 ? day : '' }}
           </div>
         </div>
       </div>

@@ -9,6 +9,48 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Mã màu cho dark mode */
+$dark-bg-gradient: linear-gradient(135deg, #0f500d 0%, #1a3c34 100%);
+$dark-text-color: #fff;
+$dark-header-bg: rgba(0, 0, 0, 0.7);
+$dark-sidebar-bg: #2a2a2a;
+$dark-card-bg: #2a2a2a;
+$dark-card-gradient: linear-gradient(135deg, #2a2a2a, #333333);
+$dark-text-secondary: #C8C8C8;
+$dark-highlight-color: #38a565;
+$dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
+$dark-calendar-day-text: #d1d5db;
+$dark-highlighted-day-bg: #ff9999; /* Màu hồng nhạt cho ngày được highlight */
+
+/* Mã màu cho light mode */
+$light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+$light-text-color: #F5F5F5;
+$light-header-bg: rgba(255, 255, 255, 0.9);
+$light-sidebar-bg: #ffffff;
+$light-card-bg:  #F5F5F5;
+$light-card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
+$light-text-secondary: #f1f1f1;
+$light-highlight-color: #38a565;
+$light-calendar-day-bg: #ffffff;
+$light-calendar-day-text: #000000;
+$light-highlighted-day-bg: #ff9999;
+
+/* Giao diện chung */
+.home-container {
+  width: 1300px;
+  height: 1024px;
+  margin: 0 auto;
+  background: $dark-bg-gradient;
+  color: $dark-text-color;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100vh;
 }
 
 .header {
@@ -16,7 +58,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: rgba(0, 0, 0, 0.7);
+  background: $dark-header-bg;
   position: fixed;
   top: 0;
   width: 1240px;
@@ -25,12 +67,13 @@
   .logo {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #38a565;
+    color: $dark-highlight-color;
   }
 
   .greeting {
-    font-size: 1rem;
-    color: #ccc;
+      font-family: 'Leckerli One', cursive;
+      font-size: 24px;
+      color: #939393;
   }
 
   .theme-toggle-button {
@@ -52,12 +95,13 @@
     .username {
       font-size: 1rem;
       font-weight: bold;
-      color: #38a565;
+      color: $dark-highlight-color;
     }
 
     .notification-icon {
       font-size: 1rem;
       cursor: pointer;
+      color: $dark-text-secondary;
     }
 
     .avatar {
@@ -86,18 +130,23 @@
 
 .main-content {
   display: flex;
-  margin-top: 60px;
+  margin-top: 70px;
   height: calc(1024px - 60px);
 }
 
 .sidebar {
   width: 220px;
-  background: #2a2a2a;
+  background: $dark-sidebar-bg;
   padding: 15px;
   position: fixed;
   top: 60px;
   bottom: 0;
   overflow-y: auto;
+
+  .menu-toggle{
+    display: none;
+
+  }
 
   ul {
     list-style: none;
@@ -109,7 +158,7 @@
       a {
         display: block;
         padding: 8px;
-        color: #ccc;
+        color: $dark-text-secondary;
         text-decoration: none;
         font-size: 0.95rem;
         border-radius: 4px;
@@ -117,8 +166,8 @@
 
         &.active,
         &:hover {
-          background-color: #38a565;
-          color: #fff;
+          background-color: $dark-highlight-color;
+          color: $dark-text-color;
         }
       }
     }
@@ -126,42 +175,46 @@
 }
 
 .content {
-  margin-left: 240px;
+  margin-left: 270px;
   padding: 15px;
   flex: 1;
   overflow-y: auto;
-  margin-top: 150px;
+  margin-top: 140px;
+
 }
 
 .content-row {
   display: flex;
   gap: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
+  width: 1000px;
   margin-left: 25px;
 
-
-  .illustration-card{
-    max-height: 300px;
-    background: #2a2a2a;
+  .illustration-card {
+    max-height: 240px;
+    max-width: 340px;
+    background: $dark-card-bg;
     border-radius: 8px;
     padding: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform, box-shadow;
+
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
-
   }
+
   .chart-card {
-    max-height: 580px;
-    background: #2a2a2a;
+    max-height: 240px;
+    max-width: 500px;
+    background: $dark-card-bg;
     border-radius: 8px;
     padding: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform, box-shadow;
     margin-right: 25px;
-
+    margin-left: 15px;
 
     &:hover {
       transform: translateY(-4px);
@@ -175,19 +228,20 @@
 
     img {
       width: 100%;
-      max-height: 250px;
+      max-height: 210px;
       border-radius: 5px;
     }
 
     p {
       margin-top: 12px;
       font-size: 1rem;
-      color: #38a565;
+      color: $dark-highlight-color;
     }
   }
 
   .chart-card {
     flex: 2;
+
     canvas {
       max-height: 260px;
     }
@@ -195,30 +249,23 @@
 }
 
 .calendar-card {
-  background: linear-gradient(135deg, #2a2a2a, #333333);
+  background: $dark-card-gradient;
   border-radius: 8px;
   padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  will-change: transform, box-shadow;
   margin: 0 25px;
   position: relative;
   overflow: hidden;
-  height: 270px;
+  width: 900px;
+  height: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   }
 
-  /* Hiệu ứng nền nhẹ */
   &::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 400px;
-    background: radial-gradient(circle at 50% 20%, rgba(56, 165, 101, 0.15), transparent 70%);
-    opacity: 0.5;
-    z-index: 0;
+    display: none;
   }
 
   .calendar-header {
@@ -232,30 +279,30 @@
     h3 {
       font-size: 1.2rem;
       font-weight: 600;
-      color: #38a565;
-      background: linear-gradient(to right, #38a565, #66cc99);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
     }
 
     .nav-button {
-      background: rgba(255, 255, 255, 0.1);
+      background: transparent; /* Loại bỏ background */
       border: none;
-      color: #ccc;
-      font-size: 1rem;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      color: $dark-text-secondary;
+      font-size: 1.5rem; /* Tăng kích thước nút */
+      width: 30px;
+      height: 30px;
+      border-radius: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s ease, color 0.3s ease;
+      transition: color 0.3s ease;
 
       &:hover {
-        background: #38a565;
-        color: #fff;
+        background: transparent;
+        color: $dark-highlight-color;
       }
     }
   }
@@ -268,52 +315,68 @@
     z-index: 1;
 
     .calendar-day {
-      padding: 10px;
+      padding: 0;
+      width: 60px;
+      height: 60px;
+      line-height: 40px;
       text-align: center;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.08);
-      color: #d1d5db;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
+      border-radius: 4px;
+      background: $dark-calendar-day-bg;
+      color: $dark-calendar-day-text;
+      font-size:20px;
+      font-weight: 400;
+      transition: background 0.3s ease;
       cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
 
       &:hover {
         background: rgba(255, 255, 255, 0.15);
-        color: #fff;
-        transform: scale(1.1);
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        color: $dark-text-color;
+        transform: none;
+        box-shadow: none;
       }
 
       &.highlighted {
-        background: linear-gradient(145deg, #38a565, #66cc99);
-        color: #fff;
-        font-weight: 600;
-        box-shadow: 0 2px 6px rgba(56, 165, 101, 0.3);
-
+        background: #F08585; /* Màu hồng nhạt */
+        color: $dark-text-color;
+        font-weight: 400;
         &:hover {
-          background: linear-gradient(145deg, #2e8b57, #55b38a);
+          background: $dark-highlighted-day-bg; /* Giữ màu khi hover */
         }
       }
 
       &.today {
-        background: linear-gradient(145deg, #ff8c66, #ffbb99);
-        color: #fff;
+        background: #0eff00;
+        color: #000;
         font-weight: 600;
-        box-shadow: 0 2px 6px rgba(255, 140, 102, 0.4);
-        position: relative;
+        border: 2px solid #ffffff;
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 
+        /* Hình huy hiệu tròn ở góc phải trên */
         &::after {
-          content: '✨';
+          content: '★'; /* Dùng biểu tượng ngôi sao để giống huy hiệu */
           position: absolute;
-          top: -4px;
-          right: -4px;
-          font-size: 0.8rem;
-          opacity: 0.8;
+          top: 0;
+          right: 0;
+          width: 16px;
+          height: 16px;
+          background: #00f366; /* Màu vàng */
+          color: #000; /* Màu ngôi sao đen */
+          font-size: 12px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 50%; /* Hình tròn */
+          border: 1px solid #ffffff; /* Viền trắng */
+          transform: translate(5px, -5px); /* Dịch nhẹ để nổi bật */
         }
 
         &:hover {
-          background: linear-gradient(145deg, #ff7043, #ffaa80);
+          background: #51f594;
+          color: #000;
         }
       }
     }
@@ -323,37 +386,37 @@
 .loading {
   text-align: center;
   padding: 20px;
-  color: #38a565;
+  color: $dark-highlight-color;
   font-size: 1rem;
 }
 
 /* Light mode */
 :host-context(body.light-mode) {
   .home-container {
-    background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
-    color: #333;
+    background: $light-bg-gradient;
+    color: $light-text-color;
   }
 
   .header {
-    background: rgba(255, 255, 255, 0.9);
+    background: $light-header-bg;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
     .greeting {
-      color: #555;
+      color: #c2c2c2;
     }
 
     .user-info {
       .username {
-        color: #38a565;
+        color: $light-highlight-color;
       }
 
       .notification-icon {
-        color: #555;
+        color: $light-text-secondary;
       }
 
       .theme-toggle-button {
-        background-color: #38a565;
-        color: #fff;
+        background-color: $light-highlight-color;
+        color: $light-text-color;
         border-radius: 10px;
         border: none;
 
@@ -373,216 +436,559 @@
   }
 
   .sidebar {
-    background: #ffffff;
+    background: $light-sidebar-bg;
     box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
 
     ul li a {
-      color: #555;
+      color: $light-text-secondary;
 
       &.active,
       &:hover {
-        background-color: #38a565;
-        color: #fff;
+        background-color: $light-highlight-color;
+        color: $light-text-color;
       }
     }
   }
 
   .content-row {
-    .illustration-card{
-      display: flex;
-      flex-direction: column;
-      border-radius: 8px;
-      max-width: 400px;
-      background: #ffffff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .illustration-card {
+      background: $light-card-bg;
 
       &:hover {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
     }
-    .chart-card {
-      display: flex;
-      flex-direction: column;
-      margin-left:25px;
-      border-radius: 8px;
-      max-width: 580px;
-      background: #ffffff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
+    .chart-card {
+      background: $light-card-bg;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
     }
 
     .illustration-card p {
-      color: #38a565;
+      color: $light-highlight-color;
     }
   }
 
   .calendar-card {
-    background: linear-gradient(135deg, #ffffff, #ffffff);
-    border-radius: 8px;
-    padding: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    will-change: transform, box-shadow;
-    margin: 0 25px;
+    background: $light-card-bg;
     position: relative;
-    overflow: hidden;
-    height: 270px;
 
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
     }
 
-    /* Hiệu ứng nền nhẹ */
     &::before {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 400px;
-      background: radial-gradient(circle at 50% 20%, rgba(56, 165, 101, 0.15), transparent 70%);
-      opacity: 0.5;
-      z-index: 0;
+      display: none;
     }
 
     .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      position: relative;
-      z-index: 1;
-
       h3 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #38a565;
-        background: linear-gradient(to right, #38a565, #66cc99);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        color: $light-highlight-color;
+        text-shadow: none;
+        background: none;
+        -webkit-background-clip: initial;
+        -webkit-text-fill-color: initial;
       }
 
       .nav-button {
-        background: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: #ccc;
-        font-size: 1rem;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.3s ease, color 0.3s ease;
+        background: transparent;
+        color: $light-text-secondary;
 
         &:hover {
-          background: #38a565;
-          color: #fff;
+          background: transparent;
+          color: $light-highlight-color;
         }
       }
     }
 
     .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(13, 1fr);
-      gap: 8px;
-      position: relative;
-      z-index: 1;
-
       .calendar-day {
-        padding: 10px;
-        text-align: center;
-        border-radius: 20px;
-        background: rgb(187, 243, 213);
-        color: #000000;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        cursor: pointer;
+        background: $light-calendar-day-bg;
+        color: $light-calendar-day-text;
 
         &:hover {
-          background: rgba(255, 255, 255, 0.15);
-          color: #fff;
-          transform: scale(1.1);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+          background: rgba(0, 0, 0, 0.05); /* Hiệu ứng hover nhẹ cho light mode */
+          color: $light-text-color;
+          transform: none;
+          box-shadow: none;
         }
 
         &.highlighted {
-          background: linear-gradient(145deg, #38a565, #66cc99);
-          color: #fff;
-          font-weight: 600;
-          box-shadow: 0 2px 6px rgba(56, 165, 101, 0.3);
+          background: $light-highlighted-day-bg;
+          color: $light-text-color;
 
           &:hover {
-            background: linear-gradient(145deg, #2e8b57, #55b38a);
+            background: lightpink;
           }
         }
 
         &.today {
-          background: linear-gradient(145deg, #ff8c66, #ffbb99);
-          color: #fff;
+          background: #ffd700;
+          color: #000;
           font-weight: 600;
-          box-shadow: 0 2px 6px rgba(255, 140, 102, 0.4);
-          position: relative;
+          border: 2px solid #000000;
+          box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 
+          /* Hình huy hiệu tròn ở góc phải trên */
           &::after {
-            content: '✨';
+            content: '★';
             position: absolute;
-            top: -4px;
-            right: -4px;
-            font-size: 0.8rem;
-            opacity: 0.8;
+            top: 0;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            background: #ffca00;
+            color: #000;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            border-radius: 50%;
+            border: 1px solid #000000; /* Viền đen */
+            transform: translate(5px, -5px);
           }
 
           &:hover {
-            background: linear-gradient(145deg, #ff7043, #ffaa80);
+            background: #f8eb8b;
+            color: #000;
           }
         }
       }
     }
   }
-
-  .loading {
-    color: #38a565;
-  }
 }
 
-/* Responsive cho màn hình nhỏ hơn */
-@media (max-width: 1300px) {
+  .loading {
+    color: $light-highlight-color;
+  }
+
+@media (max-width: 1024px) {
   .home-container {
     width: 100%;
     height: auto;
+    padding: 0 10px;
+  }
+
+  .header {
+    width: 756px;
+    padding: 12px 20px;
+    font-size: 0.9rem; /* Thu nhỏ font */
+  }
+
+  .sidebar {
+    width: 180px; /* Thu nhỏ sidebar */
+    padding: 10px;
+
+    ul li a {
+      font-size: 0.85rem;
+      padding: 6px;
+    }
+  }
+
+  .content {
+    margin-left: 200px; /* Điều chỉnh để phù hợp với sidebar nhỏ hơn */
+    padding: 10px;
+    margin-top: 90px;
+  }
+
+  .content-row {
+    gap: 10px;
+    margin-left: 15px;
+    margin-bottom: 25px;
+
+    .illustration-card {
+      max-width: 350px; /* Thu nhỏ */
+      max-height: 350px;
+      padding: 10px;
+
+      img {
+        max-height: 200px;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .chart-card {
+      max-width: 500px; /* Thu nhỏ */
+      max-height: 500px;
+      padding: 10px;
+      margin-right: 15px;
+
+      canvas {
+        max-height: 220px;
+      }
+    }
+  }
+
+  .calendar-card {
+    height: 350px;
+    margin: 0 15px;
+    padding: 10px;
+
+    .calendar-header {
+      h3 {
+        font-size: 1.1rem;
+      }
+
+      .nav-button {
+        width: 50px;
+        height: 50px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .calendar-grid {
+      gap: 6px;
+
+      .calendar-day {
+        padding: 8px;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+
+/* Tablet: 768px - 991px */
+/* Tablet: 768px - 991px */
+@media (max-width: 991px) {
+  .home-container {
+    height: auto;
+    padding: 0 5px;
+  }
+
+  .header {
+    width: 100%; /* Sửa thành full-width để tránh bị lệch */
+    max-width: 669px; /* Giới hạn tối đa */
+    padding: 10px 15px;
+    font-size: 0.85rem;
+
+    .greeting {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    width: 160px;
+    padding: 8px;
+    transition: transform 0.3s ease;
+
+    .menu-toggle {
+      display: none;
+    }
+
+    ul li a {
+      font-size: 0.8rem;
+      padding: 5px;
+    }
+  }
+
+  .content {
+    margin-left: 180px; /* Điều chỉnh để phù hợp với sidebar nhỏ hơn */
+    padding: 8px;
+    margin-top: 60px;
+  }
+
+  .content-row {
+    gap: 8px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+
+    .illustration-card {
+      max-width: 300px; /* Thu nhỏ */
+      max-height: 300px;
+      padding: 8px;
+
+      img {
+        max-height: 180px;
+      }
+
+      p {
+        font-size: 0.85rem;
+      }
+    }
+
+    .chart-card {
+      max-width: 450px; /* Thu nhỏ */
+      max-height: 450px;
+      padding: 8px;
+      margin-right: 10px;
+
+      canvas {
+        max-height: 200px;
+      }
+    }
+  }
+
+  .calendar-card {
+    height: 300px;
+    margin: 0 10px;
+    padding: 8px;
+
+    .calendar-header {
+      h3 {
+        font-size: 1rem;
+      }
+
+      .nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 0.85rem;
+      }
+    }
+
+    .calendar-grid {
+      gap: 5px;
+
+      .calendar-day {
+        padding: 6px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+/* Mobile: <= 767px */
+@media (max-width: 767px) {
+  .home-container {
+    height: auto;
+    padding: 0 3px;
+  }
+
+  .header {
+    width: 100%; /* Full-width */
+    max-width: 600px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+
+    .logo {
+      font-size: 1.4rem;
+    }
+
+    .greeting {
+      display: none; /* Ẩn greeting để tiết kiệm không gian */
+    }
+
+    .user-info {
+      gap: 6px;
+
+      .username {
+        font-size: 0.8rem;
+      }
+
+      .logout-button {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .sidebar {
+    width: 140px; /* Thu nhỏ hơn nữa */
+    padding: 6px;
+    transform: translateX(-100%); /* Ẩn sidebar */
+    transition: transform 0.3s ease;
+
+    .menu-toggle {
+      font-size: 1.2rem;
+    }
+
+    ul li a {
+      font-size: 0.75rem;
+      padding: 4px;
+    }
+
+    &.hidden {
+      transform: translateX(-100%);
+    }
+
+    &:not(.hidden) {
+      transform: translateX(0);
+    }
+  }
+
+  .content {
+    margin-left: 160px; /* Điều chỉnh để phù hợp với sidebar nhỏ hơn */
+    padding: 6px;
+    margin-top: 60px;
+  }
+
+  .content-row {
+    gap: 6px;
+    margin-left: 8px;
+    margin-bottom: 15px;
+
+    .illustration-card {
+      max-width: 250px; /* Thu nhỏ */
+      max-height: 250px;
+      padding: 6px;
+
+      img {
+        max-height: 150px;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    .chart-card {
+      max-width: 400px; /* Thu nhỏ */
+      max-height: 400px;
+      padding: 6px;
+      margin-right: 8px;
+
+      canvas {
+        max-height: 180px;
+      }
+    }
+  }
+
+  .calendar-card {
+    height: 250px;
+    margin: 0 8px;
+    padding: 6px;
+
+    .calendar-header {
+      h3 {
+        font-size: 0.9rem;
+      }
+
+      .nav-button {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
+      }
+    }
+
+    .calendar-grid {
+      gap: 4px;
+
+      .calendar-day {
+        padding: 5px;
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+/* Mini Mobile: < 576px */
+@media (max-width: 575px) {
+  .home-container {
+    height: auto;
+    padding: 0 2px;
   }
 
   .header {
     width: 100%;
-    padding: 10px 20px;
-  }
+    max-width: 500px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
 
-  .main-content {
-    flex-direction: column;
-    height: auto;
+    .logo {
+      font-size: 1.2rem;
+    }
+
+    .greeting {
+      display: none;
+    }
+
+    .user-info {
+      gap: 4px;
+
+      .username {
+        font-size: 0.75rem;
+      }
+
+      .logout-button {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+      }
+    }
   }
 
   .sidebar {
-    width: 100%;
-    position: static;
-    top: 0;
+    width: 120px; /* Thu nhỏ tối đa */
+    padding: 5px;
+    top: 80px; /* Điều chỉnh vì header nhỏ hơn */
+    height: calc(100% - 80px);
+
+    .menu-toggle {
+      font-size: 1.1rem;
+    }
+
+    ul li a {
+      font-size: 0.7rem;
+      padding: 3px;
+    }
   }
 
   .content {
-    margin-left: 0;
+    margin-left: 140px; /* Điều chỉnh */
+    padding: 5px;
+    margin-top: 80px;
   }
 
   .content-row {
-    flex-direction: column;
+    gap: 5px;
+    margin-left: 5px;
+    margin-bottom: 10px;
 
-    .illustration-card,
+    .illustration-card {
+      max-width: 200px; /* Thu nhỏ tối đa */
+      max-height: 200px;
+      padding: 5px;
+
+      img {
+        max-height: 120px;
+      }
+
+      p {
+        font-size: 0.75rem;
+      }
+    }
+
     .chart-card {
-      flex: 1;
+      max-width: 400px; /* Thu nhỏ tối đa */
+      max-height: 350px;
+      padding: 5px;
+      margin-right: 5px;
+
+      canvas {
+        max-height: 150px;
+      }
+    }
+  }
+
+  .calendar-card {
+    height: 200px;
+    margin: 0 5px;
+    padding: 5px;
+
+    .calendar-header {
+      h3 {
+        font-size: 0.85rem;
+      }
+
+      .nav-button {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+      }
+    }
+
+    .calendar-grid {
+      gap: 3px;
+
+      .calendar-day {
+        padding: 4px;
+        font-size: 0.7rem;
+      }
     }
   }
 }
