@@ -59,7 +59,7 @@ export class AuthComponent {
     };
 
     this.http
-      .post('http://localhost:3000/api/auth/login', loginData)
+      .post('http://localhost:8000/api/auth/login', loginData)
       .subscribe({
         next: (response: any) => {
           this.message = response.message || 'Login successful!';
@@ -105,7 +105,7 @@ export class AuthComponent {
     }
 
     this.http
-      .post('http://localhost:3000/api/auth/register', registerData)
+      .post('http://localhost:8000/api/auth/register', registerData)
       .subscribe({
         next: (respone: any) => {
           this.message = respone.message || 'Register successful!';
