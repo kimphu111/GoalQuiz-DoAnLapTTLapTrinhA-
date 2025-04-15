@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './personal-points.component.scss'
 })
 export class PersonalPointsComponent {
-
+  username: string = '';
+  email: string = '';
 }

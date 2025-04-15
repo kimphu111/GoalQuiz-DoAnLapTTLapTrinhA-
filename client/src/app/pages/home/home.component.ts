@@ -15,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
   username: string = '';
+  email: string = '';
   isLoading: boolean = false;
   currentMonth: string = '';
   currentYear: number = new Date().getFullYear();
@@ -72,6 +73,7 @@ export class HomeComponent implements OnInit {
 
     if (this.isBrowser) {
       this.username = localStorage.getItem('username') || 'Guest';
+      this.email = localStorage.getItem('email') || 'Guest';
       const token = localStorage.getItem('token');
       if (!token) {
         this.router.navigate(['/auth']);
@@ -86,7 +88,7 @@ export class HomeComponent implements OnInit {
   }
 
   private fetchUserProfile() {
-    this.http.get('http://localhost:3000/api/auth', {
+    this.http.get('http://localhost:8000/api/profile', {
       headers: { Authorization: `Bearer ${this.authService.getAccessToken()}` }
     }).subscribe({
       next: (response: any) => {
@@ -166,13 +168,14 @@ export class HomeComponent implements OnInit {
   }
 
   onLogout() {
-    this.http.post('http://localhost:3000/api/auth/logout', {}).subscribe({
+    this.http.post('http://localhost:8000/api/auth/logout', {}).subscribe({
       next: () => {
         if (this.isBrowser) {
           localStorage.removeItem('token');
           localStorage.removeItem('role');
           localStorage.removeItem('username');
           localStorage.removeItem('refreshToken');
+          localStorage.removeItem('email');
         }
         this.router.navigate(['/auth']);
       },

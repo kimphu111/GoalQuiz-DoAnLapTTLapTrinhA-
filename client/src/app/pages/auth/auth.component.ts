@@ -63,9 +63,16 @@ export class AuthComponent {
       .subscribe({
         next: (response: any) => {
           this.message = response.message || 'Login successful!';
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('accessToken', response.accessToken);
+          localStorage.setItem('refreshToken', response.refreshToken);
+          localStorage.setItem('username', response.user.username);
+          localStorage.setItem('email', response.user.email);
           localStorage.setItem('role', response.role);
-          localStorage.setItem('username', response.user?.username || this.email);
+          localStorage.setItem('token', response.token);
+
+
+          this.isSuccess = true;
+
           console.log('Login successful:', response);
           console.log('Stored username:', localStorage.getItem('username'));
           setTimeout(() => {

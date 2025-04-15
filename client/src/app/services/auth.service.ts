@@ -82,6 +82,10 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('role');
     localStorage.removeItem('username');
+    localStorage.removeItem('theme');
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
+
     console.log('Logged out, tokens cleared');
   }
 
