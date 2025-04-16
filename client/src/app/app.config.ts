@@ -14,6 +14,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    provideHttpClient(withFetch()),
     provideHttpClient(withInterceptors([AuthInterceptor])),    provideClientHydration(),
     importProvidersFrom(BrowserModule),
     importProvidersFrom(FormsModule),

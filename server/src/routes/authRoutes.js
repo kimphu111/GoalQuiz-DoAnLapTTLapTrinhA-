@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const userControllerr = require('../controller/userControllerr');
+const userController = require('../controller/userController');
 const { authMiddleware,admninMiddleware} = require('../middleware/authMiddleware');
 
 
-router.post('/register', userControllerr.register);
-router.post('/login', userControllerr.login);
-router.get('/logout', authMiddleware, userControllerr.logout);
+router.post('/register', userController.register);
+router.post('/login', userController.login);
+router.get('/logout', authMiddleware, userController.logout);
+
+router.get('/profile', authMiddleware, userController.getUserProfile);
+router.post('/refresh-token', userController.refreshToken);
 
 router.get('/admin-only', authMiddleware, admninMiddleware, (req, res) =>{
     res.status(200).json({ message: 'welcome to admin only route'});
