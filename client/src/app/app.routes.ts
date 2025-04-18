@@ -2,11 +2,12 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { AuthGuard } from './guards/auth.guards';
-import { AlbumQuizComponent } from './pages/album-quiz/album-quiz.component';
+import { AlbumQuizComponent } from './pages/Quiz/album-quiz/album-quiz.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PersonalPointsComponent } from './pages/personal-points/personal-points.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { navbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
+import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
       { path: 'points', component: PersonalPointsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'review', component: ReviewComponent },
+      { path: 'quiz-question', component: QuizQuestionComponent}
     ],
   },
   { path: 'home', component: HomeComponent },
