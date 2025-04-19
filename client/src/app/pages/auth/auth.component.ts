@@ -69,12 +69,8 @@ export class AuthComponent {
           localStorage.setItem('email', response.user.email);
           localStorage.setItem('role', response.role);
           localStorage.setItem('token', response.token);
-
-
           this.isSuccess = true;
 
-          console.log('Login successful:', response);
-          console.log('Stored username:', localStorage.getItem('username'));
           setTimeout(() => {
             this.showSpinner = false;
             this.router.navigate(['/home']);
@@ -124,6 +120,7 @@ export class AuthComponent {
           setTimeout(() => {
             this.showSpinner = false
             this.router.navigate(['/auth']);
+            window.location.reload();
           },1200);
         },
         error: (err) => {

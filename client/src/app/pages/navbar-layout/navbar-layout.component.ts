@@ -15,10 +15,11 @@ import {AuthService} from '../../services/auth.service';
 export class navbarLayoutComponent {
   username: string = '';
   email: string = '';
-  isDarkMode: boolean = true;
+  isDarkMode: boolean = false;
   isSidebarVisible: boolean = true;
   isLoading: boolean = false;
   isBrowser: boolean;
+
 
 
   constructor(
@@ -28,6 +29,7 @@ export class navbarLayoutComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+    this.loadTheme();
   }
 
 
@@ -65,10 +67,27 @@ export class navbarLayoutComponent {
     });
   }
 
+  private loadTheme() {
+    if (this.isBrowser) {
+      const savedTheme = localStorage.getItem('theme');
+      console.log('savedTheme:', savedTheme);
+      this.isDarkMode = savedTheme !== 'light';
+      this.applyTheme();
+    }
+  }
+
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
-    document.body.classList.toggle('dark-mode', this.isDarkMode);
-    // Logic để lưu theme nếu cần (localStorage, service, v.v.)
+    if (this.isBrowser) {
+      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+    }
+    this.applyTheme();
+  }
+
+  private applyTheme() {
+    if (this.isBrowser) {
+      document.body.classList.toggle('light-mode', !this.isDarkMode);
+    }
   }
 
   toggleSidebar() {

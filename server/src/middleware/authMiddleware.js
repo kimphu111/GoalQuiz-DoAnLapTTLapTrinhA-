@@ -15,7 +15,7 @@ const authMiddleware = (req, res, next) => {
   };
 
 // Middleware to check if user is ADMIN
-const admninMiddleware = (req, res, next) => {
+const adminMiddleware = (req, res, next) => {
     if (!req.user || req.user.role !== 'admin') { // Thêm kiểm tra req.user
       return res.status(403).json({ message: 'Chỉ admin mới có quyền truy cập!' });
     }
@@ -24,5 +24,5 @@ const admninMiddleware = (req, res, next) => {
 
 module.exports = {
     authMiddleware,
-    admninMiddleware,
+    adminMiddleware,
 };
