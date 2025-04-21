@@ -4,12 +4,16 @@
         @if (currentQuestion){
             <div class="question">
                 <p>Question {{currentIndex + 1}}: {{ currentQuestion.question}}</p>
+                @if(currentQuestion.image){
+                    <img class="question-image" [src]="currentQuestion.image || 'assets/default.png'" alt="question image" />
+                }
+                
             </div>
         }
         
         <div class="answer">
         @if (currentQuestion){
-            @for(option of currentQuestion.options; let i = $index; track option){
+            @for(option of shuffledOptions; let i = $index; track option){
                 <button 
                 [ngClass]="{
                     'correct': answered && option === currentQuestion.answer,

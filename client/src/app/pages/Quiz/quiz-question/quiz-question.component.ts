@@ -17,14 +17,15 @@ export class QuizQuestionComponent {
               private route: ActivatedRoute
   ) {}
 
+  shuffledOptions: string[] = [];
   questions: any[] = [];
   currentQuestion: any = null;
   currentIndex: number = 0;
-  level: string = '';
-  score: number = 0;
+  level= '';
+  score = 0;
 
   selectedOption: string | null = null;
-  answered: boolean = false;
+  answered = false;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params =>{
@@ -42,13 +43,49 @@ export class QuizQuestionComponent {
       }
 
       const shuffledQuestion = [...filteredQuestions].sort(() => Math.random()- 0.5);
-      this.questions = shuffledQuestion.slice(0, 2) ;
+      this.questions = shuffledQuestion.slice(0, 5) ;
 
       this.currentIndex = 0;
       this.currentQuestion = this.questions[this.currentIndex];
       this.score = 0;
+      this.selectedOption = null;
+      this.answered = false;
+      this.setShuffledOptions();
     })
   }
+
+  setShuffledOptions(): void {
+    if(!this.currentQuestion){
+      this.shuffledOptions = [];
+      return;
+    }
+    const options = [
+      this.currentQuestion.option1,
+      this.currentQuestion.option2,
+      this.currentQuestion.option3,
+      this.currentQuestion.option4,
+    ];
+    this.shuffledOptions = this.shuffleArray(options);
+  }
+  
+
+  private shuffleArray(array: string[]):string[]{
+    return array
+      .map(value => ({ value, sort: Math.random()}))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({ value }) => value);
+  }
+
+  // getCurrentOptions(): string[] {
+  //   if(!this.currentQuestion) return [];
+  //   const options = [
+  //     this.currentQuestion.option1,
+  //     this.currentQuestion.option2,
+  //     this.currentQuestion.option3,
+  //     this.currentQuestion.option4
+  //   ]
+  //   return this.shuffleArray(options);
+  // }
 
   selectAnswer(option: string): void {
     if(this.answered) return; // Prevent multiple answers
@@ -58,7 +95,7 @@ export class QuizQuestionComponent {
     if (option === this.currentQuestion.answer) {
       this.score++;
     }
-    setTimeout(() => this.nextQuestion(), 1000);
+    setTimeout(() => this.nextQuestion(), 1300);
   }
 
   nextQuestion(): void {
@@ -68,6 +105,7 @@ export class QuizQuestionComponent {
 
     if(this.currentIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentIndex];
+      this.setShuffledOptions();
     } else {
       this.currentQuestion = null;
       alert(`Quiz finished: Your score: ${this.score}/${this.questions.length}`);
