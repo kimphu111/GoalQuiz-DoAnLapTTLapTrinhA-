@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/services/quiz/quiz.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/services/quiz/quiz.service.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2vIpvoxDAnYvJI5zOLNhhOPPD5N" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging master",
+    "last_opened_file_path": "D:/DoAnLapTrinhA/GoalQuiz",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.import",
+    "ts.external.directory.path": "C:\\Users\\ADMIN\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\DoAnLapTrinhA\GoalQuiz\server" />
+      <recent name="D:\DoAnLapTrinhA\GoalQuiz\client\src\app\pages\Quiz" />
+      <recent name="D:\DoAnLapTrinhA\GoalQuiz\client\src\app\pages\navbar-layout" />
+      <recent name="D:\DoAnLapTrinhA\GoalQuiz\client\src" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-WS-242.21829.149" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="" />
+      <created>1743842683310</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743842683310</updated>
+      <workItem from="1743842684545" duration="295000" />
+      <workItem from="1743842997233" duration="244000" />
+      <workItem from="1743843256183" duration="1409000" />
+      <workItem from="1743946132800" duration="3628000" />
+      <workItem from="1744079836776" duration="2794000" />
+      <workItem from="1744112668583" duration="7041000" />
+      <workItem from="1744120379063" duration="5013000" />
+      <workItem from="1744128187165" duration="1479000" />
+      <workItem from="1744185102448" duration="7000" />
+      <workItem from="1744187176372" duration="331000" />
+      <workItem from="1744339653550" duration="3369000" />
+      <workItem from="1744375043293" duration="6370000" />
+      <workItem from="1744425405285" duration="4466000" />
+      <workItem from="1744449686191" duration="3916000" />
+      <workItem from="1744466380732" duration="6368000" />
+      <workItem from="1744557275190" duration="5457000" />
+      <workItem from="1744690022590" duration="1331000" />
+      <workItem from="1744693843948" duration="888000" />
+      <workItem from="1744700874424" duration="7596000" />
+      <workItem from="1744723367052" duration="5045000" />
+      <workItem from="1744770692723" duration="3270000" />
+      <workItem from="1744944799517" duration="4153000" />
+      <workItem from="1745030838053" duration="3665000" />
+      <workItem from="1745039087989" duration="764000" />
+      <workItem from="1745210635520" duration="726000" />
+      <workItem from="1745214599887" duration="1796000" />
+      <workItem from="1745216440323" duration="12000" />
+      <workItem from="1745221870876" duration="1013000" />
+      <workItem from="1745243948974" duration="1083000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
