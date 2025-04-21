@@ -164,6 +164,7 @@ const refresh = asyncHandler((req, res) => {
       },
     },
     process.env.JWT_SECRET_KEY,
+
     {
       expiresIn: "15m",
       // no need header because JWT default is HS256-JWT
