@@ -170,7 +170,7 @@ export class HomeComponent implements OnInit {
   }
 
   onLogout() {
-    this.http.post('http://localhost:8000/api/users/logout', {}).subscribe({
+    this.http.post('http://localhost:8000/api/auth/logout', {}).subscribe({
       next: () => {
         if (this.isBrowser) {
           localStorage.removeItem('token');

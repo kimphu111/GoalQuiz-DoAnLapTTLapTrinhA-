@@ -11,7 +11,3 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'GoalQuiz';
 }
-
-//chay current o day de luu du lieu ng dung luu accesstoken ( khi nao can thi lay accesstoken de lay tt ng dung ra chu k luu tru)
-
-
