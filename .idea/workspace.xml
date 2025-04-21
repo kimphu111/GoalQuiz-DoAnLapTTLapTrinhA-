@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/server/src/app/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/app/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/controllers/userController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/databases/mysql/mysqlConnect.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/databases/mysql/mysqlConnect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/quizRoute/quizRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/quizRoute/quizRoute.js" afterDir="false" />
-    </list>
+    <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,7 +97,7 @@
       <workItem from="1745214599887" duration="1796000" />
       <workItem from="1745216440323" duration="12000" />
       <workItem from="1745221870876" duration="1013000" />
-      <workItem from="1745243948974" duration="538000" />
+      <workItem from="1745243948974" duration="1083000" />
     </task>
     <servers />
   </component>
