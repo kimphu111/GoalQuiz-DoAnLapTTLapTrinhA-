@@ -8,7 +8,4 @@ router.route('/quiz/getMediumQuiz').get(getMediumQuiz);
 router.route('/quiz/getHardQuiz').get(getHardQuiz);
 router.route('/quiz/getMixQuiz').get(getMixQuiz);
 
-
-
-
 module.exports = router;

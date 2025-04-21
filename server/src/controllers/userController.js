@@ -118,6 +118,11 @@ const login = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       accessToken,
+      refreshToken,
+      user: { username: user.username, email: user.email },
+      role: user.role,
+      token: accessToken, //
+      message: "Login successful",
     });
   } else {
     res.status(401);

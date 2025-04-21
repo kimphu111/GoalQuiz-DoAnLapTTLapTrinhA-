@@ -1,0 +1,89 @@
+<div class="profile-container">
+  <!-- Phần ảnh đại diện -->
+  <div class="avatar-section">
+    <img
+      [src]="profile.avatar || 'https://via.placeholder.com/100'"
+      alt="Avatar"
+      class="avatar"
+    />
+    <div class="avatar-buttons">
+      <button class="upload-button" (click)="onUpload()">Upload new pictures</button>
+      <button class="delete-button" (click)="onDelete()">Delete</button>
+    </div>
+  </div>
+
+  <!-- Form thông tin cá nhân -->
+  <form class="profile-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          [(ngModel)]="profile.firstName"
+          placeholder="Enter your First Name"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          [(ngModel)]="profile.lastName"
+          placeholder="Enter your Last Name"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="profile.email"
+        placeholder="Enter your Email Address"
+        required
+        readonly
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone number</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        [(ngModel)]="profile.phone"
+        placeholder="Enter your Phone number"
+      />
+    </div>
+
+    <div class="form-group location-group">
+      <label for="location">Location (không bắt buộc)</label>
+      <div class="location-input">
+        <span class="material-icons">place</span>
+        <input
+          type="text"
+          id="location"
+          name="location"
+          [(ngModel)]="profile.address"
+          placeholder=""
+        />
+      </div>
+    </div>
+
+    <!-- Nút Save -->
+    <div class="form-actions">
+      <button type="button" class="save-button" (click)="onSave()">Save</button>
+    </div>
+
+    <!-- Thông báo -->
+    <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+  </form>
+</div>
