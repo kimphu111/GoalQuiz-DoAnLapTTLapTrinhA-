@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const { response } = require("../app/app");
 
 //@desc Register User
 //@route POST /api/users/register
@@ -65,26 +66,12 @@ const login = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found!");
   }
-  //compare password with hashedpassword
+
   if (user && (await bcrypt.compare(password, user.password))) {
-    // generate access token
     const accessToken = jwt.sign(
-      {
-        user: {
-          username: user.username,
-          email: user.email,
-          id: user.id,
-        },
-      },
+      { user: { username: user.username, email: user.email, id: user.id } },
       process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: "15m",
-        // no need header because JWT default is HS256-JWT
-        // header: {
-        //     alg: "HS256",
-        //     typ: "JWT"
-        // }
-      }
+      { expiresIn: "15m" }
     );
 
     const refreshToken = jwt.sign(
@@ -93,27 +80,17 @@ const login = asyncHandler(async (req, res) => {
           username: user.username,
           email: user.email,
           id: user.id,
-          vip: user.vip,
-          role: user.role,
         },
       },
-      process.env.REFRESH_SECRET_KEY,
-      {
-        expiresIn: "30d",
-        // no need header because JWT default is HS256-JWT
-        // header: {
-        //     alg: "HS256",
-        //     typ: "JWT"
-        // }
-      }
+      process.env.JWT_REFRESH_SECRET_KEY,
+      { expiresIn: "30d" }
     );
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: true,
+      secure: false, // Đặt false cho localhost
       sameSite: "None",
-      // path: "/"
     });
 
     res.status(200).json({
@@ -121,16 +98,13 @@ const login = asyncHandler(async (req, res) => {
       refreshToken,
       user: { username: user.username, email: user.email },
       role: user.role,
-      token: accessToken, //
+      token: accessToken,
       message: "Login successful",
     });
   } else {
     res.status(401);
     throw new Error("email or password is not valid");
   }
-
-  //compare password with hashedpassword
-  res.status(201).json({ message: "login successful" });
 });
 
 //@desc Current User
