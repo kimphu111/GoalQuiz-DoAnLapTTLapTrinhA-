@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   daysInMonth: number[] = [];
   highlightedDays: number[] = [5, 10, 15, 20];
   isBrowser: boolean;
-  isDarkMode: boolean = false;
+  isDarkMode: boolean = true;
 
   isSidebarVisible = true;
   private months: string[] = [
@@ -74,9 +74,11 @@ export class HomeComponent implements OnInit {
     if (this.isBrowser) {
       this.username = localStorage.getItem('username') || 'Guest';
       this.email = localStorage.getItem('email') || 'Guest';
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('accessToken');
+      const role = localStorage.getItem('role');
+      this.isDarkMode = localStorage.getItem('theme') !== 'light';
       if (!token) {
-        this.router.navigate(['/auth']);
+        this.router.navigate(['/home']);
         return;
       }
       this.applyTheme();

@@ -9,16 +9,16 @@ $dark-text-secondary: #C8C8C8;
 $dark-highlight-color: #38a565;
 $dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
 $dark-calendar-day-text: #d1d5db;
-$dark-highlighted-day-bg: #ff9999;
+$dark-highlighted-day-bg: #ff9999; /* Màu hồng nhạt cho ngày được highlight */
 
 /* Mã màu cho light mode */
 $light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
 $light-text-color: #F5F5F5;
 $light-header-bg: rgba(255, 255, 255, 0.9);
 $light-sidebar-bg: #ffffff;
-$light-card-bg: #F5F5F5;
+$light-card-bg:  #F5F5F5;
 $light-card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
-$light-text-secondary: #737373;
+$light-text-secondary: #4f4f4f;
 $light-highlight-color: #38a565;
 $light-calendar-day-bg: #ffffff;
 $light-calendar-day-text: #000000;
@@ -37,13 +37,15 @@ $light-highlighted-day-bg: #ff9999;
   flex-direction: column;
   overflow: hidden;
   min-height: 100vh;
+  transition: background-color 5s, color 5s;
+
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 5px 30px;
   background: $dark-header-bg;
   position: fixed;
   top: 0;
@@ -54,6 +56,11 @@ $light-highlighted-day-bg: #ff9999;
     font-size: 1.6rem;
     font-weight: bold;
     color: $dark-highlight-color;
+    img{
+      width: 150px;
+      height: 50px;
+      object-fit: cover;
+    }
   }
 
   .greeting {
@@ -129,8 +136,9 @@ $light-highlighted-day-bg: #ff9999;
   bottom: 0;
   overflow-y: auto;
 
-  .menu-toggle {
+  .menu-toggle{
     display: none;
+
   }
 
   ul {
@@ -141,13 +149,21 @@ $light-highlighted-day-bg: #ff9999;
       margin-bottom: 8px;
 
       a {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         padding: 8px;
         color: #ffffff;
         text-decoration: none;
         font-size: 0.95rem;
         border-radius: 4px;
         transition: background-color 0.3s ease;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          fill: #ffffff;
+        }
 
         &.active,
         &:hover {
@@ -160,9 +176,153 @@ $light-highlighted-day-bg: #ff9999;
 }
 
 .content {
-  margin-left: 220px;
-  padding: 20px;
+  margin-left: 250px;
+  padding: 15px;
   flex: 1;
   overflow-y: auto;
-  height: calc(1024px - 60px);
+  margin-top: 140px;
+}
+
+
+
+.calendar-card {
+  background: $dark-card-gradient;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 0 25px;
+  position: relative;
+  overflow: hidden;
+  width: 900px;
+  height: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  &::before {
+    display: none;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-button {
+      background: transparent; /* Loại bỏ background */
+      border: none;
+      color: $dark-text-secondary;
+      font-size: 1.5rem; /* Tăng kích thước nút */
+      width: 30px;
+      height: 30px;
+      border-radius: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s ease;
+
+      &:hover {
+        background: transparent;
+        color: $dark-highlight-color;
+      }
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: $dark-highlight-color;
+  font-size: 1rem;
+}
+
+/* Light mode */
+:host-context(body.light-mode) {
+  .home-container {
+    background: $light-bg-gradient;
+    color: $light-text-color;
+  }
+
+  .header {
+    background: $light-header-bg;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .greeting {
+      color: #c2c2c2;
+    }
+
+    .user-info {
+      .username {
+        color: $light-highlight-color;
+      }
+
+      .notification-icon {
+        color: $light-text-secondary;
+      }
+
+      .theme-toggle-button {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+        border-radius: 10px;
+        border: none;
+
+        &:hover {
+          background-color: #2e8b4f;
+        }
+      }
+
+      .logout-button {
+        background-color: #ff4444;
+
+        &:hover {
+          background-color: #cc0000;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    background: $light-sidebar-bg;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+
+    ul li a {
+      color: $light-text-secondary;
+
+      svg{
+        fill: $light-text-secondary;
+      }
+
+      &.active,
+      &:hover {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+      }
+    }
+  }
+
+  .content-row {
+    .illustration-card {
+      background: $light-card-bg;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
 }

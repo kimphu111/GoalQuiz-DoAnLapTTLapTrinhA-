@@ -38,11 +38,12 @@ $light-calendar-day-bg: #ffffff;
 $light-calendar-day-text: #000000;
 $light-highlighted-day-bg: #ff9999;
 
-/* Giao diện chung */
 .home-container {
   width: 1300px;
   height: 1024px;
   margin: 0 auto;
+  top: 0;
+  left: 0;
   background: $dark-bg-gradient;
   color: $dark-text-color;
   font-family: 'Roboto', sans-serif;
@@ -51,144 +52,27 @@ $light-highlighted-day-bg: #ff9999;
   flex-direction: column;
   overflow: hidden;
   min-height: 100vh;
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: $dark-header-bg;
-  position: fixed;
-  top: 0;
-  width: 1240px;
-  z-index: 1000;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE và Edge */
 
-  .logo {
-    font-size: 1.6rem;
-    font-weight: bold;
-    color: $dark-highlight-color;
-  }
-
-  .greeting {
-      font-family: 'Leckerli One', cursive;
-      font-size: 24px;
-      color: #939393;
-  }
-
-  .theme-toggle-button {
-    background-color: #fdfdfd;
-    color: #fff;
-    border-radius: 10px;
-    border: none;
-
-    &:hover {
-      background-color: #b9b9b9;
-    }
-  }
-
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    .username {
-      font-size: 1rem;
-      font-weight: bold;
-      color: $dark-highlight-color;
-    }
-
-    .notification-icon {
-      font-size: 1rem;
-      cursor: pointer;
-      color: $dark-text-secondary;
-    }
-
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .logout-button {
-      padding: 6px 18px;
-      background-color: #ff4444;
-      border: none;
-      border-radius: 4px;
-      color: #fff;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-
-      &:hover {
-        background-color: #cc0000;
-      }
-    }
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
   }
 }
 
 .main-content {
   display: flex;
-  margin-top: 70px;
   height: calc(1024px - 60px);
+  overflow: hidden;
 }
-
-.sidebar {
-  width: 220px;
-  background: $dark-sidebar-bg;
-  padding: 15px;
-  position: fixed;
-  top: 60px;
-  bottom: 0;
-  overflow-y: auto;
-
-  .menu-toggle{
-    display: none;
-
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 8px;
-
-      a {
-        display: block;
-        padding: 8px;
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 0.95rem;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-
-        &.active,
-        &:hover {
-          background-color: $dark-highlight-color;
-          color: $dark-text-color;
-        }
-      }
-    }
-  }
-}
-
-.content {
-  margin-left: 270px;
-  padding: 15px;
-  flex: 1;
-  overflow-y: auto;
-  margin-top: 140px;
-
-}
-
 .content-row {
   display: flex;
   gap: 15px;
   margin-bottom: 35px;
   width: 1000px;
   margin-left: 25px;
+  overflow: hidden;
 
   .illustration-card {
     max-height: 240px;

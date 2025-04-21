@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Location, NgClass } from '@angular/common';
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
@@ -83,5 +82,4 @@ export class QuizQuestionComponent {
   getOptionLabel(index: number): string{
     return String.fromCharCode(65 + index);
   }
-
 }

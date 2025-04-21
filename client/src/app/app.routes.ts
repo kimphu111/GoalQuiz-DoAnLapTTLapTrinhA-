@@ -20,6 +20,7 @@ export const routes: Routes = [
     component: navbarLayoutComponent,
     canActivate: [AuthGuard],
     children: [
+      { path: 'home', component: HomeComponent },
       { path: 'quiz', component: AlbumQuizComponent },
       { path: 'points', component: PersonalPointsComponent },
       { path: 'profile', component: ProfileComponent },
@@ -27,7 +28,6 @@ export const routes: Routes = [
       { path: 'quiz-question', component: QuizQuestionComponent}
     ],
   },
-  { path: 'home', component: HomeComponent },
   { path: 'auth', component: AuthComponent },
   { path: '**', redirectTo: 'auth' }, // Xử lý 404
 ];
