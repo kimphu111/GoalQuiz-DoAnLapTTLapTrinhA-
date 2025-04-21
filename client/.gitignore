@@ -41,10 +41,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Local env files
-.env.local
-.env.development.local
-.env.test.local
-
-# local node_modules
-node_modules
+.idea

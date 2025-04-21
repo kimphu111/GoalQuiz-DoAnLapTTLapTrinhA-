@@ -25,7 +25,6 @@ export class AlbumQuizComponent {
     this.popupLevel = level;
 
   }
-
   closePopup(): void{
     this.isPopupVisible = false;
     this.popupLevel = '';
@@ -44,4 +43,5 @@ export class AlbumQuizComponent {
       this.router.navigate(['/quiz-question'], { queryParams: { level } });
     }
   }
+
 }

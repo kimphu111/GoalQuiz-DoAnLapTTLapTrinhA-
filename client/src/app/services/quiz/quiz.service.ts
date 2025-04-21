@@ -134,6 +134,6 @@ export class QuizService {
       options: ['Nigeria', 'Cameroon', 'Ghana', 'Senegal'],
       answer: 'Cameroon'
     }
-    
+
   ];
 }
