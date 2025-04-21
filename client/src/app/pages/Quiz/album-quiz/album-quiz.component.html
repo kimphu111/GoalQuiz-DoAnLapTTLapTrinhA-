@@ -1,1 +1,25 @@
-<p>album-quiz works!</p>
+<div id="wrapper">
+    <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
+    <div id="container">
+        <div class="level mixed-level" (click)="openPopup('mixed')"><b>Mixed-level</b></div>
+        <div class="level easy-level" (click)="openPopup('easy')">Level <b>Easy</b></div>
+        <div class="level medium-level" (click)="openPopup('medium')">Level <b>Medium</b> </div>
+        <div class="level difficult-level" (click)="openPopup('difficult')">Level <b>Difficult</b></div>
+
+        <!-- Popup -->
+        @if(isPopupVisible){
+        <div class="popup" >
+            <div class="popup-content">
+                <p>{{ popupLevel | titlecase }} Level</p>
+                <div class="popup-button">
+                    <button class="popup-btn play-btn" (click)="navigateToQuiz(popupLevel)">Play</button>
+                    <button class="popup-btn cancel-btn" (click)="closePopup()">Cancel</button>
+                </div>
+                <span class="close-btn" (click)="closePopup()">x</span>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+

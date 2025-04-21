@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { PersonalPointsComponent } from './pages/personal-points/personal-points.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { navbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
+import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,7 @@ export const routes: Routes = [
       { path: 'points', component: PersonalPointsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'review', component: ReviewComponent },
+      { path: 'quiz-question', component: QuizQuestionComponent}
     ],
   },
   { path: 'auth', component: AuthComponent },

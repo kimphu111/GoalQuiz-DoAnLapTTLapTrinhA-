@@ -1,0 +1,159 @@
+:host {
+    display: block;
+    overflow-x: hidden;
+}
+#wrapper{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    //background-color: white;
+    margin-left: 10px;
+    display: flex;
+    align-items: start;
+    overflow: hidden;
+}
+
+#container{
+    position: relative;
+    width: 80%;
+    height: 80%;
+    margin-left: 5%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    color: black;
+    font-size: 2rem;
+        .mixed-level{
+            background-color: #FAFFDD;
+        }
+        .easy-level{
+            background-color: #FED2D2;
+        }
+        .medium-level{
+            background-color: #C8FEFF;
+        }
+        .difficult-level{
+            background-color: #BDCBFF;
+        }
+        div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+}
+
+.back-icon{
+    margin-left: 40px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    &:hover{
+        filter: brightness(0.80);
+    }
+    &:active {
+        transform: scale(0.95); // Slightly scales down the element when clicked
+    }
+}
+
+.level{
+    border-radius: 15px;
+    transition: filter 0.3s ease;
+    cursor: pointer;
+        b{
+            margin-left: 6px;
+        }
+        &:hover{
+            filter: brightness(0.80);
+        }
+        &:active {
+            transform: scale(0.95); // Slightly scales down the element when clicked
+        }
+    user-select: none;
+
+}
+
+.popup{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 80, 13, 0.8); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.popup-content{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: space-between;
+    height: 200px;
+    font-size: 2.5rem;
+}
+
+.popup-button{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    padding: 0 20px;
+
+    button{
+        flex:1;
+        max-width: 150px;
+        padding: 15px 35px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .play-btn{
+        background-color: #FFF700;
+        &:hover{
+            filter: brightness(0.80);
+        }
+        &:active {
+            transform: scale(0.95); // Slightly scales down the element when clicked
+        }
+    }
+
+    .cancel-btn{
+        background-color: #D34747;
+        color: white;
+        &:hover{
+            filter: brightness(0.80);
+        }
+        &:active {
+            transform: scale(0.95); // Slightly scales down the element when clicked
+        }
+    }
+}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    padding: 10px;
+    transition: color 0.3s ease;
+        &:hover{
+            color: darkred;
+        }
+}
