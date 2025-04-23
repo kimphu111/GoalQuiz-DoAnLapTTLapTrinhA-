@@ -11,7 +11,7 @@ const router = require('../routes/mainRoute');
 const { mysqlConnect } = require('../databases/mysql/mysqlConnect');
 const errorHandler = require('../middlewares/errorHandler');
 
-// test
+const informationRoute = require('../routes/userRoute/userInformation/informationRoute');
 
 // config
 require('express-async-handler')
@@ -35,6 +35,7 @@ mysqlConnect();
 
 // init routes
 app.use('/',router);
+app.use('/api/users', informationRoute); // Đăng ký informationRoute với tiền tố /api/users
 
 // init error handler
 app.use(errorHandler);

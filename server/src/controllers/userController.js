@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const UserInformation = require("../models/userInformationModel");
 const { response } = require("../app/app");
 
 //@desc Register User
@@ -71,7 +72,7 @@ const login = asyncHandler(async (req, res) => {
     const accessToken = jwt.sign(
       { user: { username: user.username, email: user.email, id: user.id } },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "15m" }
+      { expiresIn: "1d" }
     );
 
     const refreshToken = jwt.sign(
@@ -153,4 +154,81 @@ const refresh = asyncHandler((req, res) => {
   });
 });
 
-module.exports = { login, register, current, logout, refresh };
+//@desc Get user information from UserInformation table
+//@route GET /api/users/information
+//@access private
+const getUserInformation = async (req, res) => {
+  try {
+    console.log('req.user:', req.user); // Log để kiểm tra req.user
+
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Không tìm thấy người dùng' });
+    }
+
+    // Lấy thông tin từ UserInformation
+    const userInfo = await UserInformation.findOne({ where: { email: user.email } });
+
+    res.status(200).json({
+      user: {
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        firstName: userInfo?.firstName || '',
+        lastName: userInfo?.lastName || '',
+        phone: userInfo?.phone || '',
+        address: userInfo?.address || '',
+      },
+    });
+  } catch (error) {
+    console.error('Lỗi khi lấy thông tin người dùng:', error);
+    res.status(500).json({ message: 'Lỗi server', error: error.message });
+  }
+};
+
+//@desc Update user information in UserInformation table
+//@route POST /api/users/userInformation
+//@access private
+const updateUserInformation = async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, address } = req.body;
+
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    const userId = req.user.id;
+
+    if (!firstName || !lastName || !email) {
+      return res.status(400).json({ message: 'First Name, Last Name, và Email là bắt buộc.' });
+    }
+
+    // Kiểm tra email có khớp với người dùng hiện tại
+    const user = await User.findByPk(userId);
+    if (!user || user.email !== email) {
+      return res.status(403).json({ message: 'Email không hợp lệ hoặc không có quyền.' });
+    }
+
+    // Cập nhật hoặc tạo mới trong UserInformation
+    await UserInformation.upsert({
+      firstName,
+      lastName,
+      email,
+      phone: phone || null,
+      address: address || null,
+    });
+
+    res.status(200).json({ message: 'Lưu thông tin thành công' });
+  } catch (error) {
+    console.error('Lỗi khi lưu thông tin:', error);
+    res.status(500).json({ message: 'Lỗi server khi lưu thông tin.', error: error.message });
+  }
+};
+
+module.exports = { login, register, current, logout, refresh, updateUserInformation, getUserInformation };
