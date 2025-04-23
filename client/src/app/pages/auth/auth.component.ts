@@ -49,37 +49,55 @@ export class AuthComponent {
     if (form.invalid) {
       this.message = 'Please fill in all fields.';
       this.isSuccess = false;
+      this.showSpinner = false;
       return;
     }
 
     const loginData = {
       email: this.email,
       password: this.password,
-      username: this.username,
-    };
+    }; // Bỏ username vì backend không yêu cầu
 
     this.http
-      .post('http://localhost:8000/api/auth/login', loginData)
+      .post('http://localhost:8000/api/users/login', loginData)
       .subscribe({
         next: (response: any) => {
-          this.message = response.message || 'Login successful!';
-          localStorage.setItem('accessToken', response.accessToken);
-          localStorage.setItem('refreshToken', response.refreshToken);
-          localStorage.setItem('username', response.user.username);
-          localStorage.setItem('email', response.user.email);
-          localStorage.setItem('role', response.role);
-          localStorage.setItem('token', response.token);
-          this.isSuccess = true;
+          console.log('Login response:', response); // Log response
+          try {
+            // Kiểm tra response có đầy đủ dữ liệu không
+            if (!response.accessToken || !response.user || !response.user.username || !response.user.email) {
+              throw new Error('Invalid response structure');
+            }
 
-          setTimeout(() => {
+            this.message = response.message || 'Login successful!';
+            localStorage.setItem('accessToken', response.accessToken);
+            localStorage.setItem('refreshToken', response.refreshToken || '');
+            localStorage.setItem('username', response.user.username);
+            localStorage.setItem('email', response.user.email);
+            localStorage.setItem('role', response.role || '');
+            localStorage.setItem('token', response.token || response.accessToken);
+            this.isSuccess = true;
+
+            setTimeout(() => {
+              console.log('Setting showSpinner to false and navigating to /home');
+              this.showSpinner = false;
+              this.router.navigate(['/home']).then(success => {
+                console.log('Navigation to /home:', success ? 'Successful' : 'Failed');
+              });
+            }, 1500);
+          } catch (error) {
+            console.error('Error processing response:', error);
+            this.message = 'Error processing login response.';
+            this.isSuccess = false;
             this.showSpinner = false;
-            this.router.navigate(['/home']);
-          }, 1500);
+          }
         },
         error: (error) => {
+          console.error('Login error:', error);
           this.message = error.error?.message || 'Login failed.';
           this.isSuccess = false;
           setTimeout(() => {
+            console.log('Reloading page due to error');
             this.showSpinner = false;
             window.location.reload();
           }, 1500);
@@ -108,7 +126,7 @@ export class AuthComponent {
     }
 
     this.http
-      .post('http://localhost:8000/api/auth/register', registerData)
+      .post('http://localhost:8000/api/users/register', registerData)
       .subscribe({
         next: (respone: any) => {
           this.message = respone.message || 'Register successful!';

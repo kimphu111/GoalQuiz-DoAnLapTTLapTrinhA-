@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     avatar: 'https://via.placeholder.com/100',
   };
 
-  private apiUrl = 'http://localhost:8000/api/auth/profile';
+  private apiUrl = 'http://localhost:8000/api/users/userInformation';
 
   constructor(
     private http: HttpClient,
@@ -71,8 +71,9 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
+    // Gọi endpoint GET /api/users/userInformation
     this.http
-      .get('http://localhost:8000/api/auth/profile', {
+      .get(this.apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .subscribe({
@@ -88,7 +89,7 @@ export class ProfileComponent implements OnInit {
             email: response.user?.email || '',
             phone: response.user?.phone || '',
             address: response.user?.address || '',
-            avatar: this.profile.avatar,
+            avatar: this.profile.avatar, // Giữ avatar hiện tại
           };
           if (this.isBrowser) {
             localStorage.setItem('username', this.user.username || 'Guest');
@@ -155,7 +156,7 @@ export class ProfileComponent implements OnInit {
       address: this.profile.address || null,
     };
 
-    // Gửi yêu cầu POST
+    // Gửi yêu cầu POST đến /api/users/information
     const token = this.authService.getAccessToken();
     this.http
       .post(this.apiUrl, userData, {
