@@ -1,20 +1,31 @@
 import { Component } from '@angular/core';
-import { Location, NgClass } from '@angular/common';
+import { Location, NgClass, CommonModule } from '@angular/common'; // Import CommonModule
 import { QuizService } from '../../../services/quiz/quiz.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+// Define Question interface
+interface Question {
+  id: number;
+  level: string;
+  question: string;
+  options: string[];
+  answer: string;
+  url?: string; // Optional url field
+}
+
 @Component({
   selector: 'app-quiz-question',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, CommonModule], // Add CommonModule to imports
   templateUrl: './quiz-question.component.html',
   styleUrl: './quiz-question.component.scss'
 })
 export class QuizQuestionComponent {
-
-  constructor(private location: Location,
-              private quizService: QuizService,
-              private router: Router,
-              private route: ActivatedRoute
+  constructor(
+    private location: Location,
+    private quizService: QuizService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   shuffledOptions: string[] = [];
@@ -28,13 +39,13 @@ export class QuizQuestionComponent {
   answered = false;
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params =>{
+    this.route.queryParams.subscribe(params => {
       this.level = params['level'] || '';
       let filteredQuestions;
 
-      if(this.level === 'mixed'){
+      if (this.level === 'mixed') {
         filteredQuestions = this.quizService.questions;
-      } else{
+      } else {
         filteredQuestions = this.quizService.questions.filter(q => q.level === this.level);
       }
 
@@ -88,11 +99,11 @@ export class QuizQuestionComponent {
   // }
 
   selectAnswer(option: string): void {
-    if(this.answered) return; // Prevent multiple answers
+    if (this.answered) return;
     this.selectedOption = option;
     this.answered = true;
 
-    if (option === this.currentQuestion.answer) {
+    if (option === this.currentQuestion?.answer) {
       this.score++;
     }
     setTimeout(() => this.nextQuestion(), 1300);
@@ -103,7 +114,7 @@ export class QuizQuestionComponent {
     this.selectedOption = null;
     this.answered = false;
 
-    if(this.currentIndex < this.questions.length) {
+    if (this.currentIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentIndex];
       this.setShuffledOptions();
     } else {
@@ -113,11 +124,15 @@ export class QuizQuestionComponent {
     }
   }
 
-  goBack(): void{
+  goBack(): void {
     this.location.back();
   }
-  
-  getOptionLabel(index: number): string{
+
+  getOptionLabel(index: number): string {
     return String.fromCharCode(65 + index);
+  }
+
+  trackOption(index: number, option: string): string {
+    return option;
   }
 }

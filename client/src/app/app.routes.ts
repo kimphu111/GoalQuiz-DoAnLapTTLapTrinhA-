@@ -8,6 +8,7 @@ import { PersonalPointsComponent } from './pages/personal-points/personal-points
 import { ReviewComponent } from './pages/review/review.component';
 import { navbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
 import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
+import {RankingComponent} from './pages/ranking/ranking.component';
 
 export const routes: Routes = [
   {
@@ -25,7 +26,8 @@ export const routes: Routes = [
       { path: 'points', component: PersonalPointsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'review', component: ReviewComponent },
-      { path: 'quiz-question', component: QuizQuestionComponent}
+      { path: 'quiz-question', component: QuizQuestionComponent},
+      { path: 'ranking', component: RankingComponent },
     ],
   },
   { path: 'auth', component: AuthComponent },

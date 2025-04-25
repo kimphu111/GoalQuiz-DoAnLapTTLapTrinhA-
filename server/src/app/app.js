@@ -18,7 +18,7 @@ require('express-async-handler')
 
 // init middlewares
 app.use(cors({
-    origin: ['http://localhost:3000','http://localhost:8000','http://localhost:4200','http://localhost:4000','http://localhost:8000'],
+    origin: ['http://localhost:3000','http://localhost:8000','http://localhost:4200','http://localhost:4000','http://localhost:8000','http://localhost:5500'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],

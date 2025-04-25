@@ -1,0 +1,135 @@
+.rankings-container {
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    .rank {
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .medal {
+        background: none;
+        padding: 0;
+        margin: 0;
+
+        img {
+          width: 90px;
+          height: auto;
+          margin-left: 10px;
+          object-fit: contain;
+          background: transparent;
+          border: none;
+        }
+      }
+      .default-rank {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #666;
+      }
+    }
+
+    .player-name {
+      flex: 1;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-align: center;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+    .score {
+      font-size: 1.2rem;
+      font-weight: bold;
+      background-color: #ffe082;
+      color: #333;
+      padding: 5px 15px;
+      border-radius: 20px;
+    }
+    .player-info{
+      display: flex;
+      align-items: center;
+      width: 900px;
+      height: 90px;
+      justify-content: space-between;
+      margin-left: 10px;
+
+      .player-name{
+        max-width: 200px;
+        height: 50px;
+        font-family: 'Leckerli One', cursive;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 500;
+        padding: 10px 20px;
+        border-radius: 63px;
+        align-content: center;
+      }
+    }
+
+    &.rank-1, &.rank-2, &.rank-3 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      .score{
+        font-family: 'Leckerli One', cursive;
+        color: #FFD000;
+        background-color: #FFFDBC;
+      }
+    }
+
+    &.rank-1 {
+      background-color: #3C7363;
+      .player-name {
+        background-color: #84D9BAC4;
+      }
+    }
+
+    &.rank-2 {
+      background: #888DF2;
+      .player-name {
+        background-color: #BBD8F2C4;
+      }
+    }
+
+    &.rank-3 {
+      background: #FFD2E4;
+      .player-name {
+        background-color: #F291A3;
+      }
+    }
+
+    &.rank-default {
+      background-color: #C8C8C8;
+      .player-name {
+        background-color: #787878;
+      }
+      .score{
+        background-color: #B1B1B1;
+        color: #fff;
+        font-family: "Leckerli One", cursive;
+      }
+    }
+  }
+}

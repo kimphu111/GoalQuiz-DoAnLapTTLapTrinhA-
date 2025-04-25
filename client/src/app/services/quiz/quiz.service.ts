@@ -63,6 +63,7 @@ export class QuizService {
       answer: 'Brazil',
       image: null
     },
+    // Add `url` to other questions as needed
     {
       id: 6,
       level: 'normal',
