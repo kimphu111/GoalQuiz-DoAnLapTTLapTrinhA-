@@ -13,7 +13,8 @@
       
       <div class="answer">
       @if (currentQuestion){
-          @for(option of currentQuestion.options; let i = $index; track option){
+          <!-- @for(option of currentQuestion.options; let i = $index; track option){ -->
+          @for(option of currentQuestion?.options; trackBy: trackOption){
               <button 
               [ngClass]="{
                   'correct': answered && option === currentQuestion.answer,
