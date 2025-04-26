@@ -31,6 +31,10 @@ const PlayerResult = sequelize.define('PlayerResult', {
   dateDoQuiz: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  quizLevel: {
+    type: DataTypes.ENUM('easy', 'medium', 'hard','mix'),
+    allowNull: false,
   }
 }, {
   tableName: 'playerresult',
