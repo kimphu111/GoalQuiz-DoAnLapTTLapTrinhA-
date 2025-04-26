@@ -67,7 +67,15 @@ const getTopUsersByLevel = asyncHandler(async (req, res) => {
         ]
       });
   
-      res.status(200).json(topUsers);
+      const formattedTopUsers = topUsers.map(user => ({
+        idUser: user.idUser,
+        totalScore: user.dataValues.totalScore,
+        username: user.User?.username,
+        email: user.User?.email
+      }));
+
+      res.status(200).json(formattedTopUsers);
+      
     } catch (error) {
       console.error('Error fetching top users:', error);
       res.status(500).json({ message: 'Internal server error' });
