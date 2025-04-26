@@ -1,5 +1,8 @@
 const { Sequelize } = require('sequelize');
 
+// console.log(process.env.MYSQL_NAME,process.env.MYSQL_USER,process.env.MYSQL_PASSWORD);
+
+
 const sequelize = new Sequelize(
     process.env.MYSQL_NAME,
     process.env.MYSQL_USER,

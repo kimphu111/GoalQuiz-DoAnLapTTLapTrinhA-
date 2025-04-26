@@ -11,14 +11,14 @@ const router = require('../routes/mainRoute');
 const { mysqlConnect } = require('../databases/mysql/mysqlConnect');
 const errorHandler = require('../middlewares/errorHandler');
 
-const informationRoute = require('../routes/userRoute/userInformation/informationRoute');
+// test
 
 // config
 require('express-async-handler')
 
 // init middlewares
 app.use(cors({
-    origin: ['http://localhost:3000','http://localhost:8000','http://localhost:4200','http://localhost:4000','http://localhost:8000','http://localhost:5500'],
+    origin: ['http://localhost:3000','http://localhost:8000','http://localhost:4200','http://localhost:4000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -35,7 +35,6 @@ mysqlConnect();
 
 // init routes
 app.use('/',router);
-app.use('/api/users', informationRoute); // Đăng ký informationRoute với tiền tố /api/users
 
 // init error handler
 app.use(errorHandler);

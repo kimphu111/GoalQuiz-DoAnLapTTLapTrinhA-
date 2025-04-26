@@ -2,8 +2,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
-const UserInformation = require("../models/userInformationModel");
-const { response } = require("../app/app");
 
 //@desc Register User
 //@route POST /api/users/register
@@ -67,12 +65,26 @@ const login = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("User not found!");
   }
-
+  //compare password with hashedpassword
   if (user && (await bcrypt.compare(password, user.password))) {
+    // generate access token
     const accessToken = jwt.sign(
-      { user: { username: user.username, email: user.email, id: user.id } },
+      {
+        user: {
+          username: user.username,
+          email: user.email,
+          id: user.id,
+        },
+      },
       process.env.JWT_SECRET_KEY,
-      { expiresIn: "1d" }
+      {
+        expiresIn: "15m",
+        // no need header because JWT default is HS256-JWT
+        // header: {
+        //     alg: "HS256",
+        //     typ: "JWT"
+        // }
+      }
     );
 
     const refreshToken = jwt.sign(
@@ -83,29 +95,35 @@ const login = asyncHandler(async (req, res) => {
           id: user.id,
         },
       },
-      process.env.JWT_REFRESH_SECRET_KEY,
-      { expiresIn: "30d" }
+      process.env.REFRESH_SECRET_KEY,
+      {
+        expiresIn: "30d",
+        // no need header because JWT default is HS256-JWT
+        // header: {
+        //     alg: "HS256",
+        //     typ: "JWT"
+        // }
+      }
     );
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: false, // Đặt false cho localhost
+      secure: true,
       sameSite: "None",
+      // path: "/"
     });
 
     res.status(200).json({
       accessToken,
-      refreshToken,
-      user: { username: user.username, email: user.email },
-      role: user.role,
-      token: accessToken,
-      message: "Login successful",
     });
   } else {
     res.status(401);
     throw new Error("email or password is not valid");
   }
+
+  //compare password with hashedpassword
+  res.status(201).json({ message: "login successful" });
 });
 
 //@desc Current User
@@ -154,81 +172,40 @@ const refresh = asyncHandler((req, res) => {
   });
 });
 
-//@desc Get user information from UserInformation table
-//@route GET /api/users/information
+//@desc userInfomation User
+//@route POST /api/users/userInfomation
 //@access private
-const getUserInformation = async (req, res) => {
-  try {
-    console.log('req.user:', req.user); // Log để kiểm tra req.user
+const postUserInformation = asyncHandler(async(req, res) => {
+  const {userId,userInformation} = req.body;
 
-    if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
-
-    const userId = req.user.id;
-    const user = await User.findByPk(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'Không tìm thấy người dùng' });
-    }
-
-    // Lấy thông tin từ UserInformation
-    const userInfo = await UserInformation.findOne({ where: { email: user.email } });
-
-    res.status(200).json({
-      user: {
-        username: user.username,
-        email: user.email,
-        role: user.role,
-        firstName: userInfo?.firstName || '',
-        lastName: userInfo?.lastName || '',
-        phone: userInfo?.phone || '',
-        address: userInfo?.address || '',
-      },
-    });
-  } catch (error) {
-    console.error('Lỗi khi lấy thông tin người dùng:', error);
-    res.status(500).json({ message: 'Lỗi server', error: error.message });
+  if(!userInformation.firstname&&!userInformation.lastname&&!userInformation.birthday&&!userInformation.phonenumber&&!userInformation.address&&!userInformation.avatar){
+    res.status(401);
+    throw Error("not thing change!")
   }
-};
 
-//@desc Update user information in UserInformation table
-//@route POST /api/users/userInformation
-//@access private
-const updateUserInformation = async (req, res) => {
+  const updateFields = {};
+  if (userInformation.firstname !== undefined) updateFields.firstname = userInformation.firstname;
+  if (userInformation.lastname !== undefined) updateFields.lastname = userInformation.lastname;
+  if (userInformation.birthday !== undefined) updateFields.birthday = userInformation.birthday;
+  if (userInformation.phonenumber !== undefined) updateFields.phonenumber = userInformation.phonenumber;
+  if (userInformation.avatar !== undefined) updateFields.avatar = userInformation.avatar;
+  if (userInformation.address !== undefined) updateFields.address = userInformation.address;
+
+
+
   try {
-    const { firstName, lastName, email, phone, address } = req.body;
-
-    if (!req.user) {
-      return res.status(401).json({ message: 'User not authenticated' });
-    }
-
-    const userId = req.user.id;
-
-    if (!firstName || !lastName || !email) {
-      return res.status(400).json({ message: 'First Name, Last Name, và Email là bắt buộc.' });
-    }
-
-    // Kiểm tra email có khớp với người dùng hiện tại
-    const user = await User.findByPk(userId);
-    if (!user || user.email !== email) {
-      return res.status(403).json({ message: 'Email không hợp lệ hoặc không có quyền.' });
-    }
-
-    // Cập nhật hoặc tạo mới trong UserInformation
-    await UserInformation.upsert({
-      firstName,
-      lastName,
-      email,
-      phone: phone || null,
-      address: address || null,
+    const [updatedRowsCount] = await User.update(updateFields, {
+      where: { id: userId }
     });
 
-    res.status(200).json({ message: 'Lưu thông tin thành công' });
+    if (updatedRowsCount === 0) {
+      return res.status(404).json({ message: 'User not found or nothing to update' });
+    }
+    res.status(200).json({ message: 'User updated successfully' });
   } catch (error) {
-    console.error('Lỗi khi lưu thông tin:', error);
-    res.status(500).json({ message: 'Lỗi server khi lưu thông tin.', error: error.message });
+    console.error('Update error:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
-};
+});
 
-module.exports = { login, register, current, logout, refresh, updateUserInformation, getUserInformation };
+module.exports = { login, register, current, logout, refresh, postUserInformation };
