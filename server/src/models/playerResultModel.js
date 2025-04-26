@@ -1,5 +1,7 @@
 const { DataTypes, UUIDV4 } = require('sequelize');
 const { sequelize } = require('../databases/mysql/mysqlConnect');
+const User = require('./userModel');
+
 
 const PlayerResult = sequelize.define('PlayerResult', {
   id: {
@@ -40,5 +42,8 @@ const PlayerResult = sequelize.define('PlayerResult', {
   tableName: 'playerresult',
   timestamps: true,
 });
+
+PlayerResult.belongsTo(User, { foreignKey: 'idUser', targetKey: 'id' });
+
 
 module.exports = PlayerResult;

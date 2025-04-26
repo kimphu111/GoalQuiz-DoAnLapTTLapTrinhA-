@@ -59,15 +59,15 @@ const getTopUsersByLevel = asyncHandler(async (req, res) => {
         group: ['idUser'],
         order: [[literal('totalScore'), 'DESC']],
         limit: 5,
-        // include: [
-        //   {
-        //     model: User,
-        //     attributes: ['email', 'username']
-        //   }
-        // ]
+        include: [
+          {
+            model: User,
+            attributes: ['email', 'username']
+          }
+        ]
       });
   
-      res.json(topUsers);
+      res.status(200).json(topUsers);
     } catch (error) {
       console.error('Error fetching top users:', error);
       res.status(500).json({ message: 'Internal server error' });
