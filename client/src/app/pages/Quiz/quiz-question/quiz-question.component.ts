@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Location, NgClass, CommonModule } from '@angular/common'; // Import CommonModule
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of } from 'rxjs';
 
 // Define Question interface
@@ -19,10 +19,18 @@ interface RawQuestion {
 	score: number;
 }
 
+//Tạo giá trị ổn định cho trackBy
+//Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
+interface Option{
+    label: string;
+    text: string;
+}
+
 interface QuizQuestion extends RawQuestion {
-	options: string[];
+	options: Option[];
 	answer: string;
 }
+
 
 @Component({
   selector: 'app-quiz-question',
@@ -41,6 +49,7 @@ export class QuizQuestionComponent {
 	score: number = 0;
 	selectedOption: string | null = null;
 	answered: boolean = false;
+    questionResults: {isCorrect: boolean}[] = [];
 	
     constructor(
         private location: Location,
@@ -82,37 +91,32 @@ export class QuizQuestionComponent {
             .get<any>(apiUrl)
             .pipe(
                 catchError((err) => {
-                    alert('Error fetching quiz!');
+                    console.log('Error fetching quiz!');
                     this.router.navigate(['/quiz']);
                     return of(null);
                 })
             )
             .subscribe((res) => {
-                console.log('Quiz data:', res);
+                //console.log('Quiz data:', res);
                 if(!res || !res.success || !res.data){
-                    alert('No quiz data received!');
+                    console.log('No quiz data received!');
                     this.router.navigate(['/quiz']);
                     return;
                 }
 
                 this.questions = res.data.map((q: RawQuestion) => {
-                    const optionMap = {
-                        A: q.answerA,
-                        B: q.answerB,
-                        C: q.answerC,
-                        D: q.answerD,
-                    };
 
-                    const options = this.shuffleArray([
-                        q.answerA,
-                        q.answerB,
-                        q.answerC,
-                        q.answerD,
-                    ])
+                    const options: Option[] = this.shuffleArray([
+                        { label: 'A', text: q.answerA },
+                        { label: 'B', text: q.answerB },
+                        { label: 'C', text: q.answerC },
+                        { label: 'D', text: q.answerD }
+                    ]);
+                    
                     return {
                         ...q,
                         options,
-                        answer: optionMap[q.correctAnswer],
+                        answer: q.correctAnswer,
                     };
                 });
 
@@ -134,9 +138,32 @@ export class QuizQuestionComponent {
         this.selectedOption = option;
         this.answered = true;
 
-        if(option === this.currentQuestion.answer){
+        const isCorrect = option === this.currentQuestion.answer;
+        this.questionResults[this.currentIndex] = {isCorrect};
+
+        if(isCorrect){
             this.score++;
         }
+
+        const token = localStorage.getItem('accessToken');
+        const httpOptions = token
+            ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }// Xác thực người dùng
+            : {};
+
+        this.http.post('http://localhost:8000/api/play/postPlayerResult', {
+            idQuestion: this.currentQuestion.id,
+            chooseAnswer: option,
+            dateDoQuiz: new Date().toISOString(),
+            quizLevel: this.level
+        }, httpOptions).pipe(
+            catchError((err) => {
+              console.error('Gửi kết quả thất bại:', err);
+              return of(null); // Trả về observable null để tiếp tục thực thi
+            })
+        ).subscribe({
+            next: (res => console.log('Kết quả đã gửi:', res)),
+            error: (err) => console.error('Gửi kết quả thất bại:', err)
+        });
 
         setTimeout(() => this.nextQuestion(), 1300);
     }
@@ -148,11 +175,18 @@ export class QuizQuestionComponent {
             this.setCurrentQuestion();
         }else{
             alert(`Quiz finished! Your score: ${this.score}/${this.questions.length}`);
-            this.router.navigate(['/quiz']);
+            const userId = localStorage.getItem('userId');
+
+            console.log('questionResults:', this.questionResults);
+            console.log('userId:', userId, 'quizLevel:', this.level);
+
+            this.router.navigate(['/quiz-result'], {
+                state: {userId: userId, quizLevel: this.level, questionResults: this.questionResults}
+            });
         }
     }
 
-    private shuffleArray(array: string[]):string[]{
+    private shuffleArray<T>(array: T[]): T[]{
     return array
         .map(value => ({ value, sort: Math.random()}))
         .sort((a, b) => a.sort - b.sort)
@@ -167,7 +201,4 @@ export class QuizQuestionComponent {
         return String.fromCharCode(65 + index);
     }
 
-    trackOption(index: number, option: string): string {
-        return option;
-    }
 }

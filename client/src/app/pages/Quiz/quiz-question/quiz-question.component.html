@@ -13,21 +13,21 @@
       
       <div class="answer">
       @if (currentQuestion){
-          <!-- @for(option of currentQuestion.options; let i = $index; track option){ -->
-          @for(option of currentQuestion?.options; trackBy: trackOption){
+          <!-- @for(option of currentQuestion.options; track option trackOption){ -->
+          @for(option of currentQuestion.options; track option.label; let i = $index){
               <button 
               [ngClass]="{
-                  'correct': answered && option === currentQuestion.answer,
-                  'wrong': answered && option === selectedOption && option !== currentQuestion.answer
+                  'correct': answered && option.label === currentQuestion.answer,
+                  'wrong': answered && option.label === selectedOption && option.label !== currentQuestion.answer
               }"
               [disabled]="answered"
-              (click)="selectAnswer(option)">
+              (click)="selectAnswer(option.label)">
               <span class="option-label">{{ getOptionLabel(i)}}.  </span>
-              <span class="answer-text">{{option}}</span>
-              @if (answered && option === currentQuestion.answer) {
+              <span class="answer-text">{{option.text}}</span>
+              @if (answered && option.label === currentQuestion.answer) {
                   <span class="material-symbols-outlined correct-icon" ><b>check</b></span>
                 }
-                @if (answered && option === selectedOption && option !== currentQuestion.answer) {
+                @if (answered && option.label === selectedOption && option.label !== currentQuestion.answer) {
                   <span class="material-symbols-outlined wrong-icon" ><b>close</b></span>
                 }
               </button>
