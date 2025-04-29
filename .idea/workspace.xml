@@ -5,45 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/GoalQuizClient.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/note.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/readme.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/app/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/constrants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/quizController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/testController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/controllers/userController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/databases/mysql/mysqlConnect.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/middlewares/auth.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/middlewares/errorHandler.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/middlewares/validateAccessToken.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/middlewares/validateRefreshToken.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/quizModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/models/userModel.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/mainRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/quizRoute/quizRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/testRoute/testRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/currentRoute/currentRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/loginRoute/loginRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/logoutRoute/logoutRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/refreshCurrentRoute/refreshCurrentRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/registerRoute/registerRoute.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/routes/userRoute/userRoute.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +107,7 @@
       <workItem from="1745316378409" duration="1350000" />
       <workItem from="1745410932595" duration="7118000" />
       <workItem from="1745558861796" duration="2234000" />
-      <workItem from="1745897829330" duration="3134000" />
+      <workItem from="1745897829330" duration="3632000" />
     </task>
     <servers />
   </component>
