@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/GoalQuizClient.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.env" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/note.txt" beforeDir="false" />
@@ -132,7 +142,9 @@
       <workItem from="1745243948974" duration="1083000" />
       <workItem from="1745249279206" duration="1847000" />
       <workItem from="1745316378409" duration="1350000" />
-      <workItem from="1745410932595" duration="6676000" />
+      <workItem from="1745410932595" duration="7118000" />
+      <workItem from="1745558861796" duration="2234000" />
+      <workItem from="1745897829330" duration="3134000" />
     </task>
     <servers />
   </component>
