@@ -90,15 +90,28 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .chart-card {
-    max-height: 240px;
+    max-height: 280px;
     max-width: 500px;
     background: $dark-card-bg;
     border-radius: 8px;
-    padding: 15px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     will-change: transform, box-shadow;
     margin-right: 25px;
     margin-left: 15px;
+
+    h3{
+      margin: 5px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
 
     &:hover {
       transform: translateY(-4px);

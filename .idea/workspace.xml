@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/client/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/services/quiz/quiz.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/services/quiz/quiz.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,23 +34,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging master",
-    "last_opened_file_path": "D:/DoAnLapTrinhA/GoalQuiz",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.import",
-    "ts.external.directory.path": "C:\\Users\\ADMIN\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/DoAnLapTrinhA/GoalQuizClient&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\DoAnLapTrinhA\\GoalQuizClient\\client\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\DoAnLapTrinhA\GoalQuiz\server" />
@@ -108,6 +103,11 @@
       <workItem from="1745216440323" duration="12000" />
       <workItem from="1745221870876" duration="1013000" />
       <workItem from="1745243948974" duration="1083000" />
+      <workItem from="1745249279206" duration="1847000" />
+      <workItem from="1745316378409" duration="1350000" />
+      <workItem from="1745410932595" duration="7118000" />
+      <workItem from="1745558861796" duration="2234000" />
+      <workItem from="1745897829330" duration="3632000" />
     </task>
     <servers />
   </component>

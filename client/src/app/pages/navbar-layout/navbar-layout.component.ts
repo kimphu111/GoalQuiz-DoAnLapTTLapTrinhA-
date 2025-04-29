@@ -12,15 +12,13 @@ import {AuthService} from '../../services/auth.service';
   imports: [NgClass, RouterLink, RouterOutlet, RouterLinkActive],
   standalone: true
 })
-export class navbarLayoutComponent {
-  username: string = '';
+export class NavbarLayoutComponent {
+  username: string = 'Guest';
   email: string = '';
   isDarkMode: boolean = false;
   isSidebarVisible: boolean = true;
   isLoading: boolean = false;
   isBrowser: boolean;
-
-
 
   constructor(
     private http: HttpClient,
@@ -32,18 +30,22 @@ export class navbarLayoutComponent {
     this.loadTheme();
   }
 
-
   ngOnInit() {
     this.isLoading = true;
 
     if (this.isBrowser) {
-      this.username = localStorage.getItem('username') || 'Guest';
-      this.email = localStorage.getItem('email') || 'Guest';
-      const token = localStorage.getItem('token');
-      if (!token) {
-        this.router.navigate(['/home']);
+      if (!this.authService.isLoggedIn()) {
+        this.router.navigate(['/login']);
+        this.isLoading = false;
         return;
       }
+
+      // Lấy username từ localStorage (giá trị tạm thời)
+      this.username = localStorage.getItem('username') || 'Guest';
+      this.email = localStorage.getItem('email') || '';
+
+      // Gọi API để lấy dữ liệu người dùng
+      this.fetchUserProfile();
     }
 
     setTimeout(() => {
@@ -52,25 +54,41 @@ export class navbarLayoutComponent {
   }
 
   private fetchUserProfile() {
-    this.http.get('http://localhost:8000/api/profile', {
-      headers: { Authorization: `Bearer ${this.authService.getAccessToken()}` }
-    }).subscribe({
-      next: (response: any) => {
-        this.username = response.user.username || response.user.email || 'Guest';
-        localStorage.setItem('username', this.username);
-        console.log('Username from API:', this.username);
-      },
-      error: (error: any) => {
-        console.error('Lỗi lấy thông tin người dùng:', error);
-        this.username = 'Guest';
-      }
-    });
+    const token = this.authService.getAccessToken();
+    if (!token) {
+      this.username = 'Guest';
+      this.router.navigate(['/login']);
+      this.isLoading = false;
+      return;
+    }
+
+    this.http
+      .get('http://localhost:8000/api/users/current', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .subscribe({
+        next: (response: any) => {
+          this.username = response.user.username || response.user.email || 'Guest';
+          this.email = response.user.email || '';
+          if (this.isBrowser) {
+            localStorage.setItem('username', this.username);
+            localStorage.setItem('email', this.email);
+          }
+          console.log('Username from API:', this.username);
+          this.isLoading = false;
+        },
+        error: (error: any) => {
+          console.error('Lỗi lấy thông tin người dùng:', error);
+          this.username = 'Guest';
+          this.isLoading = false;
+          this.router.navigate(['/login']);
+        },
+      });
   }
 
   private loadTheme() {
     if (this.isBrowser) {
       const savedTheme = localStorage.getItem('theme');
-      console.log('savedTheme:', savedTheme);
       this.isDarkMode = savedTheme !== 'light';
       this.applyTheme();
     }
@@ -95,7 +113,10 @@ export class navbarLayoutComponent {
   }
 
   onLogout() {
-    // Logic đăng xuất
+    this.authService.logout();
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
 }

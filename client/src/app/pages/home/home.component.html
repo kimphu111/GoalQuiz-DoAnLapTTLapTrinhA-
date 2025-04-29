@@ -8,13 +8,15 @@
           <img src="assets/illustrationPiictureHome.png" alt="Minh họa Quiz" loading="lazy" />
           <p>QUIZ BÓNG ĐÁ</p>
         </div>
-        <!-- Card biểu đồ - Chỉ render trên client -->
+        <!-- Card biểu đồ -->
         <div class="chart-card" *ngIf="isBrowser">
-          <canvas baseChart
-                  [data]="barChartData"
-                  [options]="barChartOptions"
-                  type="bar">
-          </canvas>
+          <h3>Top 4 Người Chơi </h3>
+          <canvas
+            baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            type="bar"
+          ></canvas>
         </div>
       </div>
 
@@ -30,16 +32,14 @@
             *ngFor="let day of daysInMonth"
             class="calendar-day"
             [ngClass]="{
-            'highlighted': highlightedDays.includes(day),
-            'today': isToday(day)
-             }"
-            >
-            <!-- Chỉ hiển thị nếu day không phải là 0 -->
+              'highlighted': highlightedDays.includes(day),
+              'today': isToday(day)
+            }"
+          >
             {{ day !== 0 ? day : '' }}
           </div>
         </div>
       </div>
-
     </section>
   </div>
 
