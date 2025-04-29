@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     avatar: 'https://via.placeholder.com/100',
   };
 
-  private apiUrl = 'http://localhost:8000/api/users/userInformation';
+  private apiUrl = 'http://localhost:8000/api/users/current';
 
   constructor(
     private http: HttpClient,
@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    // Gọi endpoint GET /api/users/userInformation
+    // Gọi endpoint GET /api/users/current
     this.http
       .get(this.apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
@@ -141,7 +141,7 @@ export class ProfileComponent implements OnInit {
     if (!this.isBrowser) return;
 
     // Kiểm tra các trường bắt buộc
-    if (!this.profile.firstName || !this.profile.lastName || !this.profile.email) {
+    if (!this.profile.firstName || !this.profile.lastName) {
       this.errorMessage = 'Vui lòng điền đầy đủ First Name, Last Name và Email.';
       this.successMessage = null;
       return;
