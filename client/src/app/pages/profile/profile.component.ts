@@ -154,6 +154,7 @@ export class ProfileComponent implements OnInit {
       email: this.profile.email,
       phone: this.profile.phone || null,
       address: this.profile.address || null,
+      avatar: this.profile.avatar || null,
     };
 
     // Gửi yêu cầu POST đến /api/users/information

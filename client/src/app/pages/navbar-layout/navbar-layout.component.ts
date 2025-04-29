@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   imports: [NgClass, RouterLink, RouterOutlet],
   standalone: true,
 })
-export class navbarLayoutComponent {
+export class NavbarLayoutComponent {
   username: string = 'Guest';
   email: string = '';
   isDarkMode: boolean = false;
@@ -88,7 +88,12 @@ export class navbarLayoutComponent {
   private loadTheme() {
     if (this.isBrowser) {
       const savedTheme = localStorage.getItem('theme');
-      this.isDarkMode = savedTheme !== 'light';
+      if (!savedTheme) {
+        localStorage.setItem('theme', 'light');
+        this.isDarkMode = false;
+      } else {
+        this.isDarkMode = savedTheme !== 'light';
+      }
       this.applyTheme();
     }
   }
@@ -96,7 +101,7 @@ export class navbarLayoutComponent {
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     if (this.isBrowser) {
-      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+      localStorage.setItem('theme', !this.isDarkMode ? 'light' : 'dark');
     }
     this.applyTheme();
   }

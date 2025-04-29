@@ -6,7 +6,7 @@ import { AlbumQuizComponent } from './pages/Quiz/album-quiz/album-quiz.component
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PersonalPointsComponent } from './pages/personal-points/personal-points.component';
 import { ReviewComponent } from './pages/review/review.component';
-import { navbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
+import { NavbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
 import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
 import {RankingComponent} from './pages/ranking/ranking.component';
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    component: navbarLayoutComponent,
+    component: NavbarLayoutComponent,
     canActivate: [AuthGuard],
     children: [
       { path: 'home', component: HomeComponent },
