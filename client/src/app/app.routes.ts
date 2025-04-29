@@ -9,6 +9,7 @@ import { ReviewComponent } from './pages/review/review.component';
 import { NavbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
 import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
 import {RankingComponent} from './pages/ranking/ranking.component';
+import { QuizResultComponent } from './pages/Quiz/quiz-result/quiz-result.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
       { path: 'review', component: ReviewComponent },
       { path: 'quiz-question', component: QuizQuestionComponent},
       { path: 'ranking', component: RankingComponent },
+      { path: 'quiz-result', component: QuizResultComponent }
     ],
   },
   { path: 'auth', component: AuthComponent },

@@ -1,15 +1,16 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { isPlatformBrowser, NgClass } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../services/auth.service';
+import {Component, Inject, PLATFORM_ID} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {isPlatformBrowser, NgClass} from '@angular/common';
+import {HttpClient} from '@angular/common/http';
+import {AuthService} from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-layout',
   templateUrl: './navbar-layout.component.html',
   styleUrls: ['./navbar-layout.component.scss'],
-  imports: [NgClass, RouterLink, RouterOutlet],
-  standalone: true,
+  imports: [NgClass, RouterLink, RouterOutlet, RouterLinkActive],
+  standalone: true
 })
 export class NavbarLayoutComponent {
   username: string = 'Guest';

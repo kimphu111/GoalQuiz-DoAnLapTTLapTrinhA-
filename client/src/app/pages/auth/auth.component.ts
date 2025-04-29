@@ -4,6 +4,8 @@ import {FormsModule, NgForm} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { response } from 'express';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-auth',
@@ -57,6 +59,10 @@ export class AuthComponent {
       email: this.email,
       password: this.password,
     }; // Bỏ username vì backend không yêu cầu
+    console.log('[Login] Sending login request', loginData);
+
+    console.log('[Login] Form invalid:', form.invalid);
+    console.log('[Login] Form value:', form.value);
 
     this.http
       .post('http://localhost:8000/api/users/login', loginData)
@@ -65,17 +71,26 @@ export class AuthComponent {
           console.log('Login response:', response); // Log response
           try {
             // Kiểm tra response có đầy đủ dữ liệu không
-            if (!response.accessToken || !response.user || !response.user.username || !response.user.email) {
+            if (!response.accessToken) {
               throw new Error('Invalid response structure');
             }
 
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
-            localStorage.setItem('username', response.user.username);
-            localStorage.setItem('email', response.user.email);
+            // localStorage.setItem('username', response.user.username);
+            // localStorage.setItem('email', response.user.email);
             localStorage.setItem('role', response.role || '');
             localStorage.setItem('token', response.token || response.accessToken);
+
+            const helper = new JwtHelperService();
+            const decoded: any = helper.decodeToken(response.accessToken);
+            console.log('decode: ', decoded)
+            if(decoded && decoded.user) {
+              localStorage.setItem('userId', decoded.user.id);
+              localStorage.setItem('username', decoded.user.username);
+              localStorage.setItem('email', decoded.user.email);
+            }
             this.isSuccess = true;
 
             setTimeout(() => {
@@ -103,7 +118,7 @@ export class AuthComponent {
           }, 1500);
         },
       });
-  }
+    }
 
 
   onRegister(event: Event, registerForm: any) {

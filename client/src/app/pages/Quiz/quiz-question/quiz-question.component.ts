@@ -1,17 +1,36 @@
 import { Component } from '@angular/core';
 import { Location, NgClass, CommonModule } from '@angular/common'; // Import CommonModule
-import { QuizService } from '../../../services/quiz/quiz.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { of } from 'rxjs';
 
 // Define Question interface
-interface Question {
-  id: number;
-  level: string;
-  question: string;
-  options: string[];
-  answer: string;
-  url?: string; // Optional url field
+interface RawQuestion {
+	id: string;
+	level: 'easy' | 'medium' | 'hard';
+	question: string;
+	answerA: string;
+	answerB: string;
+	answerC: string;
+	answerD: string;
+	correctAnswer: 'A' | 'B' | 'C' | 'D';
+	image?: string;
+	score: number;
 }
+
+//Tạo giá trị ổn định cho trackBy
+//Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
+interface Option{
+    label: string;
+    text: string;
+}
+
+interface QuizQuestion extends RawQuestion {
+	options: Option[];
+	answer: string;
+}
+
 
 @Component({
   selector: 'app-quiz-question',
@@ -20,81 +39,166 @@ interface Question {
   templateUrl: './quiz-question.component.html',
   styleUrl: './quiz-question.component.scss'
 })
+
+
 export class QuizQuestionComponent {
-  constructor(
-    private location: Location,
-    private quizService: QuizService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+	questions: QuizQuestion[] = [];
+	currentQuestion: QuizQuestion | null = null;
+	currentIndex: number = 0;
+	level: string = '';
+	score: number = 0;
+	selectedOption: string | null = null;
+	answered: boolean = false;
+    questionResults: {isCorrect: boolean}[] = [];
+	
+    constructor(
+        private location: Location,
+        private router: Router,
+        private route: ActivatedRoute,
+        private http: HttpClient,
+    ) {}
 
-  questions: Question[] = [];
-  currentQuestion: Question | null = null;
-  currentIndex: number = 0;
-  level: string = '';
-  score: number = 0;
-
-  selectedOption: string | null = null;
-  answered: boolean = false;
-
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.level = params['level'] || '';
-      let filteredQuestions: Question[];
-
-      if (this.level === 'mixed') {
-        filteredQuestions = this.quizService.questions;
-      } else {
-        filteredQuestions = this.quizService.questions.filter(q => q.level === this.level);
-      }
-
-      if (filteredQuestions.length === 0) {
-        console.log('No questions found for level:', this.level);
-      }
-
-      const shuffledQuestions = [...filteredQuestions].sort(() => Math.random() - 0.5);
-      this.questions = shuffledQuestions.slice(0, 5);
-
-      this.currentIndex = 0;
-      this.currentQuestion = this.questions[this.currentIndex];
-      this.score = 0;
-    });
-  }
-
-  selectAnswer(option: string): void {
-    if (this.answered) return;
-    this.selectedOption = option;
-    this.answered = true;
-
-    if (option === this.currentQuestion?.answer) {
-      this.score++;
+    ngOnInit(): void {
+        this.route.queryParams.subscribe(params => {
+            this.level = params['level'] || 'easy';
+            this.fetchQuiz(this.level);
+        });
     }
-    setTimeout(() => this.nextQuestion(), 1000);
-  }
 
-  nextQuestion(): void {
-    this.currentIndex++;
-    this.selectedOption = null;
-    this.answered = false;
+    fetchQuiz(level: string): void{
+        let apiUrl = '';
 
-    if (this.currentIndex < this.questions.length) {
-      this.currentQuestion = this.questions[this.currentIndex];
-    } else {
-      this.currentQuestion = null;
-      alert(`Quiz finished: Your score: ${this.score}/${this.questions.length}`);
-      this.router.navigate(['/quiz']);
+        switch(level){
+            case 'easy':
+                apiUrl = 'http://localhost:8000/api/quiz/getEasyQuiz';
+                break;
+            case 'medium':
+                apiUrl = 'http://localhost:8000/api/quiz/getMediumQuiz';
+                break;
+            case 'difficult':
+                apiUrl = 'http://localhost:8000/api/quiz/getHardQuiz';
+                break;
+            case 'mixed':
+                apiUrl = 'http://localhost:8000/api/quiz/getMixQuiz';
+                break;
+            default:
+                alert('Invalid quiz level!');
+                this.router.navigate(['/quiz']);
+                return;
+        }
+
+        this.http
+            .get<any>(apiUrl)
+            .pipe(
+                catchError((err) => {
+                    console.log('Error fetching quiz!');
+                    this.router.navigate(['/quiz']);
+                    return of(null);
+                })
+            )
+            .subscribe((res) => {
+                //console.log('Quiz data:', res);
+                if(!res || !res.success || !res.data){
+                    console.log('No quiz data received!');
+                    this.router.navigate(['/quiz']);
+                    return;
+                }
+
+                this.questions = res.data.map((q: RawQuestion) => {
+
+                    const options: Option[] = this.shuffleArray([
+                        { label: 'A', text: q.answerA },
+                        { label: 'B', text: q.answerB },
+                        { label: 'C', text: q.answerC },
+                        { label: 'D', text: q.answerD }
+                    ]);
+                    
+                    return {
+                        ...q,
+                        options,
+                        answer: q.correctAnswer,
+                    };
+                });
+
+                this.currentIndex = 0;
+                this.score = 0;
+                this.setCurrentQuestion();
+            });
     }
-  }
 
-  goBack(): void {
-    this.location.back();
-  }
+    setCurrentQuestion(): void{
+        this.currentQuestion = this.questions[this.currentIndex];
+        this.selectedOption = null;
+        this.answered = false;
+    }
 
-  getOptionLabel(index: number): string {
-    return String.fromCharCode(65 + index);
-  }
+    selectAnswer(option: string): void{
+        if(this.answered || !this.currentQuestion) return;
 
-  trackOption(index: number, option: string): string {
-    return option;
-  }
+        this.selectedOption = option;
+        this.answered = true;
+
+        const isCorrect = option === this.currentQuestion.answer;
+        this.questionResults[this.currentIndex] = {isCorrect};
+
+        if(isCorrect){
+            this.score++;
+        }
+
+        const token = localStorage.getItem('accessToken');
+        const httpOptions = token
+            ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }// Xác thực người dùng
+            : {};
+
+        this.http.post('http://localhost:8000/api/play/postPlayerResult', {
+            idQuestion: this.currentQuestion.id,
+            chooseAnswer: option,
+            dateDoQuiz: new Date().toISOString(),
+            quizLevel: this.level
+        }, httpOptions).pipe(
+            catchError((err) => {
+              console.error('Gửi kết quả thất bại:', err);
+              return of(null); // Trả về observable null để tiếp tục thực thi
+            })
+        ).subscribe({
+            next: (res => console.log('Kết quả đã gửi:', res)),
+            error: (err) => console.error('Gửi kết quả thất bại:', err)
+        });
+
+        setTimeout(() => this.nextQuestion(), 1300);
+    }
+
+    nextQuestion(): void{
+        this.currentIndex++;
+
+        if(this.currentIndex < this. questions.length){
+            this.setCurrentQuestion();
+        }else{
+            alert(`Quiz finished! Your score: ${this.score}/${this.questions.length}`);
+            const userId = localStorage.getItem('userId');
+
+            console.log('questionResults:', this.questionResults);
+            console.log('userId:', userId, 'quizLevel:', this.level);
+
+            this.router.navigate(['/quiz-result'], {
+                state: {userId: userId, quizLevel: this.level, questionResults: this.questionResults}
+            });
+        }
+    }
+
+    private shuffleArray<T>(array: T[]): T[]{
+    return array
+        .map(value => ({ value, sort: Math.random()}))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+    }
+
+    goBack(): void {
+        this.location.back();
+    }
+
+    getOptionLabel(index: number): string {
+        return String.fromCharCode(65 + index);
+    }
+
 }
