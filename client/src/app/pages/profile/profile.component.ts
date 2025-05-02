@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
   };
 
   private apiUrl = 'http://localhost:8000/api/users/current';
+  private updateApiUrl = 'http://localhost:8000/api/users/postUserInformation';
 
   constructor(
     private http: HttpClient,
@@ -78,30 +79,33 @@ export class ProfileComponent implements OnInit {
       })
       .subscribe({
         next: (response: any) => {
+          // Sửa lại: Truy cập trực tiếp response thay vì response.user
           this.user = {
-            username: response.user?.username || response.user?.email || 'Guest',
-            email: response.user?.email || '',
-            role: response.user?.role || 'user',
+            username: response.username || response.email || 'Guest',
+            email: response.email || '',
+            role: response.role || 'user',
           };
           this.profile = {
-            firstName: response.user?.firstName || '',
-            lastName: response.user?.lastName || '',
-            email: response.user?.email || '',
-            phone: response.user?.phone || '',
-            address: response.user?.address || '',
-            avatar: this.profile.avatar, // Giữ avatar hiện tại
+            firstName: response.firstname || '', // Sửa firstName thành firstname (theo backend)
+            lastName: response.lastname || '',   // Sửa lastName thành lastname
+            email: response.email || '',
+            phone: response.phonenumber || '',  // Sửa phone thành phonenumber
+            address: response.address || '',
+            avatar: response.avatar || this.profile.avatar,
           };
           if (this.isBrowser) {
             localStorage.setItem('username', this.user.username || 'Guest');
             localStorage.setItem('email', this.user.email || '');
             localStorage.setItem('role', this.user.role || 'user');
           }
-          console.log('User profile:', this.user);
+          // console.log('User profile:', this.user);
           this.isLoading = false;
         },
         error: (error) => {
           console.error('Error fetching profile:', error);
+          this.errorMessage = 'Không thể lấy thông tin người dùng. Vui lòng thử lại.';
           this.isLoading = false;
+          this.router.navigate(['/auth']);
         },
       });
   }
@@ -142,25 +146,45 @@ export class ProfileComponent implements OnInit {
 
     // Kiểm tra các trường bắt buộc
     if (!this.profile.firstName || !this.profile.lastName) {
-      this.errorMessage = 'Vui lòng điền đầy đủ First Name, Last Name và Email.';
+      this.errorMessage = 'Vui lòng điền đầy đủ First Name và Last Name.';
       this.successMessage = null;
       return;
     }
 
+    // Lấy userId từ token
+    const token = this.authService.getAccessToken();
+    if (!token) {
+      this.errorMessage = 'Không tìm thấy token. Vui lòng đăng nhập lại.';
+      this.router.navigate(['/auth']);
+      return;
+    }
+
+    const decodedToken = this.authService.decodeToken(token);
+    const userId = decodedToken?.user?.id || null;
+    if (!userId) {
+      this.errorMessage = 'Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.';
+      return;
+    }
+
     // Chuẩn bị dữ liệu gửi lên server
-    const userData = {
-      firstName: this.profile.firstName,
-      lastName: this.profile.lastName,
-      email: this.profile.email,
-      phone: this.profile.phone || null,
+    const userInformation = {
+      firstname: this.profile.firstName,
+      lastname: this.profile.lastName,
+      phonenumber: this.profile.phone || null,
       address: this.profile.address || null,
       avatar: this.profile.avatar || null,
+      birthday: null,
     };
 
-    // Gửi yêu cầu POST đến /api/users/information
-    const token = this.authService.getAccessToken();
+    const payload = {
+      userId: userId,
+      userInformation: userInformation,
+    };
+
+    // Gửi yêu cầu POST đến /api/users/userInformation
+    this.isLoading = true;
     this.http
-      .post(this.apiUrl, userData, {
+      .post(this.updateApiUrl, payload, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .subscribe({
@@ -168,11 +192,19 @@ export class ProfileComponent implements OnInit {
           this.successMessage = 'Thông tin đã được lưu thành công!';
           this.errorMessage = null;
           console.log('Lưu thông tin thành công:', response);
+
+          // Sau khi lưu thành công, gọi lại fetchUserProfile để cập nhật dữ liệu
+          this.fetchUserProfile();
         },
         error: (error) => {
-          this.errorMessage = error.error.message || 'Lưu thông tin thất bại. Vui lòng thử lại.';
+          // Hiển thị thông báo lỗi chi tiết
+          const errorMsg = error.status === 404
+            ? 'Không tìm thấy endpoint. Vui lòng kiểm tra backend.'
+            : error.error?.message || 'Lưu thông tin thất bại. Vui lòng thử lại.';
+          this.errorMessage = errorMsg;
           this.successMessage = null;
           console.error('Lỗi khi lưu thông tin:', error);
+          this.isLoading = false;
         },
       });
   }

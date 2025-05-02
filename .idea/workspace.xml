@@ -5,10 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/client/src/app/guards/admin.guards.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GoalQuizClient.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GoalQuizClient.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/services/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/services/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +70,8 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;D:\\DoAnLapTrinhA\\GoalQuizClient\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\DoAnLapTrinhA\\GoalQuizClient\\client\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -109,22 +132,13 @@
       <workItem from="1745316378409" duration="1350000" />
       <workItem from="1745410932595" duration="7118000" />
       <workItem from="1745558861796" duration="2234000" />
-      <workItem from="1745897829330" duration="5560000" />
+      <workItem from="1745897829330" duration="5979000" />
+      <workItem from="1746085314550" duration="5222000" />
+      <workItem from="1746189496095" duration="10002000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client/src/app/app.routes.ts</url>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

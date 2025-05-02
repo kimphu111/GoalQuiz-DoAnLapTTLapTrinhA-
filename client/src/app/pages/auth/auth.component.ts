@@ -58,11 +58,10 @@ export class AuthComponent {
     const loginData = {
       email: this.email,
       password: this.password,
-    }; // Bỏ username vì backend không yêu cầu
-    console.log('[Login] Sending login request', loginData);
-
-    console.log('[Login] Form invalid:', form.invalid);
-    console.log('[Login] Form value:', form.value);
+    };
+    // console.log('[Login] Sending login request', loginData);
+    // console.log('[Login] Form invalid:', form.invalid);
+    // console.log('[Login] Form value:', form.value);
 
     this.http
       .post('http://localhost:8000/api/users/login', loginData)
@@ -78,14 +77,18 @@ export class AuthComponent {
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
-            // localStorage.setItem('username', response.user.username);
-            // localStorage.setItem('email', response.user.email);
-            localStorage.setItem('role', response.role || '');
+            localStorage.setItem('username', response.user.username);
+            localStorage.setItem('email', response.user.email);
+            localStorage.setItem('role', response.role );
             localStorage.setItem('token', response.token || response.accessToken);
+
+            const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
+            localStorage.setItem('role', role);
+            console.log('Role saved:', role);
 
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
-            console.log('decode: ', decoded)
+            // console.log('decode: ', decoded)
             if(decoded && decoded.user) {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);

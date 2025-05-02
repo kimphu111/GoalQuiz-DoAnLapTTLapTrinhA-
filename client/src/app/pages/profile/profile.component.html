@@ -2,7 +2,7 @@
   <!-- Phần ảnh đại diện -->
   <div class="avatar-section">
     <img
-      [src]="profile.avatar || 'https://via.placeholder.com/100'"
+      [src]="profile.avatar.startsWith('data:') ? profile.avatar : ('http://localhost:8000' + profile.avatar)"
       alt="Avatar"
       class="avatar"
     />
@@ -79,7 +79,9 @@
 
     <!-- Nút Save -->
     <div class="form-actions">
-      <button type="button" class="save-button" (click)="onSave()">Save</button>
+      <button type="button" class="save-button" (click)="onSave()" [disabled]="isLoading">
+        {{ isLoading ? 'Đang lưu...' : 'Save' }}
+      </button>
     </div>
 
     <!-- Thông báo -->

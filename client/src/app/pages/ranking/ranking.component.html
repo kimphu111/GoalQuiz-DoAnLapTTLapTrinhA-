@@ -1,33 +1,32 @@
 <div class="rankings-container">
   <div class="level-selector">
-    <button
-      [class.active]="currentLevel === 'easy'"
-      (click)="selectLevel('easy')"
-    >
-      Easy
-    </button>
-    <button
-      [class.active]="currentLevel === 'medium'"
-      (click)="selectLevel('medium')"
-    >
-      Medium
-    </button>
-    <button
-      [class.active]="currentLevel === 'hard'"
-      (click)="selectLevel('hard')"
-    >
-      Hard
-    </button>
-    <button
-      [class.active]="currentLevel === 'mixed'"
-      (click)="selectLevel('mixed')"
-    >
-      Mixed
-    </button>
+    <div class="level-buttons">
+      <button
+        [class.active]="currentLevel === 'mixed'"
+        (click)="selectLevel('mixed')"
+      >
+        Mixed
+      </button>
+      <button
+        [class.active]="currentLevel === 'easy'"
+        (click)="selectLevel('easy')"
+      >
+        Easy
+      </button>
+      <button
+        [class.active]="currentLevel === 'medium'"
+        (click)="selectLevel('medium')"
+      >
+        Medium
+      </button>
+      <button
+        [class.active]="currentLevel === 'hard'"
+        (click)="selectLevel('hard')"
+      >
+        Hard
+      </button>
+    </div>
   </div>
-
-  <!-- Tiêu đề mức độ -->
-  <h2>{{ currentLevel | titlecase }}-Level</h2>
 
   <!-- Danh sách xếp hạng -->
   <div class="ranking-list">
@@ -48,7 +47,13 @@
             <img src="assets/medalBronze.png" alt="bronze medal" />
           </span>
           <span *ngIf="i === 3" class="medal">
-            <img src="assets/encouragement%20Medal.png" alt="encouragement medal" />
+            <img src="assets/medal4.svg" alt="encouragement medal" />
+          </span>
+          <span *ngIf="i === 4" class="medal">
+            <img src="assets/medal.spirit.svg" alt="spirit medal" />
+          </span>
+          <span *ngIf="i === 5" class="medal">
+            <img src="assets/medal.spirit.svg" alt="spirit medal" />
           </span>
         </div>
         <div class="player-name">{{ player.name }}</div>
