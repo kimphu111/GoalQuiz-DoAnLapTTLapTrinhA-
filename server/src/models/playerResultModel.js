@@ -16,6 +16,10 @@ const PlayerResult = sequelize.define('PlayerResult', {
   idUser: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {         
+      model: User,
+      key: 'id',
+    }
   },
   chooseAnswer: {
     type: DataTypes.STRING,

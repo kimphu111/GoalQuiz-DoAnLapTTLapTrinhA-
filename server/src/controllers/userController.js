@@ -98,7 +98,7 @@ const login = asyncHandler(async (req, res) => {
           id: user.id,
         },
       },
-      process.env.REFRESH_SECRET_KEY,
+      process.env.JWT_REFRESH_SECRET_KEY,
       {
         expiresIn: "30d",
         // no need header because JWT default is HS256-JWT
@@ -119,6 +119,11 @@ const login = asyncHandler(async (req, res) => {
 
     res.status(200).json({
       accessToken,
+      user: {
+        username: user.username,
+        email: user.email,
+        id: user.id,
+      },
     });
   } else {
     res.status(401);
