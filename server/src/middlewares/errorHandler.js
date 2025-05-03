@@ -39,7 +39,7 @@ const errorHandler = (err, req, res, next) => {
         });
         break;
     default:
-        console.log("We got mysterious bugs, help us dev!");
+        console.log("NO ERROR, ALL GOOD! OR ERROR NEED TO CONFIG IN ERRORHANDLER (MIDDLEWARE)");
       break;
   }
 };
