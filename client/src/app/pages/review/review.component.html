@@ -1,2 +1,8 @@
-<p>review works!</p>
-<button [routerLink]="['/quiz-result']"> REVIEW</button>
+<div id="wrapper">
+    <div id="container">
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'mix'}">Quiz Result - Mixed</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'easy'}">Quiz Result - Easy</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'medium'}">Quiz Result - Medium</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'hard'}">Quiz Result - Difficult</button>
+    </div>
+</div>

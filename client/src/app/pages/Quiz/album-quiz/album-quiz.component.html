@@ -2,10 +2,10 @@
 <div id="wrapper">
     <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
     <div id="container">
-        <div class="level mixed-level" (click)="openPopup('mixed')"><b>Mixed-level</b></div>
+        <div class="level mixed-level" (click)="openPopup('mix')"><b>Mixed-level</b></div>
         <div class="level easy-level" (click)="openPopup('easy')">Level <b>Easy</b></div>
         <div class="level medium-level" (click)="openPopup('medium')">Level <b>Medium</b> </div>
-        <div class="level difficult-level" (click)="openPopup('difficult')">Level <b>Difficult</b></div>
+        <div class="level difficult-level" (click)="openPopup('hard')">Level <b>Difficult</b></div>
 
         <!-- Popup -->
         @if(isPopupVisible){

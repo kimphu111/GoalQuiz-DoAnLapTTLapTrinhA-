@@ -68,8 +68,15 @@ export class NavbarLayoutComponent {
       })
       .subscribe({
         next: (response: any) => {
-          this.username = response.user.username || response.user.email || 'Guest';
-          this.email = response.user.email || '';
+          // this.username = response.user.username || response.user.email || 'Guest';
+          // this.email = response.user.email || '';
+
+          // Nếu response.user tồn tại thì lấy, không thì fallback sang response
+          // Tránh Cannot read properties undefined(reading 'username')
+          const user = response.user || response;
+          this.username = user.username || user.email;
+          this.email = user.email || '';
+
           if (this.isBrowser) {
             localStorage.setItem('username', this.username);
             localStorage.setItem('email', this.email);
