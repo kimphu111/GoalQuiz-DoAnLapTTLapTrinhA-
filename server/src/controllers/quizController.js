@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Quiz = require("../models/quizModel");
 const { sequelize } = require("../databases/mysql/mysqlConnect");
-const { Op } = require('sequelize');
+const { Op, literal } = require('sequelize');
 const cloudinary = require('../cloudinary/cloudinaryConnect');
 const fs = require('fs');
 
@@ -205,4 +205,20 @@ const postQuiz = asyncHandler(async (req,res) => {
   }
 });
 
-module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz };
+//@desc getAllQuiz Quiz (Admin only)
+//@route GET /api/quiz/getAllQuiz
+//@access private
+const getAllQuiz = asyncHandler(async(req,res)=>{
+  
+  const quizzes = await Quiz.findAll({
+    order:[
+      [literal(`FIELD(level, 'easy', 'medium', 'hard')`)],
+    ],
+  });
+  res.status(200).json({
+    total: quizzes.length,
+    quizzes,
+  });
+})
+
+module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz };
