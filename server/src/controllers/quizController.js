@@ -221,4 +221,87 @@ const getAllQuiz = asyncHandler(async(req,res)=>{
   });
 })
 
-module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz };
+//@desc updateQuiz Quiz (Admin only)
+//@route PUT /api/quiz/updateQuiz
+//@access private
+const updateQuiz = asyncHandler(async (req, res) => {
+  const { id, level, question, answerA, answerB, answerC, answerD, correctAnswer } = JSON.parse(req.body.quizInformation);
+
+  if (!id) {
+    res.status(400);
+    throw new Error("Quiz ID is required");
+  }
+
+  const quiz = await Quiz.findByPk(id);
+
+  if (!quiz) {
+    res.status(404);
+    throw new Error("Quiz not found");
+  }
+
+
+  if (req.file && quiz.image) {
+    const imageName = quiz.image.split('/').pop();
+    const publicId = `goalquiz/${imageName.substring(0, imageName.lastIndexOf('.'))}`;
+    try {
+      await cloudinary.uploader.destroy(publicId);
+      console.log("Deleted old image:", publicId);
+    } catch (err) {
+      console.error('Cloudinary delete error:', err.message);
+    }
+  }
+
+
+  let newImageUrl = quiz.image;
+
+  if (req.file) {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'goalquiz',
+      });
+      newImageUrl = result.secure_url;
+
+
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
+
+    } catch (err) {
+      console.error('Cloudinary upload error:', err.message);
+      res.status(500);
+      throw new Error('Image upload failed');
+    }
+  }
+
+
+  const updatedLevel = level || quiz.level;
+
+  quiz.level = updatedLevel;
+  quiz.question = question || quiz.question;
+  quiz.answerA = answerA || quiz.answerA;
+  quiz.answerB = answerB || quiz.answerB;
+  quiz.answerC = answerC || quiz.answerC;
+  quiz.answerD = answerD || quiz.answerD;
+  quiz.correctAnswer = correctAnswer || quiz.correctAnswer;
+  quiz.image = newImageUrl;
+  quiz.score = updatedLevel === 'easy' ? 10 : updatedLevel === 'medium' ? 20 : updatedLevel === 'hard' ? 30 : quiz.score;
+
+  await quiz.save();
+
+  res.status(200).json({
+    message: 'Quiz updated successfully',
+    quiz,
+  });
+});
+
+
+//@desc deleteQuiz Quiz (Admin only)
+//@route DELETE /api/quiz/deleteQuiz
+//@access private
+const deleteQuiz = asyncHandler( async (req,res) => {
+  res.status(200).json({
+    message:"test"
+  });
+})
+
+module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz, updateQuiz, deleteQuiz };
