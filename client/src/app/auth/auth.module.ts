@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import {navbarLayoutComponent} from '../pages/navbar-layout/navbar-layout.component';
+import {NavbarLayoutComponent} from '../pages/navbar-layout/navbar-layout.component';
 
 @NgModule({
   declarations: [],
@@ -10,7 +10,7 @@ import {navbarLayoutComponent} from '../pages/navbar-layout/navbar-layout.compon
     CommonModule,
     FormsModule,
     RouterModule,
-    navbarLayoutComponent,
+    NavbarLayoutComponent,
     // Cung cấp routerLink
   ],
   exports: [

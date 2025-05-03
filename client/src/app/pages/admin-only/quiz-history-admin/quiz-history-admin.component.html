@@ -1,1 +1,122 @@
-<p>quiz-history-admin works!</p>
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="assets/logo.png">
+    </div>
+    <ul class="sidebar-menu">
+      <li class="sidebar-item">
+        <a [routerLink]="['/home']">🏠 Home </a>
+      </li>
+      <li class="sidebar-item ">
+        <a [routerLink]="['/quiz-edit-admin']">🏠 Edit quiz </a>
+      </li>
+      <li class="sidebar-item">
+        <a [routerLink]="['/quiz-history-admin']" routerLinkActive="active">📝 Quiz hisory </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <div class="content-top">
+      <div class="header-left">
+        <div class="user-info">
+          <img src="./assets/admin.jpg" alt="User" class="rounded-full" />
+          <span>ADMIN</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button class="date-btn">
+          <span>1 May</span>
+        </button>
+        <input type="text" placeholder="Search" class="search-bar" />
+        <button class="notification-btn">
+          <span class="relative">
+            <i class="fas fa-bell"></i>
+            <span class="notification-count">1</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="content-bot">
+      <!-- Date Filter and Table -->
+      <div class="date-filter">
+        <label>Chọn ngày:</label>
+        <input
+          type="date"
+          [(ngModel)]="selectedDate"
+          (ngModelChange)="searchByDate()"
+          class="date-input"
+        />
+      </div>
+
+      <!-- Quiz Table -->
+      <div *ngIf="paginatedQuizzes.length > 0; else noQuiz">
+        <table class="quiz-table">
+          <thead>
+          <tr class="table-header">
+            <th class="table-cell">ID</th>
+            <th class="table-cell">Title</th>
+            <th class="table-cell">Date Created</th>
+            <th class="table-cell">Participants</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let quiz of paginatedQuizzes" class="table-row">
+            <td class="table-cell text-center">{{ quiz.id }}</td>
+            <td class="table-cell">{{ quiz.title }}</td>
+            <td class="table-cell text-center">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</td>
+            <td class="table-cell text-center">
+              <button
+                class="participant-btn"
+                (click)="quiz.showParticipants = !quiz.showParticipants"
+              >
+                {{ quiz.participants.length }}
+              </button>
+              <div *ngIf="quiz.showParticipants" class="participant-list">
+                <ul *ngIf="quiz.participants.length > 0; else noParticipants">
+                  <li *ngFor="let p of quiz.participants" class="participant-item">
+                    - {{ p.name }} ({{ p.submittedAt | date:'shortTime' }})
+                  </li>
+                </ul>
+                <ng-template #noParticipants>
+                  <p class="no-participant-text">Chưa có ai làm bài</p>
+                </ng-template>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+          >
+            Previous
+          </button>
+          <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
+      <!-- No Quiz Message -->
+      <ng-template #noQuiz>
+        <p class="no-quiz-text">
+          {{ selectedDate ? 'Không có quiz nào vào ngày ' + (selectedDate | date:'dd/MM/yyyy') : 'Không có quiz nào.' }}
+        </p>
+      </ng-template>
+    </div>
+  </div>
+</div>

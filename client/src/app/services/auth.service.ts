@@ -1,9 +1,9 @@
-import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import {isPlatformBrowser} from '@angular/common';
-import {Router} from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,9 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID để kiểm tra môi trường
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
+
   // Hàm đăng nhập
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
@@ -27,7 +28,6 @@ export class AuthService {
             response.role || 'user',
             response.user?.username || response.user?.email || email
           );
-          // Chuyển hướng đến /home sau khi đăng nhập thành công
           if (isPlatformBrowser(this.platformId)) {
             this.router.navigate(['/home']);
           }
@@ -56,26 +56,32 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('accessToken');
     }
-    return null; // Trả về null nếu chạy trên server
+    return null;
   }
 
-  // Lấy refresh token
   getRefreshToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('refreshToken');
     }
-    return null; // Trả về null nếu chạy trên server
+    return null;
   }
 
-  // Lấy username
+  decodeToken(token: string): any {
+    try {
+      return this.parseJwt(token); // Sử dụng parseJwt thay vì JwtHelperService
+    } catch (error) {
+      console.error('Lỗi decode token:', error);
+      return null;
+    }
+  }
+
   getUsername(): string | null {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('username');
     }
-    return null; // Trả về null nếu chạy trên server
+    return null;
   }
 
-  // Làm mới token
   refreshToken(): Observable<any> {
     const refreshToken = this.getRefreshToken();
     if (!refreshToken) {
@@ -100,7 +106,6 @@ export class AuthService {
     );
   }
 
-  // Đăng xuất
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('accessToken');
@@ -112,18 +117,15 @@ export class AuthService {
       localStorage.removeItem('token');
       console.log('Logged out, tokens cleared');
     }
-    // Chuyển hướng đến /auth sau khi đăng xuất
     if (isPlatformBrowser(this.platformId)) {
       this.router.navigate(['/auth']);
     }
   }
 
-  // Kiểm tra trạng thái đăng nhập
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
 
-  // Kiểm tra token còn hợp lệ không
   isAuthenticated(): boolean {
     const token = this.getAccessToken();
     if (!token) {
@@ -135,7 +137,6 @@ export class AuthService {
     return expirationDate > new Date();
   }
 
-  // Giải mã JWT
   private parseJwt(token: string) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

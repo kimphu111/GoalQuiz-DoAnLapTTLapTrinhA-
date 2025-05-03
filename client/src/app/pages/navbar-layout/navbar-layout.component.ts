@@ -1,16 +1,20 @@
-import {Component, Inject, PLATFORM_ID} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {isPlatformBrowser, NgClass} from '@angular/common';
-import {HttpClient} from '@angular/common/http';
-import {AuthService} from '../../services/auth.service';
-
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
+import { isPlatformBrowser, NgClass } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './navbar-layout.component.html',
   styleUrls: ['./navbar-layout.component.scss'],
   imports: [NgClass, RouterLink, RouterOutlet, RouterLinkActive],
-  standalone: true
+  standalone: true,
 })
 export class NavbarLayoutComponent {
   username: string = 'Guest';
@@ -24,7 +28,7 @@ export class NavbarLayoutComponent {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.loadTheme();
@@ -61,13 +65,13 @@ export class NavbarLayoutComponent {
       this.isLoading = false;
       return;
     }
-
     this.http
       .get('http://localhost:8000/api/users/current', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .subscribe({
         next: (response: any) => {
+<<<<<<< HEAD
           // this.username = response.user.username || response.user.email || 'Guest';
           // this.email = response.user.email || '';
 
@@ -77,6 +81,10 @@ export class NavbarLayoutComponent {
           this.username = user.username || user.email;
           this.email = user.email || '';
 
+=======
+          this.username = response.username || response.email || 'Guest';
+          this.email = response.email || '';
+>>>>>>> 1b99b24ab7c9f048007cf2dc45f15da3c97ca9a4
           if (this.isBrowser) {
             localStorage.setItem('username', this.username);
             localStorage.setItem('email', this.email);
@@ -96,7 +104,12 @@ export class NavbarLayoutComponent {
   private loadTheme() {
     if (this.isBrowser) {
       const savedTheme = localStorage.getItem('theme');
-      this.isDarkMode = savedTheme !== 'light';
+      if (!savedTheme) {
+        localStorage.setItem('theme', 'light');
+        this.isDarkMode = false;
+      } else {
+        this.isDarkMode = savedTheme !== 'light';
+      }
       this.applyTheme();
     }
   }
@@ -104,7 +117,7 @@ export class NavbarLayoutComponent {
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     if (this.isBrowser) {
-      localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+      localStorage.setItem('theme', !this.isDarkMode ? 'light' : 'dark');
     }
     this.applyTheme();
   }
