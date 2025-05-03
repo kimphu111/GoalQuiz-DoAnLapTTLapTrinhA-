@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Quiz = require("../models/quizModel");
 const { sequelize } = require("../databases/mysql/mysqlConnect");
+const { Op } = require('sequelize');
 
 //@desc getEasyQuiz User
 //@route GET /api/quiz/getEasyQuiz
@@ -115,4 +116,43 @@ const getMixQuiz = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz };
+//@desc searchQuizByQuestionAndAnswer Admin
+//@route GET /api/quiz/searchQuizByQuestionAndAnswer?search=Ronaldo
+//@access private
+
+const searchQuizByQuestionAndAnswer = asyncHandler(async (req,res)=>{
+  var {keyword} = req.query;
+  
+  if (!keyword || keyword.trim() === '') {
+    return res.status(400).json({ message: 'Keyword is required' });
+  }
+
+  const search = keyword.trim().toLowerCase();
+
+  const quizzes = await Quiz.findAll({
+    where: {
+      [Op.or]: [
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('question')), {
+          [Op.like]: `%${search}%`,
+        }),
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('answerA')), {
+          [Op.like]: `%${search}%`,
+        }),
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('answerB')), {
+          [Op.like]: `%${search}%`,
+        }),
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('answerC')), {
+          [Op.like]: `%${search}%`,
+        }),
+        sequelize.where(sequelize.fn('LOWER', sequelize.col('answerD')), {
+          [Op.like]: `%${search}%`,
+        }),
+      ],
+    },
+  });
+
+
+  res.status(200).json(quizzes);
+})
+
+module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer };
