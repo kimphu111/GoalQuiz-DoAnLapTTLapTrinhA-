@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const cloudinary = require('../cloudinary/cloudinaryConnect');
-const multer = require('multer');
 const fs = require('fs');
 
 //@desc Register User

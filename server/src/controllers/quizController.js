@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const Quiz = require("../models/quizModel");
 const { sequelize } = require("../databases/mysql/mysqlConnect");
 const { Op } = require('sequelize');
+const cloudinary = require('../cloudinary/cloudinaryConnect');
+const fs = require('fs');
 
 //@desc getEasyQuiz User
 //@route GET /api/quiz/getEasyQuiz
@@ -155,4 +157,52 @@ const searchQuizByQuestionAndAnswer = asyncHandler(async (req,res)=>{
   res.status(200).json(quizzes);
 })
 
-module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer };
+//@desc postQuiz Quiz (Admin only)
+//@route GET /api/quiz/postQuiz
+//@access private
+const postQuiz = asyncHandler(async (req,res) => {
+  const quizInformation = JSON.parse(req.body.quizInformation);
+  let imageUrl = null;
+  if (req.file) {
+      try {
+        const result = await cloudinary.uploader.upload(req.file.path, {
+          folder: 'goalquiz',
+        });
+        imageUrl = result.secure_url;
+  
+        fs.unlinkSync(req.file.path);
+      } catch (error) {
+        console.error('Cloudinary upload error:', error);
+        res.status(500);
+        throw new Error('Image upload failed');
+      }
+    }
+
+  try {
+    const newQuiz = await Quiz.create({
+      level: quizInformation.level,
+      question: quizInformation.question,
+      answerA: quizInformation.answerA,
+      answerB: quizInformation.answerB,
+      answerC: quizInformation.answerC,
+      answerD: quizInformation.answerD,
+      correctAnswer: quizInformation.correctAnswer,
+      score: quizInformation.level === 'easy' ? 10 :
+      quizInformation.level === 'medium' ? 20 :
+      quizInformation.level === 'hard' ? 30 :
+      10,
+      image: imageUrl,
+    });
+  
+    res.status(201).json({
+      message: 'Quiz created successfully',
+      quiz: newQuiz,
+    });
+  } catch (error) {
+    console.error('Quiz creation error:', error);
+    res.status(500);
+    throw new Error('Database insert failed');
+  }
+});
+
+module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz };
