@@ -88,7 +88,12 @@ export class AuthComponent {
 
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
+<<<<<<< HEAD
+            console.log('decode: ', decoded)
+            
+=======
             // console.log('decode: ', decoded)
+>>>>>>> 1b99b24ab7c9f048007cf2dc45f15da3c97ca9a4
             if(decoded && decoded.user) {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);

@@ -16,7 +16,7 @@
     background-color: white;
     margin-left: 15px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     overflow: hidden;
     border-radius: 10px;
@@ -27,7 +27,8 @@
     height:auto;
     color: #575757;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
     padding: 30px;
@@ -35,30 +36,74 @@
     margin-top:10px;
     margin-bottom: 20px;
     gap: 20px;
+    h1{
+        font-size: 3rem;
+    }
+    .result{
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
+        max-width: 800px;
+        max-width: 100%;
+        .square {
+            width: 85px;
+            height: 85px;
+            border-radius: 10px;
+            display: flex;  
+            justify-content: center;
+            align-items: center;
+            background-color: #388e3c;
+            transition: background 0.3s, border 0.3s;
+            cursor: pointer;
+            user-select: none;
+            font-size: 2rem;
+            &:hover{
+                filter: brightness(0.80);
+            }
+            &:active {
+                transform: scale(0.95); // Slightly scales down the element when clicked
+            }
+            &.correct{
+                background-color: #57CB68 ;
+                color: #fff;
+            }
+            &.incorrect {
+                background-color: #B94E4E;
+                    color: #fff ;
+              }
+        }
+        .no-result{
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            min-height: 350px;
+            height: 100%;
+            width: 100%;
+            justify-self: center;
+            align-self: center;
+
+        }
+    }
 }
-.square {
-    flex: 0 0 15%;
-    aspect-ratio: 1 / 1;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #388e3c;
-    transition: background 0.3s, border 0.3s;
+
+.back-icon{
+    position: absolute;
+    // margin-left: 40px;
+    // margin-top: 10px;
+    top: 30px;
+    left: 25px;
+    z-index: 10;
+    color: #1b1a25;
     cursor: pointer;
-    user-select: none;
+    transition: transform 0.2s ease;
     &:hover{
         filter: brightness(0.80);
     }
     &:active {
-        transform: scale(0.95); // Slightly scales down the element when clicked
+        transform: scale(0.95);
     }
-    &.correct{
-        background-color: #57CB68 ;
-        color: #fff;
-    }
-    &.incorrect {
-        background-color: #B94E4E;
-            color: #fff ;
-      }
-  }
+}
