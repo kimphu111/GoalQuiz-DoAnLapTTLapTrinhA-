@@ -30,7 +30,7 @@ app.use(compression());
 app.use(helmet());
 app.use(cookieParser());
 
-// init databases
+// init databases, cloud
 mysqlConnect();
 
 // init routes

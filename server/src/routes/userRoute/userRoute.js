@@ -6,7 +6,7 @@ const registerRoute = require('./registerRoute/registerRoute');
 const currentRoute = require('./currentRoute/currentRoute');
 const logoutRoute = require('./logoutRoute/logoutRoute');
 const refreshRoute = require('./refreshCurrentRoute/refreshCurrentRoute');
-const postUserInformationRoute = require('./postUserInformation/postUserInformation');
+const postUserInformationRoute = require('./userInformation/userInformation');
 
 
 router.use('/users',loginRoute);

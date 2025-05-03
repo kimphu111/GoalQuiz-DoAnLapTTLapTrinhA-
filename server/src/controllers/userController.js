@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const cloudinary = require('../cloudinary/cloudinaryConnect');
+const multer = require('multer');
+const fs = require('fs');
 
 //@desc Register User
 //@route POST /api/users/register
@@ -176,9 +179,11 @@ const refresh = asyncHandler((req, res) => {
 //@route POST /api/users/userInfomation
 //@access private
 const postUserInformation = asyncHandler(async(req, res) => {
-  const {userId,userInformation} = req.body;
+  const userInformation = JSON.parse(req.body.userInformation);
+  const {id} = req.user;
 
-  if(!userInformation.firstname&&!userInformation.lastname&&!userInformation.birthday&&!userInformation.phonenumber&&!userInformation.address&&!userInformation.avatar){
+
+  if(!userInformation.firstname&&!userInformation.lastname&&!userInformation.birthday&&!userInformation.phonenumber&&!userInformation.address&&!req.file){
     res.status(401);
     throw Error("not thing change!")
   }
@@ -191,11 +196,25 @@ const postUserInformation = asyncHandler(async(req, res) => {
   if (userInformation.avatar !== undefined) updateFields.avatar = userInformation.avatar;
   if (userInformation.address !== undefined) updateFields.address = userInformation.address;
 
+  if (req.file) {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'goalquiz_user_avatar',
+      });
+      updateFields.avatar = result.secure_url;
+
+      fs.unlinkSync(req.file.path);
+    } catch (error) {
+      console.error('Cloudinary upload error:', error);
+      res.status(500);
+      throw new Error('Image upload failed');
+    }
+  }
 
 
   try {
     const [updatedRowsCount] = await User.update(updateFields, {
-      where: { id: userId }
+      where: { id: id }
     });
 
     if (updatedRowsCount === 0) {
