@@ -16,7 +16,7 @@ router.route('/quiz/searchQuizByQuestionAndAnswer').get(validateAccessToken,auth
 router.route('/quiz/postQuiz').post(validateAccessToken,auth(["admin"]),upload.single('quiz_image'),postQuiz);
 router.route('/quiz/getAllQuiz').get(validateAccessToken,auth(["admin"]),getAllQuiz);
 router.route('/quiz/updateQuiz').put(validateAccessToken,auth(["admin"]),upload.single('quiz_image'),updateQuiz);
-router.route('/quiz/deleteQuiz').delete(validateAccessToken,auth(["admin"]),deleteQuiz);
+router.route('/quiz/deleteQuiz/:id').delete(validateAccessToken,auth(["admin"]),deleteQuiz);
 
 
 

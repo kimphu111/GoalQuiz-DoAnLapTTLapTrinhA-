@@ -299,8 +299,36 @@ const updateQuiz = asyncHandler(async (req, res) => {
 //@route DELETE /api/quiz/deleteQuiz
 //@access private
 const deleteQuiz = asyncHandler( async (req,res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400);
+    throw new Error("Quiz ID is required");
+  }
+
+  const quiz = await Quiz.findByPk(id);
+
+  if (!quiz) {
+    res.status(404);
+    throw new Error("Quiz not found");
+  }
+
+  if (quiz.image) {
+    const imageName = quiz.image.split('/').pop();
+    const publicId = `goalquiz/${imageName.substring(0, imageName.lastIndexOf('.'))}`;
+    try {
+      await cloudinary.uploader.destroy(publicId);
+      console.log(`Deleted image: ${publicId}`);
+    } catch (err) {
+      console.error('Cloudinary delete error:', err.message);
+    }
+  }
+
+  await quiz.destroy();
+
   res.status(200).json({
-    message:"test"
+    message: 'Quiz deleted successfully',
+    quizId: id,
   });
 })
 
