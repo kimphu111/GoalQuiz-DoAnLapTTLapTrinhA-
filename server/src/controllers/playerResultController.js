@@ -82,4 +82,40 @@ const getTopUsersByLevel = asyncHandler(async (req, res) => {
     }
   });
 
-module.exports = { postPlayerResult, getTopUsersByLevel };
+//@desc review  PlayerResult
+//@route GET /api/play/review
+//@access private
+const review = asyncHandler(async (req, res) => {
+  const { dateDoQuiz } = req.query;
+  const idUser = req.user.id;
+
+  if (!idUser || !dateDoQuiz) {
+    return res.status(400).json({ message: 'Missing idUser or dateDoQuiz' });
+  }
+
+  const results = await PlayerResult.findAll({
+    where: {
+      idUser,
+      dateDoQuiz
+    },
+    order: [['createdAt', 'ASC']],
+  });
+
+  if (!results || results.length === 0) {
+    return res.status(404).json({ message: 'No results found' });
+  }
+
+  const totalQuestions = results.length;
+  const totalScore = results.reduce((sum, item) => {
+    return item.result ? sum + item.score : sum;
+  }, 0);
+
+  res.status(200).json({
+    totalQuestions,
+    totalScore,
+    results,
+  });
+});
+
+
+module.exports = { postPlayerResult, getTopUsersByLevel, review };
