@@ -77,10 +77,10 @@ export class AuthComponent {
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
-            localStorage.setItem('username', response.user.username);
-            localStorage.setItem('email', response.user.email);
-            localStorage.setItem('role', response.role );
-            localStorage.setItem('token', response.token || response.accessToken);
+            localStorage.setItem('username', response.user?.username || '');
+            localStorage.setItem('email', response.user?.email || '');
+            //localStorage.setItem('role', response.role );
+            //localStorage.setItem('token', response.token || response.accessToken);
 
             const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
             localStorage.setItem('role', role);
