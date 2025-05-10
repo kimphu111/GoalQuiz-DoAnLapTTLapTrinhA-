@@ -4,7 +4,88 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="" />
+    <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/GoalQuizClient.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/prettier.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/album-quiz/album-quiz.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-question/quiz-question.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-question/quiz-question.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-question/quiz-question.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-question/quiz-question.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/Quiz/quiz-result/quiz-result.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/ranking/ranking.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/review/review.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/review/review.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/review/review.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/review/review.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/prettier" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/prettier.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.bin/prettier.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/THIRD-PARTY-NOTICES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/bin/prettier.cjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/doc.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/doc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/doc.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/index.cjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/index.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/internal/cli.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/acorn.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/acorn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/acorn.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/angular.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/angular.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/angular.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/babel.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/babel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/babel.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/estree.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/estree.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/estree.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/flow.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/flow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/flow.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/glimmer.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/glimmer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/glimmer.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/graphql.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/graphql.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/graphql.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/html.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/html.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/html.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/markdown.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/markdown.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/markdown.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/meriyah.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/meriyah.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/meriyah.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/postcss.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/postcss.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/postcss.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/typescript.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/typescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/typescript.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/yaml.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/yaml.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/plugins/yaml.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/standalone.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/standalone.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/prettier/standalone.mjs" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +117,7 @@
     &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging master&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/DoAnLapTrinhA/GoalQuizClient&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -108,6 +189,8 @@
       <workItem from="1745897829330" duration="5979000" />
       <workItem from="1746085314550" duration="5222000" />
       <workItem from="1746189496095" duration="10096000" />
+      <workItem from="1746264856469" duration="1354000" />
+      <workItem from="1746295104102" duration="6247000" />
     </task>
     <servers />
   </component>

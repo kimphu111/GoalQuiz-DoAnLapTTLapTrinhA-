@@ -75,10 +75,10 @@ export class QuizQuestionComponent {
             case 'medium':
                 apiUrl = 'http://localhost:8000/api/quiz/getMediumQuiz';
                 break;
-            case 'difficult':
+            case 'hard':
                 apiUrl = 'http://localhost:8000/api/quiz/getHardQuiz';
                 break;
-            case 'mixed':
+            case 'mix':
                 apiUrl = 'http://localhost:8000/api/quiz/getMixQuiz';
                 break;
             default:
@@ -170,7 +170,7 @@ export class QuizQuestionComponent {
 
     nextQuestion(): void{
         this.currentIndex++;
-
+        
         if(this.currentIndex < this. questions.length){
             this.setCurrentQuestion();
         }else{
@@ -180,8 +180,10 @@ export class QuizQuestionComponent {
             console.log('questionResults:', this.questionResults);
             console.log('userId:', userId, 'quizLevel:', this.level);
 
+            sessionStorage.setItem('fromQuizQuestion', '1');
             this.router.navigate(['/quiz-result'], {
-                state: {userId: userId, quizLevel: this.level, questionResults: this.questionResults}
+                //state: {userId: userId, quizLevel: this.level, questionResults: this.questionResults},
+                queryParams:{ level: this.level}
             });
         }
     }

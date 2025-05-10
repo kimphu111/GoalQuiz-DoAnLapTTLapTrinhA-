@@ -1,8 +1,8 @@
 <div class="profile-container">
   <!-- Phần ảnh đại diện -->
-  <div class="avatar-section">
+  <div class="card-section avatar-section">
     <img
-      [src]="profile.avatar.startsWith('data:') ? profile.avatar : ('http://localhost:8000' + profile.avatar)"
+      [src]="isFullUrl(profile.avatar) ? profile.avatar : (profile.avatar.startsWith('data:') ? profile.avatar : 'https://via.placeholder.com/100')"
       alt="Avatar"
       class="avatar"
     />
@@ -13,6 +13,7 @@
   </div>
 
   <!-- Form thông tin cá nhân -->
+  <div class="card-section profile-form">
   <form class="profile-form">
     <div class="form-row">
       <div class="form-group">
@@ -40,6 +41,18 @@
     </div>
 
     <div class="form-group">
+      <label for="birthday">Birthday</label>
+      <input
+        type="text"
+        id="birthday"
+        name="birthday"
+        [(ngModel)]="profile.birthday"
+        placeholder="Enter your Birthday"
+        required
+      />
+    </div>
+
+    <div class="form-group">
       <label for="email">Email Address</label>
       <input
         type="email"
@@ -48,7 +61,6 @@
         [(ngModel)]="profile.email"
         placeholder="Enter your Email Address"
         required
-        readonly
       />
     </div>
 
@@ -88,4 +100,6 @@
     <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
     <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
   </form>
+  </div>
+
 </div>
