@@ -77,23 +77,30 @@ export class AuthComponent {
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
-            localStorage.setItem('username', response.user.username);
-            localStorage.setItem('email', response.user.email);
-            localStorage.setItem('role', response.role );
-            localStorage.setItem('token', response.token || response.accessToken);
+            localStorage.setItem('username', response.user?.username || '');
+            localStorage.setItem('email', response.user?.email || '');
+            // localStorage.setItem('role', response.role );
+            // localStorage.setItem('token', response.token || response.accessToken);
 
-            const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
-            localStorage.setItem('role', role);
-            console.log('Role saved:', role);
+            // const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
+            // localStorage.setItem('role', role);
+            
 
+            
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
+            console.log('decode: ', decoded)
 
+            let role = response.role || response.user?.role || 'user';
             if(decoded && decoded.user) {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);
               localStorage.setItem('email', decoded.user.email);
+              // Ưu tiên lấy role từ token nếu có
+              role = decoded.user.role || decoded.role || role;
             }
+            localStorage.setItem('role', role);
+            console.log('Role saved:', role);
             this.isSuccess = true;
 
             setTimeout(() => {

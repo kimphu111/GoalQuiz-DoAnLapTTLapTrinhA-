@@ -50,6 +50,7 @@ export class QuizQuestionComponent {
 	selectedOption: string | null = null;
 	answered: boolean = false;
     questionResults: {isCorrect: boolean}[] = [];
+    dateDoQuiz: string = '';
 	
     constructor(
         private location: Location,
@@ -61,6 +62,9 @@ export class QuizQuestionComponent {
     ngOnInit(): void {
         this.route.queryParams.subscribe(params => {
             this.level = params['level'] || 'easy';
+
+            this.dateDoQuiz = new Date().toISOString();
+            localStorage.setItem('dateDoQuiz', this.dateDoQuiz);
             this.fetchQuiz(this.level);
         });
     }
@@ -153,7 +157,7 @@ export class QuizQuestionComponent {
         this.http.post('http://localhost:8000/api/play/postPlayerResult', {
             idQuestion: this.currentQuestion.id,
             chooseAnswer: option,
-            dateDoQuiz: new Date().toISOString(),
+            dateDoQuiz: this.dateDoQuiz,
             quizLevel: this.level
         }, httpOptions).pipe(
             catchError((err) => {

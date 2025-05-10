@@ -1,8 +1,8 @@
 <div id="wrapper">
     <div id="container">
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'mix'}">Quiz Result - Mixed</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'easy'}">Quiz Result - Easy</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'medium'}">Quiz Result - Medium</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'hard'}">Quiz Result - Difficult</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'mix', dateDoQuiz: latestMix?.dateDoQuiz}">Quiz Result - Mixed</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'easy', dateDoQuiz: latestEasy?.dateDoQuiz}">Quiz Result - Easy</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'medium', dateDoQuiz: latestMedium?.dateDoQuiz}">Quiz Result - Medium</button>
+        <button routerLink="/quiz-result" [queryParams]="{ level: 'hard', dateDoQuiz: latestHard?.dateDoQuiz}">Quiz Result - Difficult</button>
     </div>
 </div>
