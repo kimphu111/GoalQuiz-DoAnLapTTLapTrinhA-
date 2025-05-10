@@ -13,6 +13,8 @@ import { RankingComponent } from './pages/ranking/ranking.component';
 import { QuizResultComponent } from './pages/Quiz/quiz-result/quiz-result.component';
 import { QuizEditAdminComponent } from './pages/admin-only/quiz-edit-admin/quiz-edit-admin.component';
 import { QuizHistoryAdminComponent } from './pages/admin-only/quiz-history-admin/quiz-history-admin.component';
+import { CreateQuestionComponent } from './pages/admin-only/create-question/create-question.component';
+import { AdminNavbarComponent } from './pages/admin-only/admin-navbar/admin-navbar.component';
 
 export const routes: Routes = [
   {
@@ -36,15 +38,22 @@ export const routes: Routes = [
     ],
   },
   { path: 'auth', component: AuthComponent },
+  // { 
+  //   path: 'admin',
+  //   canActivate: [AuthGuard, AdminGuard],
+  //   component: AdminNavbarComponent,
+  //   children: [
+  //     { path: 'question-management', component: QuizEditAdminComponent},
+  //     { path: 'quiz-history', component: QuizHistoryAdminComponent},
+  //     { path: 'create-question', component: CreateQuestionComponent},
+  //     { path: '', redirectTo: 'question-management', pathMatch: 'full'},
+  //   ]
+  // },
   {
-    path: 'quiz-edit-admin',
-    component: QuizEditAdminComponent,
-    canActivate: [AuthGuard, AdminGuard], // Thêm AuthGuard để đảm bảo đã đăng nhập
+  path: 'admin',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('./pages/admin-only/admin.routes').then(m => m.AdminRoutingModule)
   },
-  {
-    path: 'quiz-history-admin', // Sửa dấu phẩy
-    component: QuizHistoryAdminComponent,
-    canActivate: [AuthGuard, AdminGuard], // Thêm AuthGuard
-  },
+
   { path: '**', redirectTo: 'auth' }, // Xử lý 404
 ];
