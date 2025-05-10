@@ -118,6 +118,9 @@
             Xếp hạng</a
           >
         </li>
+        @if(role === 'admin'){
+          <li><a [routerLink]="['/admin/question-management']">admin</a></li>
+        }
       </ul>
     </aside>
 
