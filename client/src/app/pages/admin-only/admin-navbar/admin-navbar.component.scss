@@ -45,12 +45,13 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: #8d8d8d;
+          background-color: #38a565;
         }
 
         &.active {
-          background-color: #707070;
+          background-color: #38a565;
           font-weight: bold;
+          color: rgba(255, 255, 255, 0.889);
         }
       }
     }

@@ -1,0 +1,218 @@
+@mixin flex($direction: row){
+    display: flex;
+    flex-direction: $direction;
+}
+
+#container{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 24px;
+    height: 550px;
+    width: 1175px;
+    color: #5b5d59;
+}
+.left-panel{
+    width: 100%;
+    height: 100%;
+    @include flex(column);
+    justify-content: space-around;
+    background-color: #a2d590;
+    box-sizing: border-box;
+    padding: 30px;
+    overflow: auto;
+    border-radius: 10px;
+    .question-content{
+        @include flex(column);
+    }
+    .options{
+       @include flex(column);
+       .option-row{
+            @include flex(row);
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 5px;
+            label{
+                min-width: 24px;
+                text-align: end; 
+                display: inline-block;
+                margin-bottom: 0;
+                padding-top: 5px;
+            }
+            input {
+                flex: 1;
+            }
+       }
+
+    }
+    textarea{
+        resize: none;
+        height: 70px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        /* Thu nhỏ scrollbar trên Chrome, Edge, Safari */
+        &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: #b5b5b5;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: #888888;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    }
+    .correct-answer{
+        @include flex(column);
+        input{
+            border: 2px solid #57CB68;
+            border-radius: 5px;
+        }
+        label{
+            font-size: 1rem;
+        }
+    }
+    .level{
+        @include flex(column);
+        gap: 8px;
+        label{
+            margin-bottom: 4px;
+        }
+        .level-row{
+            @include flex(row);
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .level-buttons{
+            @include flex(row);
+            gap:20px;
+            button{
+                width: 90px;
+                height: 90px;
+                border-radius: 10px;
+                border:none;
+                color: white;
+                font-size: 1rem;
+                cursor: pointer;
+                &:hover{
+                    filter: brightness(0.80);
+                }
+                &:active {
+                    transform: scale(0.95); // Slightly scales down the element when clicked
+                }
+            }
+            button:nth-child(1) { background: #0d8f20; }   // Easy - xanh lá
+            button:nth-child(2) { background: #f08585; } // Medium - vàng
+            button:nth-child(3) { background: #a3cfff; }
+            
+        }
+        .score{
+            background-color: black;
+            padding: 15px 50px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            color: white;
+        }
+    }
+}
+
+.right-panel{
+    //@include flex(column);
+    //background-color: #a2d590;
+    border-radius: 10px;
+    //justify-content: space-between;
+    display: grid;
+    grid-template-rows: 1fr 1fr ;
+    box-sizing: border-box;
+    //padding: 30px;
+    overflow: auto;
+    .right-panel-top{
+        @include flex(column);
+        background-color: #a2d590;
+        padding: 30px;
+        border-radius: 10px;
+        .id-question{
+            margin-bottom: 24px;
+            input{
+                width: 100%;
+            }
+        }
+        .upload-box{
+            width: 100%;
+            height: 200px;
+            background-color: white;
+            @include flex(row);
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            &:hover{
+                filter: brightness(0.80);
+            }
+            span{
+                width: 50px;
+                height: 50px;
+                background-color: #fff;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2.5rem;
+                color: #57CB68;
+                border: 3px solid #57CB68;
+                cursor: pointer;
+                transition: background 0.2s, border-color 0.2s;
+            }
+        }
+    }
+    // .mode-section{
+    //     background-color: #a2d590;
+    //     padding: 30px;
+    // }
+    .create-button{
+        @include flex(row);
+        justify-content: center;
+        align-items: center;
+        button{
+            background-color: #00FF04;
+            color: white;
+            font-size: 2rem;
+            width: 250px;
+            height: 65px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            &:hover{
+                filter: brightness(0.80);
+            }
+            &:active {
+                transform: scale(0.95); // Slightly scales down the element when clicked
+            }
+            }
+    }
+    
+    
+}
+
+.left-panel label,
+.right-panel label {
+    margin-bottom: 10px;
+    display: block;
+    font-size: 1.4rem;
+}
+
+.left-panel input,
+.right-panel input {
+    border: none;
+    border-radius: 3px;
+    height: 25px;
+    font-size: 1.2rem;
+}
