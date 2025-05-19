@@ -47,4 +47,11 @@ const Quiz = sequelize.define('quizzes', {
     }
 });
 
+//  Quiz.associate = models => {
+//     Quiz.hasMany(models.PlayerResult, {
+//       foreignKey: 'quizId',
+//       as: 'results'
+//     });
+//   };
+
 module.exports = Quiz;

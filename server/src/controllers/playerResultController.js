@@ -4,6 +4,18 @@ const Quiz = require("../models/quizModel");
 const User = require('../models/userModel');
 const { fn, col, literal } = require('sequelize');
 
+
+// const models = {
+//   Quiz: Quiz,
+//   PlayerResult: PlayerResult
+// };
+
+// Object.keys(models).forEach(modelName => {
+//   if (typeof models[modelName].associate === 'function') {
+//     models[modelName].associate(models);
+//   }
+// });
+
 //@desc postPlayerResult PlayerResult
 //@route POST /api/play/postPlayerResult
 //@access public
@@ -88,7 +100,7 @@ const getTopUsersByLevel = asyncHandler(async (req, res) => {
 const review = asyncHandler(async (req, res) => {
   const { dateDoQuiz } = req.query;
   const idUser = req.user.id;
-
+  
   if (!idUser || !dateDoQuiz) {
     return res.status(400).json({ message: 'Missing idUser or dateDoQuiz' });
   }
@@ -99,6 +111,12 @@ const review = asyncHandler(async (req, res) => {
       dateDoQuiz
     },
     order: [['createdAt', 'ASC']],
+     include: [
+      {
+        model: Quiz,
+        attributes: ['question', 'image', 'correctAnswer', 'answerA', 'answerB', 'answerC', 'answerD']
+      }
+    ]
   });
 
   if (!results || results.length === 0) {

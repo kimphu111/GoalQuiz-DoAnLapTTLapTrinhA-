@@ -1,7 +1,7 @@
 const { DataTypes, UUIDV4 } = require('sequelize');
 const { sequelize } = require('../databases/mysql/mysqlConnect');
 const User = require('./userModel');
-
+const Quiz = require('./quizModel');
 
 const PlayerResult = sequelize.define('PlayerResult', {
   id: {
@@ -44,6 +44,6 @@ const PlayerResult = sequelize.define('PlayerResult', {
 });
 
 PlayerResult.belongsTo(User, { foreignKey: 'idUser', targetKey: 'id' });
-
+PlayerResult.belongsTo(Quiz, { foreignKey: 'idQuestion', targetKey: 'id' });
 
 module.exports = PlayerResult;
