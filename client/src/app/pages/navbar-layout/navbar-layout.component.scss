@@ -5,7 +5,7 @@ $dark-header-bg: rgba(0, 0, 0, 0.7);
 $dark-sidebar-bg: #2a2a2a;
 $dark-card-bg: #2a2a2a;
 $dark-card-gradient: linear-gradient(135deg, #2a2a2a, #333333);
-$dark-text-secondary: #C8C8C8;
+$dark-text-secondary: #c8c8c8;
 $dark-highlight-color: #38a565;
 $dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
 $dark-calendar-day-text: #d1d5db;
@@ -13,10 +13,10 @@ $dark-highlighted-day-bg: #ff9999; /* Màu hồng nhạt cho ngày được high
 
 /* Mã màu cho light mode */
 $light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
-$light-text-color: #F5F5F5;
+$light-text-color: #f5f5f5;
 $light-header-bg: rgba(255, 255, 255, 0.9);
 $light-sidebar-bg: #ffffff;
-$light-card-bg:  #F5F5F5;
+$light-card-bg: #f5f5f5;
 $light-card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
 $light-text-secondary: #4f4f4f;
 $light-highlight-color: #38a565;
@@ -31,14 +31,15 @@ $light-highlighted-day-bg: #ff9999;
   margin: 0 auto;
   background: $dark-bg-gradient;
   color: $dark-text-color;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 100vh;
-  transition: background-color 5s, color 5s;
-
+  transition:
+    background-color 5s,
+    color 5s;
 }
 
 .header {
@@ -51,12 +52,13 @@ $light-highlighted-day-bg: #ff9999;
   top: 0;
   width: 1240px;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .logo {
     font-size: 1.6rem;
     font-weight: bold;
     color: $dark-highlight-color;
-    img{
+    img {
       width: 150px;
       height: 50px;
       object-fit: cover;
@@ -64,7 +66,7 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .greeting {
-    font-family: 'Leckerli One', cursive;
+    font-family: "Leckerli One", cursive;
     font-size: 24px;
     color: #939393;
   }
@@ -136,9 +138,8 @@ $light-highlighted-day-bg: #ff9999;
   bottom: 0;
   overflow-y: auto;
 
-  .menu-toggle{
+  .menu-toggle {
     display: none;
-
   }
 
   ul {
@@ -191,8 +192,6 @@ $light-highlighted-day-bg: #ff9999;
   }
 }
 
-
-
 .calendar-card {
   background: $dark-card-gradient;
   border-radius: 8px;
@@ -202,7 +201,9 @@ $light-highlighted-day-bg: #ff9999;
   overflow: hidden;
   width: 900px;
   height: 300px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
@@ -312,7 +313,7 @@ $light-highlighted-day-bg: #ff9999;
     ul li a {
       color: $light-text-secondary;
 
-      svg{
+      svg {
         fill: $light-text-secondary;
       }
 

@@ -1,48 +1,67 @@
 <div class="container">
-
   <main class="main-content">
     <section class="content-bot">
       <ng-container *ngIf="paginatedQuizzes.length > 0; else noQuiz">
         <table class="quiz-table">
           <thead>
-          <tr class="table-header">
-            <th class="table-cell">ID</th>
-            <th class="table-cell">Title</th>
-            <th class="table-cell">Date Created</th>
-            <th class="table-cell">Participants</th>
-          </tr>
+            <tr class="table-header">
+              <th class="table-cell">ID</th>
+              <th class="table-cell">Title</th>
+              <th class="table-cell">Date Created</th>
+              <th class="table-cell">Participants</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let quiz of paginatedQuizzes" class="table-row">
-            <td class="table-cell text-center">{{ quiz.id }}</td>
-            <td class="table-cell">{{ quiz.title }}</td>
-            <td class="table-cell text-center">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</td>
-            <td class="table-cell text-center">
-              <button class="participant-btn" (click)="quiz.showParticipants = !quiz.showParticipants">
-                {{ quiz.participants.length }}
-              </button>
+            <tr *ngFor="let quiz of paginatedQuizzes" class="table-row">
+              <td class="table-cell text-center">{{ quiz.id }}</td>
+              <td class="table-cell">{{ quiz.title }}</td>
+              <td class="table-cell text-center">
+                {{ quiz.createdAt | date: "dd/MM/yyyy" }}
+              </td>
+              <td class="table-cell text-center">
+                <button
+                  class="participant-btn"
+                  (click)="quiz.showParticipants = !quiz.showParticipants"
+                >
+                  {{ quiz.participants.length }}
+                </button>
 
-              <div *ngIf="quiz.showParticipants" class="participant-list">
-                <ng-container *ngIf="quiz.participants.length > 0; else noParticipants">
-                  <ul>
-                    <li *ngFor="let p of quiz.participants" class="participant-item">
-                      - {{ p.name }} ({{ p.submittedAt | date:'shortTime' }})
-                    </li>
-                  </ul>
-                </ng-container>
-              </div>
-            </td>
-          </tr>
+                <div *ngIf="quiz.showParticipants" class="participant-list">
+                  <ng-container
+                    *ngIf="quiz.participants.length > 0; else noParticipants"
+                  >
+                    <ul>
+                      <li
+                        *ngFor="let p of quiz.participants"
+                        class="participant-item"
+                      >
+                        - {{ p.name }} ({{ p.submittedAt | date: "shortTime" }})
+                      </li>
+                    </ul>
+                  </ng-container>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
 
         <!-- Pagination -->
         <nav class="pagination">
-          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()"
+          >
             Previous
           </button>
-          <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-          <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+          <span class="pagination-info"
+            >Page {{ currentPage }} of {{ totalPages }}</span
+          >
+          <button
+            class="pagination-btn"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()"
+          >
             Next
           </button>
         </nav>
@@ -58,6 +77,10 @@
 
 <ng-template #noQuiz>
   <p class="no-quiz-text">
-    {{ selectedDate ? 'No quizzes found on ' + (selectedDate | date:'dd/MM/yyyy') : 'No quizzes available.' }}
+    {{
+      selectedDate
+        ? "No quizzes found on " + (selectedDate | date: "dd/MM/yyyy")
+        : "No quizzes available."
+    }}
   </p>
 </ng-template>

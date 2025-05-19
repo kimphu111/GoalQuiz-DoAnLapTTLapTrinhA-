@@ -69,17 +69,11 @@ export class AuthComponent {
             if (!response.accessToken) {
               throw new Error('Invalid response structure');
             }
-            console.log('Login response:', response); // Debug API response
-
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
             localStorage.setItem('username', response.user.username);
             localStorage.setItem('email', response.user.email);
-            localStorage.setItem(
-              'token',
-              response.token || response.accessToken,
-            );
 
             // Lưu role và user object
             const role = response.user?.role || response.role || 'user';

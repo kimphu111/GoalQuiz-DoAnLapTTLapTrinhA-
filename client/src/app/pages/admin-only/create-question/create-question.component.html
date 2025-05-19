@@ -1,98 +1,105 @@
 <div id="container">
-    <div class="left-panel">
-        <div class="question-content">
-            <label>Question Content</label>
-            <textarea [(ngModel)]="questionData.question"  placeholder="Please enter content!"></textarea>
-        </div>
-
-        <div class="response-options">
-            <label>Response Options</label>
-            <div class="options">
-
-                <div class="option-row">
-                    <label>A.</label>
-                    <input [(ngModel)]="questionData.optionA" type="text">
-                </div>
-
-                <div class="option-row">
-                    <label>B.</label>
-                    <input [(ngModel)]="questionData.optionB" type="text">
-                </div>
-
-                <div class="option-row">
-                    <label>C.</label>
-                    <input [(ngModel)]="questionData.optionC" type="text">
-                </div>
-
-                <div class="option-row">
-                    <label>D.</label>
-                    <input [(ngModel)]="questionData.optionD" type="text">
-                </div>
-
-            </div>
-
-            <div class="correct-answer">
-                <label>Correct Answer</label>
-                <input [(ngModel)]="questionData.correctAnswer" type="text">
-            </div>
-        </div>
-
-        <div class="level">
-            <label>Level</label>
-            <div class="level-row">
-                <div class="level-buttons">
-
-                    <button
-                        type="button"
-                        [class.selected]="questionData.level === 'easy'"
-                        (click)="questionData.level = 'easy'">
-                        <b>Easy</b>
-                    </button>
-
-                    <button
-                        type="button"
-                        [class.selected]="questionData.level === 'medium'"
-                        (click)="questionData.level = 'medium'">
-                        <b>Medium</b>
-                    </button>
-
-                    <button
-                        type="button"
-                        [class.selected]="questionData.level === 'hard'"
-                        (click)="questionData.level = 'hard'">
-                        <b>Hard</b>
-                    </button>
-
-                </div>
-
-                <div class="score">
-                    <span>0</span>
-                </div>
-            </div>
-        </div>
+  <div class="left-panel">
+    <div class="question-content">
+      <label>Question Content</label>
+      <textarea
+        [(ngModel)]="questionData.question"
+        placeholder="Please enter content!"
+      ></textarea>
     </div>
 
-    <div class="right-panel">
-        <div class="right-panel-top">
-            <div class="id-question">
-                <label>ID Questions</label>
-                <input type="text" readonly>
-            </div>
-
-            <div class="image-upload">
-                <label>Image</label>
-                 <input type="file" #fileInput style="display:none" (change)="onFileSelected($event)" >
-                <div class="upload-box" (click)="fileInput.click()" >
-                    @if(!selectedImage){
-                        <span>+</span>
-                    }@else{
-                        <img [src]="selectedImage" alt="Preview">
-                    }
-                </div>
-            </div>
+    <div class="response-options">
+      <label>Response Options</label>
+      <div class="options">
+        <div class="option-row">
+          <label>A.</label>
+          <input [(ngModel)]="questionData.optionA" type="text" />
         </div>
 
-        <!-- <div class="mode-section">
+        <div class="option-row">
+          <label>B.</label>
+          <input [(ngModel)]="questionData.optionB" type="text" />
+        </div>
+
+        <div class="option-row">
+          <label>C.</label>
+          <input [(ngModel)]="questionData.optionC" type="text" />
+        </div>
+
+        <div class="option-row">
+          <label>D.</label>
+          <input [(ngModel)]="questionData.optionD" type="text" />
+        </div>
+      </div>
+
+      <div class="correct-answer">
+        <label>Correct Answer</label>
+        <input [(ngModel)]="questionData.correctAnswer" type="text" />
+      </div>
+    </div>
+
+    <div class="level">
+      <label>Level</label>
+      <div class="level-row">
+        <div class="level-buttons">
+          <button
+            type="button"
+            [class.selected]="questionData.level === 'easy'"
+            (click)="questionData.level = 'easy'"
+          >
+            <b>Easy</b>
+          </button>
+
+          <button
+            type="button"
+            [class.selected]="questionData.level === 'medium'"
+            (click)="questionData.level = 'medium'"
+          >
+            <b>Medium</b>
+          </button>
+
+          <button
+            type="button"
+            [class.selected]="questionData.level === 'hard'"
+            (click)="questionData.level = 'hard'"
+          >
+            <b>Hard</b>
+          </button>
+        </div>
+
+        <div class="score">
+          <span>0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="right-panel-top">
+      <div class="id-question">
+        <label>ID Questions</label>
+        <input type="text" readonly />
+      </div>
+
+      <div class="image-upload">
+        <label>Image</label>
+        <input
+          type="file"
+          #fileInput
+          style="display: none"
+          (change)="onFileSelected($event)"
+        />
+        <div class="upload-box" (click)="fileInput.click()">
+          @if (!selectedImage) {
+            <span>+</span>
+          } @else {
+            <img [src]="selectedImage" alt="Preview" />
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="mode-section">
             <div class="mode">
                 <label>Mode</label>
                 <select>
@@ -103,8 +110,8 @@
             </div>
         </div> -->
 
-        <div class="create-button">
-            <button (click)="createQuestion()">Create</button>
-        </div>
+    <div class="create-button">
+      <button (click)="createQuestion()">Create</button>
     </div>
+  </div>
 </div>
