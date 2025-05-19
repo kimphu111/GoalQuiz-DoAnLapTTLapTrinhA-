@@ -167,7 +167,6 @@
         border: 2px solid #e0e0e0;
         background: #f5f5f5;
         font-size: 1.2rem;
-        cursor: pointer;
         transition: background 0.2s, border 0.2s, color 0.2s;
         &.chosen {
             border: 2px solid #1976d2;
@@ -177,13 +176,13 @@
         }
         &.correct {
             background: #57CB68;
-            border: 2px solid #388e3c;
+            border: none;
             color: #fff;
             font-weight: bold;
         }
         &.incorrect {
             background: #B94E4E;
-            border: 2px solid #b71c1c;
+            border:  none;
             color: #fff;
             font-weight: bold;
         }

@@ -2,7 +2,9 @@
     <div class="left-panel">
         <div class="question-content">
             <label>Question Content</label>
-            <textarea [(ngModel)]="questionData.question"  placeholder="Please enter content!"></textarea>
+            <textarea [(ngModel)]="questionData.question" 
+                         placeholder="Please enter content!"
+                         [ngClass]="{'error-border': errorFields['question']}"></textarea>
         </div>
 
         <div class="response-options">
@@ -11,29 +13,34 @@
 
                 <div class="option-row">
                     <label>A.</label>
-                    <input [(ngModel)]="questionData.optionA" type="text">
+                    <input [(ngModel)]="questionData.optionA" type="text" 
+                            [ngClass]="{'error-border': errorFields['optionA']}">
                 </div>
 
                 <div class="option-row">
                     <label>B.</label>
-                    <input [(ngModel)]="questionData.optionB" type="text">
+                    <input [(ngModel)]="questionData.optionB" type="text"
+                            [ngClass]="{'error-border': errorFields['optionB']}">
                 </div>
 
                 <div class="option-row">
                     <label>C.</label>
-                    <input [(ngModel)]="questionData.optionC" type="text">
+                    <input [(ngModel)]="questionData.optionC" type="text"
+                            [ngClass]="{'error-border': errorFields['optionC']}">
                 </div>
 
                 <div class="option-row">
                     <label>D.</label>
-                    <input [(ngModel)]="questionData.optionD" type="text">
+                    <input [(ngModel)]="questionData.optionD" type="text"
+                            [ngClass]="{'error-border': errorFields['optionD']}">
                 </div>
 
             </div>
 
             <div class="correct-answer">
                 <label>Correct Answer</label>
-                <input [(ngModel)]="questionData.correctAnswer" type="text">
+                <input [(ngModel)]="questionData.correctAnswer" type="text"
+                        [ngClass]="{'error-border': errorFields['correctAnswer']}">
             </div>
         </div>
 
@@ -76,7 +83,11 @@
         <div class="right-panel-top">
             <div class="id-question">
                 <label>ID Questions</label>
-                <input type="text" readonly>
+                @if(showQuestionId){
+                    <input type="text" [value]="questionId" readonly>
+                }@else{
+                    <input type="text" readonly>
+                }
             </div>
 
             <div class="image-upload">

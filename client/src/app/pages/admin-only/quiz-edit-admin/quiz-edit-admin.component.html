@@ -27,13 +27,14 @@
             <button (click)="openPopup(i)">...</button>
              <!-- Popup -->
             @if(showPopup && selectedIndex === i){
-            <div class="popup-inline">
-              <div class="popup">
-                <button>Details</button>
-                <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
-                <button>Edit</button>
-              </div>
-            </div>  
+            <div class="popup-overlay" (click)="closePopup()"></div>
+                <div class="popup-inline" (click)="$event.stopPropagation()" >
+                  <div class="popup" >
+                    <button>Details</button>
+                    <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
+                    <button>Edit</button>
+                  </div>
+                </div>
           }
           </td>
         </tr>
