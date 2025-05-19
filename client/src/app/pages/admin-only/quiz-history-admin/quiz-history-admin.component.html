@@ -1,22 +1,8 @@
 <div class="container">
 
-  <!-- Main Content -->
-  <div class="main-content">
-
-    <div class="content-bot">
-      <!-- Date Filter and Table -->
-      <div class="date-filter">
-        <label>Chọn ngày:</label>
-        <input
-          type="date"
-          [(ngModel)]="selectedDate"
-          (ngModelChange)="searchByDate()"
-          class="date-input"
-        />
-      </div>
-
-      <!-- Quiz Table -->
-      <div *ngIf="paginatedQuizzes.length > 0; else noQuiz">
+  <main class="main-content">
+    <section class="content-bot">
+      <ng-container *ngIf="paginatedQuizzes.length > 0; else noQuiz">
         <table class="quiz-table">
           <thead>
           <tr class="table-header">
@@ -32,53 +18,46 @@
             <td class="table-cell">{{ quiz.title }}</td>
             <td class="table-cell text-center">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</td>
             <td class="table-cell text-center">
-              <button
-                class="participant-btn"
-                (click)="quiz.showParticipants = !quiz.showParticipants"
-              >
+              <button class="participant-btn" (click)="quiz.showParticipants = !quiz.showParticipants">
                 {{ quiz.participants.length }}
               </button>
+
               <div *ngIf="quiz.showParticipants" class="participant-list">
-                <ul *ngIf="quiz.participants.length > 0; else noParticipants">
-                  <li *ngFor="let p of quiz.participants" class="participant-item">
-                    - {{ p.name }} ({{ p.submittedAt | date:'shortTime' }})
-                  </li>
-                </ul>
-                <ng-template #noParticipants>
-                  <p class="no-participant-text">Chưa có ai làm bài</p>
-                </ng-template>
+                <ng-container *ngIf="quiz.participants.length > 0; else noParticipants">
+                  <ul>
+                    <li *ngFor="let p of quiz.participants" class="participant-item">
+                      - {{ p.name }} ({{ p.submittedAt | date:'shortTime' }})
+                    </li>
+                  </ul>
+                </ng-container>
               </div>
             </td>
           </tr>
           </tbody>
         </table>
 
-        <!-- Pagination Controls -->
-        <div class="pagination">
-          <button
-            class="pagination-btn"
-            [disabled]="currentPage === 1"
-            (click)="previousPage()"
-          >
+        <!-- Pagination -->
+        <nav class="pagination">
+          <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">
             Previous
           </button>
           <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
-          <button
-            class="pagination-btn"
-            [disabled]="currentPage === totalPages"
-            (click)="nextPage()"
-          >
+          <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
             Next
           </button>
-        </div>
-      </div>
-
-      <!-- No Quiz Message -->
-      <ng-template #noQuiz>
-        <p class="no-quiz-text">
-          {{ selectedDate ? 'Không có quiz nào vào ngày ' + (selectedDate | date:'dd/MM/yyyy') : 'Không có quiz nào.' }}
-        </p>
-      </ng-template>
-    </div>
-  </div>
+        </nav>
+      </ng-container>
+    </section>
+  </main>
 </div>
+
+<!-- Templates -->
+<ng-template #noParticipants>
+  <p class="no-participant-text">No participants yet</p>
+</ng-template>
+
+<ng-template #noQuiz>
+  <p class="no-quiz-text">
+    {{ selectedDate ? 'No quizzes found on ' + (selectedDate | date:'dd/MM/yyyy') : 'No quizzes available.' }}
+  </p>
+</ng-template>

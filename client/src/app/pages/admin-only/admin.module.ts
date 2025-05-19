@@ -7,15 +7,14 @@ import { CreateQuestionComponent } from './create-question/create-question.compo
 import { AdminRoutingModule } from './admin.routes';
 
 @NgModule({
-  declarations: [
+  declarations: [],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
     AdminNavbarComponent,
     QuizEditAdminComponent,
     QuizHistoryAdminComponent,
-    CreateQuestionComponent
+    CreateQuestionComponent,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule
-  ]
 })
-export class AdminModule { }
+export class AdminModule {}

@@ -1,9 +1,10 @@
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #0f500d;
-    width: 100vw;
-    height: 100vh;
+    //width: 100vw;
+    //height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,3 +13,6 @@ body {
       display: none; /* Chrome, Safari, Edge */
     }
   }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

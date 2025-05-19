@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 interface Participant {
   name: string;
@@ -14,6 +14,14 @@ interface Quiz {
   createdAt: Date;
   participants: Participant[];
   showParticipants?: boolean;
+}
+
+interface CalendarDay {
+  day: number;
+  isCurrentMonth: boolean;
+  isSelected: boolean;
+  isToday: boolean;
+  date: Date;
 }
 
 @Component({
@@ -34,6 +42,9 @@ export class QuizHistoryAdminComponent implements OnInit {
     day: 'numeric',
     month: 'long',
   });
+  showDateFilter = false;
+  calendarMonth: Date = new Date();
+  calendarDays: CalendarDay[] = [];
 
   quizzes: Quiz[] = [
     {
@@ -150,8 +161,7 @@ export class QuizHistoryAdminComponent implements OnInit {
     },
     {
       id: 15,
-      title:
-        'Ai là cầu thủ đầu tiên ghi bàn trong lịch sử World Cup?',
+      title: 'Ai là cầu thủ đầu tiên ghi bàn trong lịch sử World Cup?',
       createdAt: new Date('2025-05-08'),
       participants: [
         { name: 'Thắng', submittedAt: new Date('2025-05-08T12:00:00') },
@@ -159,8 +169,7 @@ export class QuizHistoryAdminComponent implements OnInit {
     },
     {
       id: 16,
-      title:
-        'Đội nào vô địch giải bóng đá U23 châu Á năm 2018?',
+      title: 'Đội nào vô địch giải bóng đá U23 châu Á năm 2018?',
       createdAt: new Date('2025-05-09'),
       participants: [
         { name: 'Bảo', submittedAt: new Date('2025-05-09T13:00:00') },
@@ -184,8 +193,7 @@ export class QuizHistoryAdminComponent implements OnInit {
     },
     {
       id: 19,
-      title:
-        'Ai là cầu thủ đầu tiên ghi bàn trong lịch sử World Cup nữ?',
+      title: 'Ai là cầu thủ đầu tiên ghi bàn trong lịch sử World Cup nữ?',
       createdAt: new Date('2025-05-12'),
       participants: [
         { name: 'Hương', submittedAt: new Date('2025-05-12T14:05:00') },
@@ -193,8 +201,7 @@ export class QuizHistoryAdminComponent implements OnInit {
     },
     {
       id: 20,
-      title:
-        'Đội nào vô địch giải bóng đá U19 châu Á năm 2018?',
+      title: 'Đội nào vô địch giải bóng đá U19 châu Á năm 2018?',
       createdAt: new Date('2025-05-13'),
       participants: [
         { name: 'Mai', submittedAt: new Date('2025-05-13T08:45:00') },
@@ -206,13 +213,95 @@ export class QuizHistoryAdminComponent implements OnInit {
     this.filteredQuizzes = [...this.quizzes];
     this.filteredQuizzes.forEach((q) => (q.showParticipants = false));
     this.updatePagination();
+    this.generateCalendar();
+  }
+  generateCalendar() {
+    const year = this.calendarMonth.getFullYear();
+    const month = this.calendarMonth.getMonth();
+    const firstDay = new Date(year, month, 0);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDay = firstDay.getDay();
+    const totalDays = lastDay.getDate();
+    const today = new Date();
+
+    this.calendarDays = [];
+
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+    for (let i = startDay - 1; i >= 0; i--) {
+      const date = new Date(year, month - 1, prevMonthLastDay - i);
+      this.calendarDays.push({
+        day: prevMonthLastDay - i,
+        isCurrentMonth: false,
+        isSelected: false,
+        isToday: false,
+        date,
+      });
+    }
+
+    // Add current month's days
+    for (let day = 1; day <= totalDays; day++) {
+      const date = new Date(year, month, day);
+      const isSelected = this.selectedDate === date.toISOString().split('T')[0];
+      const isToday =
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
+      this.calendarDays.push({
+        day,
+        isCurrentMonth: true,
+        isSelected,
+        isToday,
+        date,
+      });
+    }
+
+    // Add next month's days to fill the grid
+    const remainingDays = 42 - this.calendarDays.length; // 6 rows * 7 columns
+    for (let day = 1; day <= remainingDays; day++) {
+      const date = new Date(year, month + 1, day);
+      this.calendarDays.push({
+        day,
+        isCurrentMonth: false,
+        isSelected: false,
+        isToday: false,
+        date,
+      });
+    }
+  }
+
+  previousMonth() {
+    this.calendarMonth = new Date(
+      this.calendarMonth.getFullYear(),
+      this.calendarMonth.getMonth() - 1,
+      1,
+    );
+    this.generateCalendar();
+  }
+
+  nextMonth() {
+    this.calendarMonth = new Date(
+      this.calendarMonth.getFullYear(),
+      this.calendarMonth.getMonth() + 1,
+      1,
+    );
+    this.generateCalendar();
   }
 
   updatePagination() {
-    this.totalPages = Math.ceil(this.filteredQuizzes.length / this.itemsPerPage);
+    this.totalPages = Math.ceil(
+      this.filteredQuizzes.length / this.itemsPerPage,
+    );
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedQuizzes = this.filteredQuizzes.slice(startIndex, endIndex);
+  }
+
+  selectDay(day: CalendarDay) {
+    if (!day.isCurrentMonth) return; // Only allow selecting current month's days
+    this.selectedDate = day.date.toISOString().split('T')[0];
+    this.calendarDays.forEach((d) => (d.isSelected = false));
+    day.isSelected = true;
+    this.searchByDate();
   }
 
   previousPage() {
@@ -245,5 +334,18 @@ export class QuizHistoryAdminComponent implements OnInit {
     }
     this.currentPage = 1; // Reset về trang 1 khi lọc
     this.updatePagination();
+  }
+
+  toggleDateFilter() {
+    this.showDateFilter = !this.showDateFilter;
+  }
+
+  closeDateFilter() {
+    this.showDateFilter = false;
+  }
+  clearDate() {
+    this.selectedDate = '';
+    this.calendarDays.forEach((d) => (d.isSelected = false));
+    this.searchByDate();
   }
 }

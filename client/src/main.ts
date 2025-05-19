@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './app/app.routes';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,7 +16,8 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       FormsModule,
       HttpClientModule,
-      RouterModule.forRoot(routes)
-    ),
+      RouterModule.forRoot(routes),
+      MatSnackBarModule,
+    ), provideAnimationsAsync(),
   ],
 }).catch(err => console.error(err));

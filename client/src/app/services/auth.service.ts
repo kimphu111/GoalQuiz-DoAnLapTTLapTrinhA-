@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api/auth';
+  private apiUrl = 'http://localhost:8000/api/users';
 
   constructor(
     private http: HttpClient,
@@ -21,6 +21,7 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
       map((response: any) => {
+        console.log('API response:', response); // Kiểm tra response
         if (response.accessToken && response.refreshToken) {
           this.saveTokens(
             response.accessToken,
@@ -29,7 +30,13 @@ export class AuthService {
             response.user?.username || response.user?.email || email
           );
           if (isPlatformBrowser(this.platformId)) {
-            this.router.navigate(['/home']);
+            const role = response.role || 'user';
+            console.log('Role:', role); // Kiểm tra role
+            if (role === 'admin') {
+              this.router.navigate(['/quiz-edit-admin']);
+            } else {
+              this.router.navigate(['/home']);
+            }
           }
         }
         return response;
@@ -150,5 +157,12 @@ export class AuthService {
     );
 
     return JSON.parse(jsonPayload);
+  }
+
+  getRole(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('role');
+    }
+    return null;
   }
 }

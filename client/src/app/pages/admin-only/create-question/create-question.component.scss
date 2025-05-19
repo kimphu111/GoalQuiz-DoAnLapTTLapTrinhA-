@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: 60% 40%;
     gap: 24px;
-    height: 550px;
+    height: 590px;
     width: 1175px;
     color: #5b5d59;
 }
@@ -132,20 +132,19 @@
 }
 
 .right-panel{
-    //@include flex(column);
-    //background-color: #a2d590;
     border-radius: 10px;
-    //justify-content: space-between;
     display: grid;
     grid-template-rows: 1fr 1fr ;
     box-sizing: border-box;
     //padding: 30px;
-    overflow: auto;
+    overflow: hidden;
+    min-height:100%;
     .right-panel-top{
         @include flex(column);
         background-color: #a2d590;
         padding: 30px;
         border-radius: 10px;
+        width: 386px;
         .id-question{
             margin-bottom: 24px;
             input{
