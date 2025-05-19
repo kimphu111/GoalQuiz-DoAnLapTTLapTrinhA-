@@ -19,6 +19,7 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarLayoutComponent {
   username: string = 'Guest';
   email: string = '';
+  role: string | null = null;
   isDarkMode: boolean = false;
   isSidebarVisible: boolean = true;
   isLoading: boolean = false;
@@ -47,6 +48,7 @@ export class NavbarLayoutComponent {
       // Lấy username từ localStorage (giá trị tạm thời)
       this.username = localStorage.getItem('username') || 'Guest';
       this.email = localStorage.getItem('email') || '';
+      this.role = localStorage.getItem('role');
 
       // Gọi API để lấy dữ liệu người dùng
       this.fetchUserProfile();
@@ -79,10 +81,15 @@ export class NavbarLayoutComponent {
           const user = response.user || response;
           this.username = user.username || user.email;
           this.email = user.email || '';
+          this.role = user.role || localStorage.getItem('role');
+
 
           if (this.isBrowser) {
             localStorage.setItem('username', this.username);
             localStorage.setItem('email', this.email);
+            if (user.role) {
+              localStorage.setItem('role', user.role);
+            }
           }
           console.log('Username from API:', this.username);
           this.isLoading = false;

@@ -12,19 +12,22 @@ export class AuthGuard implements CanActivate {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   canActivate(): boolean {
     const isAuthenticated = this.authService.isAuthenticated();
-
+    console.log('AuthGuard: isAuthenticated =', isAuthenticated);
     if (!isAuthenticated) {
       if (isPlatformBrowser(this.platformId)) {
-        this.snackBar.open('Vui lòng đăng nhập để tiếp tục', 'Đóng', { duration: 3000 });
+        this.snackBar.open('Vui lòng đăng nhập để tiếp tục', 'Đóng', {
+          duration: 3000,
+        });
       }
+      console.log('AuthGuard: Redirecting to /auth');
       this.router.navigate(['/auth']);
+      return false;
     }
-
-    return isAuthenticated;
+    return true;
   }
 }

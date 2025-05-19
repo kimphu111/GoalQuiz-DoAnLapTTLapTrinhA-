@@ -1,49 +1,46 @@
 <div class="container">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <img src="assets/logo.png" />
-    </div>
-    <ul class="sidebar-menu">
-      <li class="sidebar-item">
-        <a [routerLink]="['/home']">🏠 Home </a>
-      </li>
-      <li class="sidebar-item">
-        <a [routerLink]="['/quiz-edit-admin']">🏠 Manage Quiz </a>
-      </li>
-      <li class="sidebar-item">
-        <a [routerLink]="['/quiz-history-admin']" routerLinkActive="active"
-          >📝 Review
-        </a>
-      </li>
-    </ul>
-  </div>
+  <div class="content">
+    <table class="quiz-table">
+      <thead>
+      <tr>
+        <th>Question</th>
+        <th>Level</th>
+        <th>Date Created</th>
+        <th>Participants</th>
+        <th></th>
+      </tr>
+      </thead>
 
-  <div class="main-content">
-    <div class="content-top">
-      <div class="header-left">
-        <div class="user-info">
-          <img src="./assets/admin.jpg" alt="User" class="rounded-full" />
-          <span>ADMIN</span>
-        </div>
-      </div>
-      <div class="header-right">
-        <button class="date-btn">
-          <span>1 May</span>
-        </button>
-        <input type="text" placeholder="Search" class="search-bar" />
-        <button class="notification-btn">
-          <span class="relative">
-            <i class="fas fa-bell"></i>
-            <span class="notification-count">1</span>
-          </span>
-        </button>
-      </div>
-    </div>
+      <tbody>
 
-    <div class="content-bot">
-      <!-- bo code m o day nha Tuan-->
-      <!-- o tren la slide bar voi header -->
-    </div>
+        @for(quiz of quizzes; track quiz; let i = $index){
+          <tr>
+            <td>{{quiz.question}}</td>
+            <td>{{quiz.level}}</td>
+            <td>{{quiz.createdAt ? (quiz.createdAt | date:'dd/MM/yyyy') : '-'}}</td>
+            <td>
+              <div class="participant">
+                <p>{{quiz.participants || 0}}</p>
+              </div>
+            </td>
+            <td style="position: relative;">
+              <button (click)="openPopup(i)">...</button>
+              <!-- Popup -->
+              @if(showPopup && selectedIndex === i){
+                <div class="popup-inline">
+                  <div class="popup">
+                    <button>Details</button>
+                    <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
+                    <button>Edit</button>
+                  </div>
+                </div>
+              }
+            </td>
+          </tr>
+        }
+
+      </tbody>
+
+    </table>
   </div>
 </div>

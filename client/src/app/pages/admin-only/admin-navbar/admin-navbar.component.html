@@ -1,0 +1,116 @@
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="/assets/logo.png" alt="Logo" />
+    </div>
+    <ul class="sidebar-menu">
+      <li class="sidebar-item">
+        <a [routerLink]="['/home']" routerLinkActive="active">
+          <span class="material-symbols-outlined">home</span> Home
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/question-management']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined">help</span> Question Management
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/quiz-history']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined">assignment</span> Quiz History
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/create-question']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined">edit</span> Create Question
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="content-top">
+      <div class="header-left">
+        <div class="user-info">
+          <img src="/assets/admin.jpg" alt="Admin" class="rounded-full" />
+          <span>ADMIN</span>
+        </div>
+
+        <!-- Date Picker -->
+        <div class="date" (click)="toggleDateFilter()">
+          <button class="date-btn" type="button">
+            <div class="date-calender">
+              <span class="material-symbols-outlined calendar-icon">calendar_today</span>
+              {{ currentDate | date: 'd MMM' }}
+            </div>
+          </button>
+
+          <!-- Date Filter Popup -->
+          <div
+            class="date-filter-popup"
+            *ngIf="showDateFilter"
+            (click)="$event.stopPropagation()"
+          >
+            <div class="calendar-header">
+              <div class="button-background">
+                <button class="nav-btn" (click)="previousMonth()">&lt;</button>
+              </div>
+              <span class="month-year">{{ calendarMonth | date: 'MMMM yyyy' }}</span>
+              <div class="button-background">
+                <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+              </div>
+            </div>
+
+            <div class="calendar-grid">
+              <div class="weekday" *ngFor="let day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']">
+                {{ day }}
+              </div>
+              <div
+                class="day"
+                *ngFor="let day of calendarDays"
+                [class.selected]="day.isSelected"
+                [class.disabled]="!day.isCurrentMonth"
+                [class.today]="day.isToday"
+                (click)="selectDay(day)"
+              >
+                <span class="crown" *ngIf="day.isToday">👑</span>
+                {{ day.day }}
+              </div>
+            </div>
+
+            <button class="clear-btn" (click)="clearDate()">Clear Date</button>
+          </div>
+        </div>
+
+        <div class="overlay" *ngIf="showDateFilter" (click)="closeDateFilter()"></div>
+      </div>
+
+      <!-- Header Right -->
+      <div class="header-right">
+        <input type="text" placeholder="Search" class="search-bar" />
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-count">1</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Router Outlet -->
+    <div class="content-bot">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

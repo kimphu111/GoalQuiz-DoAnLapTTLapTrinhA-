@@ -11,15 +11,9 @@ import { NavbarLayoutComponent } from './pages/navbar-layout/navbar-layout.compo
 import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
 import { RankingComponent } from './pages/ranking/ranking.component';
 import { QuizResultComponent } from './pages/Quiz/quiz-result/quiz-result.component';
-import { QuizEditAdminComponent } from './pages/admin-only/quiz-edit-admin/quiz-edit-admin.component';
-import { QuizHistoryAdminComponent } from './pages/admin-only/quiz-history-admin/quiz-history-admin.component';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'auth',
-    pathMatch: 'full',
-  },
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
   {
     path: '',
     component: NavbarLayoutComponent,
@@ -35,16 +29,14 @@ export const routes: Routes = [
       { path: 'quiz-result', component: QuizResultComponent },
     ],
   },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard, AdminGuard],
+    loadChildren: () =>
+      import('./pages/admin-only/admin.routes').then(
+        (m) => m.AdminRoutingModule,
+      ),
+  },
   { path: 'auth', component: AuthComponent },
-  {
-    path: 'quiz-edit-admin',
-    component: QuizEditAdminComponent,
-    canActivate: [AdminGuard],
-  },
-  {
-    path: 'quiz-history-admin',
-    component: QuizHistoryAdminComponent,
-    canActivate: [AdminGuard],
-  },
-  { path: '**', redirectTo: 'auth' }, // Xử lý 404
+  { path: '**', redirectTo: 'auth' },
 ];

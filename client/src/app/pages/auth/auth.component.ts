@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import {NgClass} from '@angular/common';
-import {FormsModule, NgForm} from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { response } from 'express';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [NgClass, FormsModule,CommonModule],
+  imports: [NgClass, FormsModule, CommonModule],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
-
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
   isSignIn: boolean = true;
@@ -24,14 +23,15 @@ export class AuthComponent {
   email: string = '';
   message: string = '';
   rememberMe: boolean = false;
-  isSuccess: boolean | null = null; // null: không trạng thái, true: thành công, false: thất bại
+  isSuccess: boolean | null = null;
 
-  //spinner
-  showSpinner: boolean  = false;
+  showSpinner: boolean = false;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private authService: AuthService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   ngOnInit() {}
 
@@ -65,42 +65,56 @@ export class AuthComponent {
       .post('http://localhost:8000/api/users/login', loginData)
       .subscribe({
         next: (response: any) => {
-          // console.log('Login response:', response); // Log response
           try {
-            // Kiểm tra response có đầy đủ dữ liệu không
             if (!response.accessToken) {
               throw new Error('Invalid response structure');
             }
+            console.log('Login response:', response); // Debug API response
+
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
             localStorage.setItem('username', response.user.username);
             localStorage.setItem('email', response.user.email);
-            localStorage.setItem('token', response.token || response.accessToken);
-            const role = response.role || response.user?.role || 'user';
-            localStorage.setItem('role', role);
+            localStorage.setItem(
+              'token',
+              response.token || response.accessToken,
+            );
 
-            if(role === 'admin') {
-              this.router.navigate(['/quiz-history-admin']);
-            }else{
-              this.router.navigate(['/home']);
-            }
+            // Lưu role và user object
+            const role = response.user?.role || response.role || 'user';
+            localStorage.setItem('role', role);
+            localStorage.setItem(
+              'user',
+              JSON.stringify({
+                id: response.user.id,
+                username: response.user.username,
+                email: response.user.email,
+                role: role,
+              }),
+            );
 
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
+            console.log('Decoded JWT:', decoded); // Debug JWT
 
-            if(decoded && decoded.user) {
+            if (decoded && decoded.user) {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);
               localStorage.setItem('email', decoded.user.email);
             }
+
             this.isSuccess = true;
+
+            // Chuyển hướng theo role
+            if (role === 'admin') {
+              this.router.navigate(['/admin/quiz-history']);
+            } else {
+              this.router.navigate(['/home']);
+            }
 
             setTimeout(() => {
               this.showSpinner = false;
-              // this.router.navigate(['/home']).then(success => {
-              //   console.log('Navigation to /home:', success ? 'Successful' : 'Failed');
-              // });
             }, 1500);
           } catch (error) {
             console.error('Error processing response:', error);
@@ -114,25 +128,24 @@ export class AuthComponent {
           this.message = error.error?.message || 'Login failed.';
           this.isSuccess = false;
           setTimeout(() => {
-            console.log('Reloading page due to error');
             this.showSpinner = false;
             window.location.reload();
           }, 1500);
         },
       });
-    }
-
+  }
 
   onRegister(event: Event, registerForm: any) {
     event.preventDefault();
 
-    this.showSpinner = true; // Hiển thị spinner khi bắt đầu đăng ký
+    this.showSpinner = true;
     this.message = '';
     this.isSuccess = null;
 
-    if (registerForm.invalid){
-      this.message =' Please fill in all fields.';
+    if (registerForm.invalid) {
+      this.message = 'Please fill in all fields.';
       this.isSuccess = false;
+      this.showSpinner = false;
       return;
     }
 
@@ -140,33 +153,39 @@ export class AuthComponent {
       username: this.username,
       password: this.password,
       email: this.email,
-    }
+    };
 
     this.http
       .post('http://localhost:8000/api/users/register', registerData)
       .subscribe({
-        next: (respone: any) => {
-          this.message = respone.message || 'Register successful!';
+        next: (response: any) => {
+          this.message = response.message || 'Register successful!';
           this.isSuccess = true;
-          localStorage.setItem('token', respone.token);
-          localStorage.setItem('role', respone.role);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('role', response.role || 'user');
           localStorage.setItem('username', this.username);
-          console.log('Register successful:', respone);
+          localStorage.setItem(
+            'user',
+            JSON.stringify({
+              username: this.username,
+              email: this.email,
+              role: response.role || 'user',
+            }),
+          );
+          console.log('Register successful:', response);
           setTimeout(() => {
-            this.showSpinner = false
-            this.router.navigate(['/auth']);
-            window.location.reload();
-          },1200);
+            this.showSpinner = false;
+            this.isSignIn = true;
+            this.isSignUp = false;
+          }, 1200);
         },
         error: (err) => {
           this.message = err.error?.message || 'Register failed.';
           this.isSuccess = false;
-          setTimeout(() =>{
+          setTimeout(() => {
             this.showSpinner = false;
-            window.location.reload();
-          },1200);
-        }
-      })
-
+          }, 1200);
+        },
+      });
   }
 }

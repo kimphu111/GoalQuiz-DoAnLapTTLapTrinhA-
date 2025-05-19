@@ -1,5 +1,10 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
@@ -12,28 +17,39 @@ export class AdminGuard implements CanActivate {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): boolean {
-    if (!this.authService.isLoggedIn() || !this.authService.isAuthenticated()) {
+    const isAuthenticated = this.authService.isAuthenticated();
+    console.log('AdminGuard: isAuthenticated =', isAuthenticated);
+    if (!isAuthenticated) {
       if (isPlatformBrowser(this.platformId)) {
-        this.snackBar.open('Vui lòng đăng nhập để tiếp tục', 'Đóng', { duration: 3000 });
+        this.snackBar.open('Vui lòng đăng nhập để tiếp tục', 'Đóng', {
+          duration: 3000,
+        });
       }
+      console.log('AdminGuard: Redirecting to /auth');
       this.router.navigate(['/auth']);
       return false;
     }
+
     const role = this.authService.getRole();
-    // console.log('Role in AdminGuard:', role);
+    console.log('AdminGuard: role =', role);
     if (role === 'admin') {
       return true;
     } else {
       if (isPlatformBrowser(this.platformId)) {
-        this.snackBar.open('Bạn không có quyền truy cập vào trang này', 'Đóng', { duration: 3000 });
+        this.snackBar.open(
+          'Bạn không có quyền truy cập vào trang này',
+          'Đóng',
+          { duration: 3000 },
+        );
       }
+      console.log('AdminGuard: Redirecting to /home');
       this.router.navigate(['/home']);
       return false;
     }
