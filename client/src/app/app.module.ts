@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -14,6 +16,9 @@ import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
+    MatSnackBarModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }), // Cần cho SSR
+    BrowserAnimationsModule, // Cần cho Angular Material
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: {} }, // Cung cấp cấu hình cho JwtHelperService

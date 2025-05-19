@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { response } from 'express';
 import { JwtHelperService } from '@auth0/angular-jwt';
-
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-auth',
   standalone: true,
@@ -29,8 +29,9 @@ export class AuthComponent {
   //spinner
   showSpinner: boolean  = false;
 
-  constructor(private http: HttpClient, private router: Router) {
-  }
+  constructor(private http: HttpClient,
+              private router: Router,
+              private authService: AuthService) {}
 
   ngOnInit() {}
 
@@ -59,32 +60,31 @@ export class AuthComponent {
       email: this.email,
       password: this.password,
     };
-    // console.log('[Login] Sending login request', loginData);
-    // console.log('[Login] Form invalid:', form.invalid);
-    // console.log('[Login] Form value:', form.value);
 
     this.http
       .post('http://localhost:8000/api/users/login', loginData)
       .subscribe({
         next: (response: any) => {
-          console.log('Login response:', response); // Log response
+          // console.log('Login response:', response); // Log response
           try {
             // Kiểm tra response có đầy đủ dữ liệu không
             if (!response.accessToken) {
               throw new Error('Invalid response structure');
             }
-
             this.message = response.message || 'Login successful!';
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('refreshToken', response.refreshToken || '');
-            // localStorage.setItem('username', response.user.username);
-            // localStorage.setItem('email', response.user.email);
-            // localStorage.setItem('role', response.role );
-            // localStorage.setItem('token', response.token || response.accessToken);
-            //
-            // const role = response.role || response.user?.role || 'user';
-            // localStorage.setItem('role', role);
-            // console.log('Role saved:', role);
+            localStorage.setItem('username', response.user.username);
+            localStorage.setItem('email', response.user.email);
+            localStorage.setItem('token', response.token || response.accessToken);
+            const role = response.role || response.user?.role || 'user';
+            localStorage.setItem('role', role);
+
+            if(role === 'admin') {
+              this.router.navigate(['/quiz-history-admin']);
+            }else{
+              this.router.navigate(['/home']);
+            }
 
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
@@ -93,16 +93,14 @@ export class AuthComponent {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);
               localStorage.setItem('email', decoded.user.email);
-              localStorage.setItem('role', decoded.user.role);
             }
             this.isSuccess = true;
 
             setTimeout(() => {
-              console.log('Setting showSpinner to false and navigating to /home');
               this.showSpinner = false;
-              this.router.navigate(['/home']).then(success => {
-                console.log('Navigation to /home:', success ? 'Successful' : 'Failed');
-              });
+              // this.router.navigate(['/home']).then(success => {
+              //   console.log('Navigation to /home:', success ? 'Successful' : 'Failed');
+              // });
             }, 1500);
           } catch (error) {
             console.error('Error processing response:', error);

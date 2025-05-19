@@ -80,7 +80,6 @@ export class NavbarLayoutComponent {
           this.username = user.username || user.email;
           this.email = user.email || '';
 
-
           if (this.isBrowser) {
             localStorage.setItem('username', this.username);
             localStorage.setItem('email', this.email);

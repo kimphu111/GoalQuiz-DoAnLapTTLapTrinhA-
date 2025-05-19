@@ -39,12 +39,12 @@ export const routes: Routes = [
   {
     path: 'quiz-edit-admin',
     component: QuizEditAdminComponent,
-    canActivate: [AuthGuard, AdminGuard], // Thêm AuthGuard để đảm bảo đã đăng nhập
+    canActivate: [AdminGuard],
   },
   {
-    path: 'quiz-history-admin', // Sửa dấu phẩy
+    path: 'quiz-history-admin',
     component: QuizHistoryAdminComponent,
-    canActivate: [AuthGuard, AdminGuard], // Thêm AuthGuard
+    canActivate: [AdminGuard],
   },
   { path: '**', redirectTo: 'auth' }, // Xử lý 404
 ];

@@ -1,23 +1,39 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    const role = localStorage.getItem('role');
-
+    if (!this.authService.isLoggedIn() || !this.authService.isAuthenticated()) {
+      if (isPlatformBrowser(this.platformId)) {
+        this.snackBar.open('Vui lòng đăng nhập để tiếp tục', 'Đóng', { duration: 3000 });
+      }
+      this.router.navigate(['/auth']);
+      return false;
+    }
+    const role = this.authService.getRole();
+    // console.log('Role in AdminGuard:', role);
     if (role === 'admin') {
       return true;
     } else {
-      alert('Bạn không có quyền truy cập vào trang này');
+      if (isPlatformBrowser(this.platformId)) {
+        this.snackBar.open('Bạn không có quyền truy cập vào trang này', 'Đóng', { duration: 3000 });
+      }
       this.router.navigate(['/home']);
       return false;
     }

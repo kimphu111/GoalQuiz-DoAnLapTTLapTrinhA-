@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './app/app.routes';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,7 +14,8 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       FormsModule,
       HttpClientModule,
-      RouterModule.forRoot(routes)
+      RouterModule.forRoot(routes),
+      MatSnackBarModule,
     ),
   ],
 }).catch(err => console.error(err));
