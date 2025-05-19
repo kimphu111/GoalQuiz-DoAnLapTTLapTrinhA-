@@ -51,16 +51,21 @@ export class QuizResultComponent {
                 ).subscribe({
                     next: (res) => {
                       console.log('API response:', res)
-                      // Map result thành isCorrect để FE dùng đúng
+                      // Map lại cho đúng với dữ liệu backend trả về 
                       this.questionResults = (res.results || [])
                         .map((item:any) => ({
                           ...item,
-                          isCorrect: item.result, // ép về boolean
-                          options: item.options,
-                          questionText: item.questionText || item.question,
-                          correctAnswer: item.correctAnswer,
+                          isCorrect: item.result,
+                          options: [
+                            item.quiz?.answerA,
+                            item.quiz?.answerB,
+                            item.quiz?.answerC,
+                            item.quiz?.answerD
+                          ],
+                          questionText: item.quiz?.question,
+                          correctAnswer: item.quiz?.correctAnswer,
                           chooseAnswer: item.chooseAnswer,
-                          image: item.image
+                          image: item.quiz?.image
                         }));
                         console.log('Mapped questionResults:', this.questionResults);
                       this.score = res.totalScore || 0;

@@ -38,17 +38,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'auth', component: AuthComponent },
-  // { 
-  //   path: 'admin',
-  //   canActivate: [AuthGuard, AdminGuard],
-  //   component: AdminNavbarComponent,
-  //   children: [
-  //     { path: 'question-management', component: QuizEditAdminComponent},
-  //     { path: 'quiz-history', component: QuizHistoryAdminComponent},
-  //     { path: 'create-question', component: CreateQuestionComponent},
-  //     { path: '', redirectTo: 'question-management', pathMatch: 'full'},
-  //   ]
-  // },
+  
   {
   path: 'admin',
   canActivate: [AuthGuard],
