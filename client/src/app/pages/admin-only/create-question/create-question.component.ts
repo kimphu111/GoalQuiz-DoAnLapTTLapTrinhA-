@@ -23,15 +23,64 @@ export class CreateQuestionComponent {
   };
   selectedFile: File | null = null;
   selectedImage: string | ArrayBuffer | null = null;
-  //selectedLevel: string = '';
+  errorFields: { [key: string]: boolean } = {};
+  questionId: string = '';
+  showQuestionId: boolean = false;
 
   constructor(private http: HttpClient){
 
   }
 
   createQuestion(){
-    console.log('Input data: ', this.questionData);
-    this.resetState();
+    const { question, optionA, optionB, optionC, optionD, correctAnswer, level, image } = this.questionData;
+    this.errorFields = {
+      question: !question.trim(),
+      optionA: !optionA.trim(),
+      optionB: !optionB.trim(),
+      optionC: !optionC.trim(),
+      optionD: !optionD.trim(),
+      correctAnswer: !correctAnswer.trim(),
+      level: !level.trim()
+    };
+    if (Object.values(this.errorFields).some(v => v)) {
+      return;
+    }
+
+    const quizInformation = {
+      question,
+      answerA: optionA,
+      answerB: optionB,
+      answerC: optionC,
+      answerD: optionD,
+      correctAnswer,
+      level,
+    };
+    const formData = new FormData();
+    formData.append('quizInformation', JSON.stringify(quizInformation));
+    if (image) {
+      formData.append('image', image);
+    }
+
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+    this.http.post<any>('http://localhost:8000/api/quiz/postQuiz', formData, httpOptions).subscribe({
+      next: (res) => {
+        // Xử lý thành công
+        this.questionId = res.quiz?._id || res.quiz?.id || '';
+        console.log('Input data: ', this.questionData);
+        this.showQuestionId = true;
+        this.resetState();
+        setTimeout(() => {
+          this.showQuestionId = false;
+        }, 100);
+        this.errorFields = {};
+        console.log('Quiz created successfully!');
+      },
+      error: (err) => {
+        console.log('Quiz creation failed!');
+      }
+    });
   }
 
   onFileSelected(event: Event) {
@@ -64,5 +113,6 @@ export class CreateQuestionComponent {
     this.selectedFile = null;
     this.selectedImage = null;
   }
+  
 
 }

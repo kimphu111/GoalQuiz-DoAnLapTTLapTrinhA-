@@ -9,7 +9,7 @@
                     [ngClass]="{
                         'correct': result.isCorrect,
                         'incorrect': result.isCorrect === false
-                    }" (click)="showQuestionDetail(result)">{{i+1}}
+                    }" (click)="showQuestionDetail(result, i)">{{i+1}}
                     </div>
                 }
              } @else {
@@ -24,20 +24,29 @@
                 <div class="question-detail">
 
                     <div class="question">
-                        <p>Question: {{selectedResult?.questionText || selectedResult?.question || 'No data'}}</p>
+                        <h3>Question {{selectedResult?.index !== undefined ? selectedResult.index + 1 : ''}}:
+                             {{selectedResult?.questionText || selectedResult?.question || 'No data'}}</h3>
                     </div>
-                    <img class="question-image" [src]="selectedResult?.image" alt="question image"/>
-
-                    @for( option of selectedResult?.options || []; track option){
-                    <div class="answer"
-                        [ngClass]="{
-                            'correct': selectedResult?.correctAnswer === option,
-                            'incorrect': selectedResult?.chooseAnswer === option && selectedResult?.isCorrect === false,
-                            'chosen': selectedResult?.chooseAnswer === option
-                        }">
-                        {{option}}
-                    </div>
+                    @if(selectedResult?.image){
+                        <img class="question-image"
+                            [src]="selectedResult?.image"
+                            alt="question image"
+                            (error)="selectedResult.image = null"
+                        />
                     }
+                    <div class="answer-box">
+                        @for( option of selectedResult?.options || []; track $index ){
+                            <div class="answer"
+                                [ngClass]="{
+                                    'correct': selectedResult?.correctAnswer === getAnswerKey($index),
+                                    'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
+                                    'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
+                                }">
+                                <span class="answer-label">{{ getAnswerKey($index) }}.</span> 
+                                {{option}}
+                            </div>
+                        }
+                    </div>
 
                 </div>
 

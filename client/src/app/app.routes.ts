@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { AuthGuard } from './guards/auth.guards';
-import { AdminGuard } from './guards/admin.guards';
 import { AlbumQuizComponent } from './pages/Quiz/album-quiz/album-quiz.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PersonalPointsComponent } from './pages/personal-points/personal-points.component';
@@ -13,7 +12,11 @@ import { RankingComponent } from './pages/ranking/ranking.component';
 import { QuizResultComponent } from './pages/Quiz/quiz-result/quiz-result.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'auth',
+    pathMatch: 'full',
+  },
   {
     path: '',
     component: NavbarLayoutComponent,
@@ -29,14 +32,13 @@ export const routes: Routes = [
       { path: 'quiz-result', component: QuizResultComponent },
     ],
   },
-  {
-    path: 'admin',
-    canActivate: [AuthGuard, AdminGuard],
-    loadChildren: () =>
-      import('./pages/admin-only/admin.routes').then(
-        (m) => m.AdminRoutingModule,
-      ),
-  },
   { path: 'auth', component: AuthComponent },
-  { path: '**', redirectTo: 'auth' },
+  
+  {
+  path: 'admin',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('./pages/admin-only/admin.routes').then(m => m.AdminRoutingModule)
+  },
+
+  { path: '**', redirectTo: 'auth' }, // Xử lý 404
 ];

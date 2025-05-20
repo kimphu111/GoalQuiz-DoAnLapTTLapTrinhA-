@@ -46,21 +46,26 @@ export class QuizResultComponent {
                 
                 // Gọi API lấy kết quả từ DB
                 if(this.userId && dateDoQuiz){
-                  this.http.get<any>(`http://localhost:8000/api/play/review?dateDoQuiz=${encodeURIComponent(dateDoQuiz)}&quizLevel${encodeURIComponent(this.quizLevel)}`,
+                  this.http.get<any>(`http://localhost:8000/api/play/review?dateDoQuiz=${dateDoQuiz}&quizLevel=${this.quizLevel}`,
                   httpOptions
                 ).subscribe({
                     next: (res) => {
                       console.log('API response:', res)
-                      // Map result thành isCorrect để FE dùng đúng
+                      // Map lại cho đúng với dữ liệu backend trả về 
                       this.questionResults = (res.results || [])
                         .map((item:any) => ({
                           ...item,
-                          isCorrect: item.result, // ép về boolean
-                          options: item.options,
-                          questionText: item.questionText || item.question,
-                          correctAnswer: item.correctAnswer,
+                          isCorrect: item.result,
+                          options: item.quiz ? [
+                            item.quiz?.answerA,
+                            item.quiz?.answerB,
+                            item.quiz?.answerC,
+                            item.quiz?.answerD
+                          ]: [],
+                          questionText: item.quiz?.question || 'No data',
+                          correctAnswer: item.quiz?.correctAnswer || '',
                           chooseAnswer: item.chooseAnswer,
-                          image: item.image
+                          image: item.quiz?.image || ''
                         }));
                         console.log('Mapped questionResults:', this.questionResults);
                       this.score = res.totalScore || 0;
@@ -109,9 +114,9 @@ export class QuizResultComponent {
     }
   }
 
-  showQuestionDetail(result: any){
+  showQuestionDetail(result: any, index: number){
     console.log('Show popup for:', result);
-    this.selectedResult = result;
+    this.selectedResult = {...result, index};
     this.showPopup = true;
   }
 
@@ -130,4 +135,9 @@ export class QuizResultComponent {
       this.location.back();
     }
   }
+  getAnswerKey(index: number): string {
+    return String.fromCharCode(65 + index); // 0 -> 'A', 1 -> 'B', ...
+  }
+
+  
 }

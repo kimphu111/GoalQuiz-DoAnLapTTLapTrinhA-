@@ -2,45 +2,47 @@
   <div class="content">
     <table class="quiz-table">
       <thead>
-      <tr>
-        <th>Question</th>
-        <th>Level</th>
-        <th>Date Created</th>
-        <th>Participants</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>Question</th>
+          <th>Level</th>
+          <th>Date Created</th>
+          <th>Participants</th>
+          <th></th>
+        </tr>
       </thead>
 
       <tbody>
 
         @for(quiz of quizzes; track quiz; let i = $index){
-          <tr>
-            <td>{{quiz.question}}</td>
-            <td>{{quiz.level}}</td>
-            <td>{{quiz.createdAt ? (quiz.createdAt | date:'dd/MM/yyyy') : '-'}}</td>
-            <td>
-              <div class="participant">
-                <p>{{quiz.participants || 0}}</p>
-              </div>
-            </td>
-            <td style="position: relative;">
-              <button (click)="openPopup(i)">...</button>
-              <!-- Popup -->
-              @if(showPopup && selectedIndex === i){
-                <div class="popup-inline">
-                  <div class="popup">
+        <tr>
+          <td>{{quiz.question}}</td>
+          <td>{{quiz.level}}</td>
+          <td>{{quiz.createdAt ? (quiz.createdAt | date:'dd/MM/yyyy') : '-'}}</td>
+          <td>
+            <div class="participant">
+              <p>{{quiz.participants || 0}}</p>
+            </div>
+          </td>
+          <td style="position: relative;">
+            <button (click)="openPopup(i)">...</button>
+             <!-- Popup -->
+            @if(showPopup && selectedIndex === i){
+            <div class="popup-overlay" (click)="closePopup()"></div>
+                <div class="popup-inline" (click)="$event.stopPropagation()" >
+                  <div class="popup" >
                     <button>Details</button>
                     <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
                     <button>Edit</button>
                   </div>
                 </div>
-              }
-            </td>
-          </tr>
+          }
+          </td>
+        </tr>
         }
-
+        
       </tbody>
 
     </table>
   </div>
 </div>
+
