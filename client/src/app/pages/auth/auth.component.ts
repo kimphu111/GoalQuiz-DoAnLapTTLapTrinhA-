@@ -82,10 +82,22 @@ export class AuthComponent {
             // localStorage.setItem('role', response.role );
             // localStorage.setItem('token', response.token || response.accessToken);
 
+
+            // Lưu role và user object
+            const role = response.user?.role || response.role || 'user';
+            localStorage.setItem('role', role);
+            localStorage.setItem(
+              'user',
+              JSON.stringify({
+                id: response.user.id,
+                username: response.user.username,
+                email: response.user.email,
+                role: role,
+              }),
+            );
+
             // const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
             // localStorage.setItem('role', role);
-            
-
             
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);

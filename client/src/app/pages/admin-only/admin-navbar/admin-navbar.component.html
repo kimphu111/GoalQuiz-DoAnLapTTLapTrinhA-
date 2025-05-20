@@ -7,7 +7,8 @@
     <ul class="sidebar-menu">
       <li class="sidebar-item">
         <a [routerLink]="['/home']" routerLinkActive="active">
-          <span class="material-symbols-outlined">home</span> Home
+          <span class="material-symbols-outlined icon colored">home</span>
+          <span class="label">Home</span>
         </a>
       </li>
       <li class="sidebar-item">
@@ -16,7 +17,8 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: false }"
         >
-          <span class="material-symbols-outlined">help</span> Question Management
+          <span class="material-symbols-outlined icon colored">help</span>
+          <span class="label">Question Management</span>
         </a>
       </li>
       <li class="sidebar-item">
@@ -25,7 +27,8 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: false }"
         >
-          <span class="material-symbols-outlined">assignment</span> Quiz History
+          <span class="material-symbols-outlined icon colored">assignment</span>
+          <span class="label">Quiz History</span>
         </a>
       </li>
       <li class="sidebar-item">
@@ -34,7 +37,8 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: false }"
         >
-          <span class="material-symbols-outlined">edit</span> Create Question
+          <span class="material-symbols-outlined icon colored">edit</span>
+          <span class="label">Create Question</span>
         </a>
       </li>
     </ul>
@@ -53,8 +57,10 @@
         <div class="date" (click)="toggleDateFilter()">
           <button class="date-btn" type="button">
             <div class="date-calender">
-              <span class="material-symbols-outlined calendar-icon">calendar_today</span>
-              {{ currentDate | date: 'd MMM' }}
+              <span class="material-symbols-outlined calendar-icon"
+                >calendar_today</span
+              >
+              {{ currentDate | date: "d MMM" }}
             </div>
           </button>
 
@@ -68,14 +74,21 @@
               <div class="button-background">
                 <button class="nav-btn" (click)="previousMonth()">&lt;</button>
               </div>
-              <span class="month-year">{{ calendarMonth | date: 'MMMM yyyy' }}</span>
+              <span class="month-year">{{
+                calendarMonth | date: "MMMM yyyy"
+              }}</span>
               <div class="button-background">
                 <button class="nav-btn" (click)="nextMonth()">&gt;</button>
               </div>
             </div>
 
             <div class="calendar-grid">
-              <div class="weekday" *ngFor="let day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']">
+              <div
+                class="weekday"
+                *ngFor="
+                  let day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                "
+              >
                 {{ day }}
               </div>
               <div
@@ -95,15 +108,22 @@
           </div>
         </div>
 
-        <div class="overlay" *ngIf="showDateFilter" (click)="closeDateFilter()"></div>
+        <div
+          class="overlay"
+          *ngIf="showDateFilter"
+          (click)="closeDateFilter()"
+        ></div>
       </div>
 
       <!-- Header Right -->
       <div class="header-right">
-        <input type="text" placeholder="Search" class="search-bar" />
+        <div class="search-bar">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input type="text" placeholder="Search..." />
+        </div>
         <button class="notification-btn">
           <span class="material-symbols-outlined">notifications</span>
-          <span class="notification-count">1</span>
+          <span class="notification-count">3</span>
         </button>
       </div>
     </header>

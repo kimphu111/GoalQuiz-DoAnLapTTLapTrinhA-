@@ -18,7 +18,7 @@ $light-highlight-color: #38a565;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
-  margin: auto;
+  margin-top: 10px;
 
   body.dark-mode & {
     background: $dark-card-bg;
@@ -32,9 +32,9 @@ $light-highlight-color: #38a565;
     padding: 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    margin-bottom: 20px;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    width: 943px;
 
     body.dark-mode & {
       background: #333;
@@ -111,11 +111,13 @@ $light-highlight-color: #38a565;
     .form-row {
       display: flex;
       gap: 20px;
+    }
 
-      .form-group {
-        margin-bottom: 14px;
-        flex: 1;
-      }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin-bottom: 10px;
     }
 
     .form-group {
@@ -133,7 +135,7 @@ $light-highlight-color: #38a565;
       }
 
       input {
-        width: 100%;
+        width: 98%;
         height: 32px;
         padding: 6px 10px;
         font-size: 0.95rem;
