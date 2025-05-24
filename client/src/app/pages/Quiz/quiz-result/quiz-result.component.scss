@@ -39,7 +39,53 @@
     h1{
         font-size: 3rem;
     }
-    .result{
+    .header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 32px;
+        width: 100%;
+        .header-info {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 32px;
+            margin-bottom: 10px;
+            width: 100%;
+            .date, .result-time{
+                display: flex;
+                align-items: center;
+                font-size: 1.3rem;
+                color: #2ecc40;
+                font-weight: bold;
+                .material-symbols-outline{
+                    font-size: 2rem;
+                    margin-right: 6px;
+                }
+            }
+        }
+
+        .score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .score-number {
+                color: #e74c3c;
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+                font-family: 'Arial Black', Arial, sans-serif;
+            }
+
+            .quiz-level {
+                font-size: 1.7rem;
+                color: #222;
+                font-weight: bold;
+            }
+        }
+    }
+    .result-grid{
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         align-items: center;

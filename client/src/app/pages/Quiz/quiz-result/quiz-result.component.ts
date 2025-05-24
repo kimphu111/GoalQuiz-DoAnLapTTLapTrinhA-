@@ -16,6 +16,8 @@ export class QuizResultComponent {
   userId: string = '';
   quizLevel: string = '';
   score: number = 0;
+  quizTime: string = '';
+  quizDate: string = '';
 
   latestEasy: any = {};
   latestMedium: any = {};
@@ -24,6 +26,7 @@ export class QuizResultComponent {
 
   selectedResult: any = null;
   showPopup: boolean = false;
+
 
   constructor(private router: Router,
               private http: HttpClient,
@@ -68,7 +71,16 @@ export class QuizResultComponent {
                           image: item.quiz?.image || ''
                         }));
                         console.log('Mapped questionResults:', this.questionResults);
-                      this.score = res.totalScore || 0;
+                        this.score = res.totalScore || 0;
+
+                      if (dateDoQuiz) {
+                        const dateObj = new Date(dateDoQuiz);
+                        this.quizDate = dateObj.toLocaleDateString('vi-VN');
+                        this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                      } else {
+                        this.quizDate = '';
+                        this.quizTime = '';
+                      }
 
                       // Lưu kết quả mới nhất theo level (ghi đè)
                       const key = `latestQuizResult_${this.quizLevel}`;
