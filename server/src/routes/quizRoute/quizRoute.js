@@ -10,12 +10,14 @@ router.route('/quiz/getEasyQuiz').get(getEasyQuiz);
 router.route('/quiz/getMediumQuiz').get(getMediumQuiz);
 router.route('/quiz/getHardQuiz').get(getHardQuiz);
 router.route('/quiz/getMixQuiz').get(getMixQuiz);
-router.route('/quiz/:id').get(getQuizById);
+
+
 
 // private admin
 router.route('/quiz/searchQuizByQuestionAndAnswer').get(validateAccessToken,auth(["admin"]),searchQuizByQuestionAndAnswer);
 router.route('/quiz/postQuiz').post(validateAccessToken,auth(["admin"]),upload.single('quiz_image'),postQuiz);
 router.route('/quiz/getAllQuiz').get(validateAccessToken,auth(["admin"]),getAllQuiz);
+router.route('/quiz/getQuizById/:id').get(validateAccessToken,auth(["admin"]),getQuizById);
 router.route('/quiz/updateQuiz').put(validateAccessToken,auth(["admin"]),upload.single('quiz_image'),updateQuiz);
 router.route('/quiz/deleteQuiz/:id').delete(validateAccessToken,auth(["admin"]),deleteQuiz);
 

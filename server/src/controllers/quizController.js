@@ -206,7 +206,7 @@ const postQuiz = asyncHandler(async (req,res) => {
 });
 
 //@desc    Get quiz by ID
-//@route   GET /api/quiz/:id
+//@route   GET /api/quiz/getQuizById/:id
 //@access  Private
 const getQuizById = asyncHandler(async (req, res) => {
   const quizId = req.params.id;
