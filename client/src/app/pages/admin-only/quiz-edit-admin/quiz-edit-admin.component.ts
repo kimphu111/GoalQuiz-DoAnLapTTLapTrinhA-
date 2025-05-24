@@ -31,11 +31,8 @@ export class QuizEditAdminComponent implements OnInit {
 
   getAllQuiz(){
     const token = localStorage.getItem('accessToken');
-    this.http.get<any>('http://localhost:8000/api/quiz/getAllQuiz', {
-       headers: {
-        Authorization: `Bearer ${token}`
-    }
-    })
+    const httpOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+    this.http.get<any>('http://localhost:8000/api/quiz/getAllQuiz', httpOptions) 
     .subscribe({
       next: res => {
         // this.quizzes = res.quizzes.map((q: any) => ({

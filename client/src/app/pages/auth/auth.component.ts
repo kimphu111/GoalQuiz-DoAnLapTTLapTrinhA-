@@ -84,17 +84,17 @@ export class AuthComponent {
 
 
             // Lưu role và user object
-            const role = response.user?.role || response.role || 'user';
-            localStorage.setItem('role', role);
-            localStorage.setItem(
-              'user',
-              JSON.stringify({
-                id: response.user.id,
-                username: response.user.username,
-                email: response.user.email,
-                role: role,
-              }),
-            );
+            // const role = response.user?.role || response.role || 'user';
+            // localStorage.setItem('role', role);
+            // localStorage.setItem(
+            //   'user',
+            //   JSON.stringify({
+            //     id: response.user.id,
+            //     username: response.user.username,
+            //     email: response.user.email,
+            //     role: role,
+            //   }),
+            // );
 
             // const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
             // localStorage.setItem('role', role);

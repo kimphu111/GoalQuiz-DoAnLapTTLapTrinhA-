@@ -2,9 +2,7 @@
     <div class="left-panel">
         <div class="question-content">
             <label>Question Content</label>
-            <textarea [(ngModel)]="questionData.question" 
-                         placeholder="Please enter content!"
-                         [ngClass]="{'error-border': errorFields['question']}"></textarea>
+            <textarea [(ngModel)]="questionData.question"  placeholder="Please enter content!"></textarea>
         </div>
 
         <div class="response-options">
@@ -13,107 +11,65 @@
 
                 <div class="option-row">
                     <label>A.</label>
-                    <input [(ngModel)]="questionData.optionA" type="text" 
-                            [ngClass]="{'error-border': errorFields['optionA']}">
+                    <input [(ngModel)]="questionData.optionA" type="text">
                 </div>
 
                 <div class="option-row">
                     <label>B.</label>
-                    <input [(ngModel)]="questionData.optionB" type="text"
-                            [ngClass]="{'error-border': errorFields['optionB']}">
+                    <input [(ngModel)]="questionData.optionB" type="text">
                 </div>
 
                 <div class="option-row">
                     <label>C.</label>
-                    <input [(ngModel)]="questionData.optionC" type="text"
-                            [ngClass]="{'error-border': errorFields['optionC']}">
+                    <input [(ngModel)]="questionData.optionC" type="text">
                 </div>
 
                 <div class="option-row">
                     <label>D.</label>
-                    <input [(ngModel)]="questionData.optionD" type="text"
-                            [ngClass]="{'error-border': errorFields['optionD']}">
+                    <input [(ngModel)]="questionData.optionD" type="text">
                 </div>
 
             </div>
 
             <div class="correct-answer">
                 <label>Correct Answer</label>
-                <input [(ngModel)]="questionData.correctAnswer" type="text"
-                        [ngClass]="{'error-border': errorFields['correctAnswer']}">
+                <input [(ngModel)]="questionData.correctAnswer" type="text">
             </div>
-  <div class="left-panel">
-    <div class="question-content">
-      <label>Question Content</label>
-      <textarea
-        [(ngModel)]="questionData.question"
-        placeholder="Please enter content!"
-      ></textarea>
-    </div>
-
-    <div class="response-options">
-      <label>Response Options</label>
-      <div class="options">
-        <div class="option-row">
-          <label>A.</label>
-          <input [(ngModel)]="questionData.optionA" type="text" />
         </div>
 
-        <div class="option-row">
-          <label>B.</label>
-          <input [(ngModel)]="questionData.optionB" type="text" />
+        <div class="level">
+            <label>Level</label>
+            <div class="level-row">
+                <div class="level-buttons">
+
+                    <button
+                        type="button"
+                        [class.selected]="questionData.level === 'easy'"
+                        (click)="questionData.level = 'easy'">
+                        <b>Easy</b>
+                    </button>
+
+                    <button
+                        type="button"
+                        [class.selected]="questionData.level === 'medium'"
+                        (click)="questionData.level = 'medium'">
+                        <b>Medium</b>
+                    </button>
+
+                    <button
+                        type="button"
+                        [class.selected]="questionData.level === 'hard'"
+                        (click)="questionData.level = 'hard'">
+                        <b>Hard</b>
+                    </button>
+
+                </div>
+
+                <div class="score">
+                    <span>{{ score }}</span>
+                </div>
+            </div>
         </div>
-
-        <div class="option-row">
-          <label>C.</label>
-          <input [(ngModel)]="questionData.optionC" type="text" />
-        </div>
-
-        <div class="option-row">
-          <label>D.</label>
-          <input [(ngModel)]="questionData.optionD" type="text" />
-        </div>
-      </div>
-
-      <div class="correct-answer">
-        <label>Correct Answer</label>
-        <input [(ngModel)]="questionData.correctAnswer" type="text" />
-      </div>
-    </div>
-
-    <div class="level">
-      <label>Level</label>
-      <div class="level-row">
-        <div class="level-buttons">
-          <button
-            type="button"
-            [class.selected]="questionData.level === 'easy'"
-            (click)="questionData.level = 'easy'"
-          >
-            <b>Easy</b>
-          </button>
-
-          <button
-            type="button"
-            [class.selected]="questionData.level === 'medium'"
-            (click)="questionData.level = 'medium'"
-          >
-            <b>Medium</b>
-          </button>
-
-          <button
-            type="button"
-            [class.selected]="questionData.level === 'hard'"
-            (click)="questionData.level = 'hard'"
-          >
-            <b>Hard</b>
-          </button>
-        </div>
-
-        <div class="score">
-          <span>0</span>
-        </div>
-      </div>
     </div>
 
     <div class="right-panel">
@@ -138,10 +94,9 @@
                     }
                 </div>
             </div>
-  </div>
-    </div>
+        </div>
 
-    <!-- <div class="mode-section">
+        <!-- <div class="mode-section">
             <div class="mode">
                 <label>Mode</label>
                 <select>
@@ -152,8 +107,18 @@
             </div>
         </div> -->
 
-    <div class="create-button">
-      <button (click)="createQuestion()">Create</button>
+        <div class="create-button">
+            @if(isEdit){
+              <button (click)="updateQuiz()">Update</button>
+            }@else{
+              <button (click)="createQuestion()">Create</button>
+            }
+        </div>
     </div>
-  </div>
+
+    @if(showPopup){
+      <div class="popup-message"  [ngClass]="popupType === 'success' ? 'popup-success' : 'popup-failed'">
+        {{ popupMessage }}
+      </div>
+    }
 </div>
