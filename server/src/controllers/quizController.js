@@ -158,7 +158,7 @@ const searchQuizByQuestionAndAnswer = asyncHandler(async (req,res)=>{
 })
 
 //@desc postQuiz Quiz (Admin only)
-//@route GET /api/quiz/postQuiz
+//@route POST /api/quiz/postQuiz
 //@access private
 const postQuiz = asyncHandler(async (req,res) => {
   const quizInformation = JSON.parse(req.body.quizInformation);
@@ -202,6 +202,31 @@ const postQuiz = asyncHandler(async (req,res) => {
     console.error('Quiz creation error:', error);
     res.status(500);
     throw new Error('Database insert failed');
+  }
+});
+
+//@desc    Get quiz by ID
+//@route   GET /api/quiz/:id
+//@access  Private
+const getQuizById = asyncHandler(async (req, res) => {
+  const quizId = req.params.id;
+  console.log(quizId);
+  try {
+    const quiz = await Quiz.findByPk(quizId);
+
+    if (!quiz) {
+      res.status(404);
+      throw new Error('Quiz not found');
+    }
+
+    res.status(200).json({
+      message: 'Quiz fetched successfully',
+      quiz,
+    });
+  } catch (error) {
+    console.error('Get quiz by ID error:', error);
+    res.status(500);
+    throw new Error('Failed to fetch quiz');
   }
 });
 
@@ -332,4 +357,4 @@ const deleteQuiz = asyncHandler( async (req,res) => {
   });
 })
 
-module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz, updateQuiz, deleteQuiz };
+module.exports = { getEasyQuiz, getMediumQuiz, getHardQuiz, getMixQuiz, searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz, updateQuiz, deleteQuiz, getQuizById };

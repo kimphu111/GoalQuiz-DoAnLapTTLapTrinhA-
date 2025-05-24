@@ -1,5 +1,5 @@
 const express = require("express");
-const { getEasyQuiz,getMediumQuiz,getHardQuiz,getMixQuiz,searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz, updateQuiz, deleteQuiz } = require("../../controllers/quizController");
+const { getEasyQuiz,getMediumQuiz,getHardQuiz,getMixQuiz,searchQuizByQuestionAndAnswer, postQuiz, getAllQuiz, updateQuiz, deleteQuiz, getQuizById } = require("../../controllers/quizController");
 const { auth } = require("../../middlewares/auth");
 const { validateAccessToken } = require("../../middlewares/validateAccessToken");
 const upload = require("../../middlewares/uploadImage");
@@ -10,6 +10,7 @@ router.route('/quiz/getEasyQuiz').get(getEasyQuiz);
 router.route('/quiz/getMediumQuiz').get(getMediumQuiz);
 router.route('/quiz/getHardQuiz').get(getHardQuiz);
 router.route('/quiz/getMixQuiz').get(getMixQuiz);
+router.route('/quiz/:id').get(getQuizById);
 
 // private admin
 router.route('/quiz/searchQuizByQuestionAndAnswer').get(validateAccessToken,auth(["admin"]),searchQuizByQuestionAndAnswer);
