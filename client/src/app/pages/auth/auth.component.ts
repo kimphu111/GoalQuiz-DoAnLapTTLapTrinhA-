@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {NgClass} from '@angular/common';
-import {FormsModule, NgForm} from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,10 +10,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [NgClass, FormsModule,CommonModule],
+  imports: [NgClass, FormsModule, CommonModule],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
-
+  styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
   isSignIn: boolean = true;
@@ -27,10 +26,12 @@ export class AuthComponent {
   isSuccess: boolean | null = null; // null: không trạng thái, true: thành công, false: thất bại
 
   //spinner
-  showSpinner: boolean  = false;
+  showSpinner: boolean = false;
 
-  constructor(private http: HttpClient, private router: Router) {
-  }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   ngOnInit() {}
 
@@ -39,6 +40,7 @@ export class AuthComponent {
     this.message = '';
     this.isSuccess = false;
     this.showSpinner = false;
+    $event.preventDefault();
   }
 
   onLogin(event: Event, form: NgForm) {
@@ -79,32 +81,29 @@ export class AuthComponent {
             localStorage.setItem('refreshToken', response.refreshToken || '');
             localStorage.setItem('username', response.user?.username || '');
             localStorage.setItem('email', response.user?.email || '');
-            // localStorage.setItem('role', response.role );
+            localStorage.setItem('role', response.role);
             // localStorage.setItem('token', response.token || response.accessToken);
 
-
             // Lưu role và user object
-            const role = response.user?.role || response.role || 'user';
-            localStorage.setItem('role', role);
             localStorage.setItem(
               'user',
               JSON.stringify({
                 id: response.user.id,
                 username: response.user.username,
                 email: response.user.email,
-                role: role,
+                role: response.role,
               }),
             );
 
             // const role = response.role || response.user?.role || 'user'; // Fallback là 'user'
             // localStorage.setItem('role', role);
-            
+
             const helper = new JwtHelperService();
             const decoded: any = helper.decodeToken(response.accessToken);
-            console.log('decode: ', decoded)
+            console.log('decode: ', decoded);
 
             let role = response.role || response.user?.role || 'user';
-            if(decoded && decoded.user) {
+            if (decoded && decoded.user) {
               localStorage.setItem('userId', decoded.user.id);
               localStorage.setItem('username', decoded.user.username);
               localStorage.setItem('email', decoded.user.email);
@@ -116,10 +115,15 @@ export class AuthComponent {
             this.isSuccess = true;
 
             setTimeout(() => {
-              console.log('Setting showSpinner to false and navigating to /home');
+              console.log(
+                'Setting showSpinner to false and navigating to /home',
+              );
               this.showSpinner = false;
-              this.router.navigate(['/home']).then(success => {
-                console.log('Navigation to /home:', success ? 'Successful' : 'Failed');
+              this.router.navigate(['/home']).then((success) => {
+                console.log(
+                  'Navigation to /home:',
+                  success ? 'Successful' : 'Failed',
+                );
               });
             }, 1500);
           } catch (error) {
@@ -140,8 +144,7 @@ export class AuthComponent {
           }, 1500);
         },
       });
-    }
-
+  }
 
   onRegister(event: Event, registerForm: any) {
     event.preventDefault();
@@ -150,8 +153,8 @@ export class AuthComponent {
     this.message = '';
     this.isSuccess = null;
 
-    if (registerForm.invalid){
-      this.message =' Please fill in all fields.';
+    if (registerForm.invalid) {
+      this.message = ' Please fill in all fields.';
       this.isSuccess = false;
       return;
     }
@@ -160,7 +163,7 @@ export class AuthComponent {
       username: this.username,
       password: this.password,
       email: this.email,
-    }
+    };
 
     this.http
       .post('http://localhost:8000/api/users/register', registerData)
@@ -173,20 +176,19 @@ export class AuthComponent {
           localStorage.setItem('username', this.username);
           console.log('Register successful:', respone);
           setTimeout(() => {
-            this.showSpinner = false
+            this.showSpinner = false;
             this.router.navigate(['/auth']);
             window.location.reload();
-          },1200);
+          }, 1200);
         },
         error: (err) => {
           this.message = err.error?.message || 'Register failed.';
           this.isSuccess = false;
-          setTimeout(() =>{
+          setTimeout(() => {
             this.showSpinner = false;
             window.location.reload();
-          },1200);
-        }
-      })
-
+          }, 1200);
+        },
+      });
   }
 }

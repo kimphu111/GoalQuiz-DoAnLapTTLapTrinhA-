@@ -8,7 +8,7 @@
   color: white;
 }
 .sidebar {
-  width: 260px;
+  width: 270px;
   height: 720px;
   background-color: #ffffff;
   padding: 1rem;
@@ -57,7 +57,7 @@
       }
 
       .text {
-        font-size: 10px;
+        font-size: 8px;
         font-weight: 500;
       }
 
@@ -361,13 +361,13 @@
       }
     }
 
-  .content-bot {
-    border-radius: 8px;
-    box-shadow:none;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: none;
-    height: auto;
-  
+    .content-bot {
+      border-radius: 8px;
+      box-shadow: none;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: none;
+      height: auto;
+    }
   }
 }

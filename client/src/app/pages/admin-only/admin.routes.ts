@@ -6,6 +6,7 @@ import { QuizHistoryAdminComponent } from './quiz-history-admin/quiz-history-adm
 import { CreateQuestionComponent } from './create-question/create-question.component';
 import { AuthGuard } from '../../guards/auth.guards';
 import { AdminGuard } from '../../guards/admin.guards';
+import { QuizUserAdminComponent } from './quiz-user-admin/quiz-user-admin.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'question-management', component: QuizEditAdminComponent },
       { path: 'quiz-history', component: QuizHistoryAdminComponent },
       { path: 'create-question', component: CreateQuestionComponent },
+      { path: 'quiz-user', component: QuizUserAdminComponent },
     ],
   },
 ];

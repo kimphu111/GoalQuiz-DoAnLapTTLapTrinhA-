@@ -1,7 +1,8 @@
 .auth-container {
   display: flex;
-  width: 1440px;
-  height: 700px;
+  width: 100%;
+  max-width: 1440px;
+  height: 100vh;
   background-color: #0f500d;
   overflow: hidden;
   position: relative;
@@ -9,9 +10,10 @@
 }
 
 .container {
-  position: absolute;
+  position: relative;
   top: 50%;
   left: 50%;
+  max-width: 1200px;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
@@ -81,23 +83,21 @@
   }
 
   h2 {
-    color: #38A565;
+    color: #38a565;
     font-size: 48px;
     margin-bottom: 0px;
     text-align: left;
-    font-family: 'Leckerli One', cursive;
+    font-family: "Leckerli One", cursive;
   }
-
-
 
   .form-group {
     text-align: left;
 
     label {
       display: block;
-      color: #38A565;
+      color: #38a565;
       font-size: 20px;
-      font-family: 'Robuto',cursive;
+      font-family: "Robuto", cursive;
     }
 
     input {
@@ -129,12 +129,11 @@
   .form-group-register {
     text-align: left;
 
-
     label {
       display: block;
-      color: #38A565;
+      color: #38a565;
       font-size: 22px;
-      font-family: 'Robuto',cursive;
+      font-family: "Robuto", cursive;
       margin-bottom: 10px;
     }
 
@@ -146,7 +145,7 @@
       border-radius: 5px;
       font-size: 14px;
       margin-bottom: 17px;
-      background-color: #E0E0E0;
+      background-color: #e0e0e0;
 
       .login-form & {
         background-color: #212121;
@@ -201,14 +200,14 @@
     margin-top: 10px;
 
     &:disabled {
-      background-color: #0F500D;
+      background-color: #0f500d;
       cursor: not-allowed;
     }
   }
 
   p {
     a {
-      color: #38A565;
+      color: #38a565;
       text-decoration: none;
 
       &:hover {
@@ -217,28 +216,28 @@
     }
   }
 
-  .textLogin{
+  .textLogin {
     color: #bcf8d9;
     font-size: 20px;
-    font-family: 'Robuto',cursive;
+    font-family: "Robuto", cursive;
     margin-top: 20px;
     cursor: pointer;
   }
 }
 
-.message-container{
+.message-container {
   margin-top: 12px;
   text-align: center;
   font-size: 20px;
-  font-family: 'Robuto',cursive;
+  font-family: "Robuto", cursive;
   color: #002bff;
 
-  p{
+  p {
     &.success {
       color: #00ff72;
     }
 
-    &.error{
+    &.error {
       color: #ff0000;
     }
   }
@@ -258,7 +257,7 @@
 .spinner {
   width: 60px;
   height: 60px;
-  background-image: url('/assets/ball3.png');
+  background-image: url("/assets/ball3.png");
   background-size: cover;
   background-position: center;
   animation: spinAndBounce 5s cubic-bezier(0.6, -0.2, 0.4, 1.2) infinite;
@@ -349,4 +348,7 @@
   .register-form {
     display: flex;
   }
+}
+
+@media screen and (max-width: 1200px) {
 }

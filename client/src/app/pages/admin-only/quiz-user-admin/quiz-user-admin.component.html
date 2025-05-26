@@ -1,0 +1,14 @@
+<div *ngIf="isLoading">Đang tải dữ liệu...</div>
+
+<div *ngIf="!isLoading && quizzes.length === 0">Không có dữ liệu hiển thị.</div>
+
+<div *ngIf="!isLoading && quizzes.length > 0">
+  <h2>Kết quả bài quiz</h2>
+  <ul>
+    <li *ngFor="let quiz of quizzes; let i = index">
+      <strong>Câu hỏi {{ i + 1 }}:</strong> {{ quiz.question }} <br />
+      - Đáp án của bạn: {{ quiz.yourAnswer }} <br />
+      - Đáp án đúng: {{ quiz.correctAnswer }}
+    </li>
+  </ul>
+</div>

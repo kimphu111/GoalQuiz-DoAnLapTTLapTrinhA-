@@ -31,6 +31,17 @@
           <span class="label">Quiz History</span>
         </a>
       </li>
+
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/quiz-user']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined icon colored">assignment</span>
+          <span class="label">Quiz User</span>
+        </a>
+      </li>
       <li class="sidebar-item">
         <a
           [routerLink]="['/admin/create-question']"
