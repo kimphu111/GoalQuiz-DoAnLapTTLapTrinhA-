@@ -181,7 +181,7 @@ const getAllPlayerResult = asyncHandler(async (req, res) => {
 })
 
 //@desc queryPlayerQuiz  PlayerResult
-//@route GET /api/play/review
+//@route GET /api/play/queryPlayerQuiz
 //@access public
 const queryPlayerQuiz = asyncHandler(async (req, res) => {
   const { idUser, dateDoQuiz } = req.query;
