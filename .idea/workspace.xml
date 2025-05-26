@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/create-question/create-question.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/create-question/create-question.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/create-question/create-question.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/create-question/create-question.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-history-admin/quiz-history-admin.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/auth/auth.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/home/home.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/navbar-layout/navbar-layout.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/profile/profile.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/styles.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +117,10 @@
       <workItem from="1747655344624" duration="860000" />
       <workItem from="1747656246034" duration="854000" />
       <workItem from="1747657138678" duration="10056000" />
-      <workItem from="1747693911280" duration="3890000" />
+      <workItem from="1747693911280" duration="4551000" />
+      <workItem from="1747714142367" duration="3449000" />
+      <workItem from="1748097712662" duration="2677000" />
+      <workItem from="1748259509243" duration="9191000" />
     </task>
     <servers />
   </component>
