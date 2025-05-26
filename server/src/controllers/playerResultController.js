@@ -181,10 +181,10 @@ const getAllPlayerResult = asyncHandler(async (req, res) => {
 })
 
 //@desc queryPlayerQuiz  PlayerResult
-//@route GET /api/play/queryPlayerQuiz
+//@route POST /api/play/queryPlayerQuiz
 //@access public
 const queryPlayerQuiz = asyncHandler(async (req, res) => {
-  const { idUser, dateDoQuiz } = req.query;
+  const { idUser, dateDoQuiz } = req.body;
 
   if (!idUser || !dateDoQuiz) {
     return res.status(400).json({ message: 'Missing idUser or dateDoQuiz' });
