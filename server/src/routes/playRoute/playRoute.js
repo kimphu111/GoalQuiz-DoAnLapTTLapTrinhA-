@@ -1,5 +1,5 @@
 const express = require("express");
-const { postPlayerResult, getTopUsersByLevel, review } = require("../../controllers/playerResultController");
+const { postPlayerResult, getTopUsersByLevel, review, getAllPlayerResult, queryPlayerQuiz } = require("../../controllers/playerResultController");
 const { validateAccessToken } = require("../../middlewares/validateAccessToken");
 const { auth } = require("../../middlewares/auth");
 
@@ -11,6 +11,8 @@ router.route('/play/leaderboard/:level').get(getTopUsersByLevel);
 
 // private
 router.route('/play/review').get(validateAccessToken,auth(["user"]),review);
+router.route('/play/getAllPlayerResult').get(validateAccessToken,auth(["admin"]),getAllPlayerResult);
+router.route('/play/queryPlayerQuiz').get(validateAccessToken,auth(["admin"]),queryPlayerQuiz);
 
 
 

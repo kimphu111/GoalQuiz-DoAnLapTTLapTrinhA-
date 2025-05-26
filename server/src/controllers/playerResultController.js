@@ -135,5 +135,99 @@ const review = asyncHandler(async (req, res) => {
   });
 });
 
+//@desc getAllPlayerResult  PlayerResult
+//@route GET /api/play/review
+//@access public
+const getAllPlayerResult = asyncHandler(async (req, res) => {
+  const allResults = await PlayerResult.findAll({
+    order: [['createdAt', 'ASC']],
+    include: [
+      {
+        model: Quiz,
+        attributes: ['question', 'image', 'correctAnswer', 'answerA', 'answerB', 'answerC', 'answerD']
+      }
+    ]
+  })
 
-module.exports = { postPlayerResult, getTopUsersByLevel, review };
+  if (!allResults || allResults.length === 0) {
+    return res.status(404).json({ message: 'No player results found' })
+  }
+
+
+  const groupedMap = allResults.reduce((map, item) => {
+    const key = `${item.idUser}-${item.dateDoQuiz}`
+    if (!map[key]) {
+      map[key] = {
+        idUser: item.idUser,
+        dateDoQuiz: item.dateDoQuiz,
+        totalQuestions: 0,
+        totalScore: 0,
+        results: []
+      }
+    }
+
+    map[key].results.push(item)
+    map[key].totalQuestions += 1
+    if (item.result) {
+      map[key].totalScore += item.score
+    }
+
+    return map
+  }, {})
+
+  const groupedArray = Object.values(groupedMap)
+
+  res.status(200).json(groupedArray)
+})
+
+//@desc queryPlayerQuiz  PlayerResult
+//@route GET /api/play/review
+//@access public
+const queryPlayerQuiz = asyncHandler(async (req, res) => {
+  const { idUser, dateDoQuiz } = req.query;
+
+  if (!idUser || !dateDoQuiz) {
+    return res.status(400).json({ message: 'Missing idUser or dateDoQuiz' });
+  }
+
+  const results = await PlayerResult.findAll({
+    where: {
+      idUser,
+      dateDoQuiz
+    },
+    order: [['createdAt', 'ASC']],
+    include: [
+      {
+        model: Quiz,
+        attributes: [
+          'question',
+          'image',
+          'correctAnswer',
+          'answerA',
+          'answerB',
+          'answerC',
+          'answerD'
+        ]
+      }
+    ]
+  });
+
+  if (!results || results.length === 0) {
+    return res.status(404).json({ message: 'No results found for this user and date' });
+  }
+
+  const totalQuestions = results.length;
+  const totalScore = results.reduce((sum, item) => {
+    return item.result ? sum + item.score : sum;
+  }, 0);
+
+  res.status(200).json({
+    idUser,
+    dateDoQuiz,
+    totalQuestions,
+    totalScore,
+    results
+  });
+});
+
+module.exports = { postPlayerResult, getTopUsersByLevel, review, getAllPlayerResult, queryPlayerQuiz };
