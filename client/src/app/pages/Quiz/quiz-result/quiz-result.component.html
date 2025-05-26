@@ -1,22 +1,29 @@
 <div id="wrapper">
     <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
     <div id="container">
+
         <div class="header">
             <div class="header-info">
+
                 <div class="date">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <span>{{quizDate}}</span>
                 </div>
+
                 <div class="result-time">
                     <span class="material-symbols-outlined">schedule</span>
                     <span>{{quizTime}}</span>
                 </div>
+
                 <div class="score">
-                    <div class="score-number">Score: {{score}}</div>
+                    <img src="/assets/icon-park-solid_success.png" alt="pic"/>
+                    <div class="score-number">{{score}}</div>
                     <div class="quiz-level">{{ quizLevel | titlecase }} Level</div>
                 </div>
+                
             </div>
         </div>
+
         <div class="result-grid">
             @if (questionResults && questionResults.length> 0){
                 @for(result of questionResults;track i; let i = $index ){

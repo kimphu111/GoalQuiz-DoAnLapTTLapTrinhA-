@@ -25,18 +25,44 @@
           </td> -->
           <td style="position: relative;">
             <button (click)="openPopup(i)">...</button>
+
              <!-- Popup -->
             @if(showPopup && selectedIndex === i){
-            <div class="popup-overlay" (click)="closePopup()"></div>
-                <div class="popup-inline" (click)="$event.stopPropagation()" >
-                  <div class="popup" >
-                    <button>Details</button>
-                    <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
-                    <button [routerLink]="['/admin/create-question']" [queryParams]="{id: quiz.id}">Edit</button>
+              <div class="popup-overlay" (click)="closePopup()"></div>
+                  <div class="popup-inline" (click)="$event.stopPropagation()" >
+                    <div class="popup" >
+                      <button (click)="getQuizDetail(quiz.id)">Details</button>
+                      <button (click)="deleteQuiz(quiz.id, i)">Delete</button>
+                      <button [routerLink]="['/admin/create-question']" [queryParams]="{id: quiz.id}">Edit</button>
+                    </div>
                   </div>
-                </div>
-          }
+            }
           </td>
+          @if(showDetailPopup){
+              <div class="popup-overlay" (click)="closeDetailPopup()"></div>
+              <div class="popup-inline" (click)="$event.stopPropagation()">
+                <div class="popup">
+                  <h3>Quiz Detail</h3>
+                  <div *ngIf="quizDetail">
+                    <p><strong>Question:</strong> {{quizDetail.question}}</p>
+                    <p><strong>Level:</strong> {{quizDetail.level}}</p>
+                    <p><strong>Created At:</strong> {{quizDetail.createdAt | date:'dd/MM/yyyy'}}</p>
+                    <p><strong>Answer A:</strong> {{quizDetail.answerA}}</p>
+                    <p><strong>Answer B:</strong> {{quizDetail.answerB}}</p>
+                    <p><strong>Answer C:</strong> {{quizDetail.answerC}}</p>
+                    <p><strong>Answer D:</strong> {{quizDetail.answerD}}</p>
+                    <p><strong>Correct Answer:</strong> {{quizDetail.correctAnswer}}</p>
+                    @if(quizDetail.image){
+                      <div style="margin: 10px 0;">
+                        <img [src]="quizDetail.image" alt="Quiz Image" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                      </div>
+                    }
+                  </div>
+              
+                  <button (click)="closeDetailPopup()">Close</button>
+                </div>
+              </div>
+            }
         </tr>
         }
         

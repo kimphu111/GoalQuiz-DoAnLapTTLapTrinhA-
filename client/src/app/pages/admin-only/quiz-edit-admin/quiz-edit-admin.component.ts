@@ -22,6 +22,8 @@ export class QuizEditAdminComponent implements OnInit {
   quizzes: any[] = [];
   showPopup = false;
   selectedIndex: number | null = null;
+  showDetailPopup = false;
+  quizDetail: any = null;
 
   constructor(private http: HttpClient){}
 
@@ -66,6 +68,22 @@ export class QuizEditAdminComponent implements OnInit {
     });
   }
 
+  getQuizDetail(id: string){
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+     this.http.get<any>(`http://localhost:8000/api/quiz/getQuizById/${id}`, httpOptions)
+    .subscribe({
+      next: res => {
+        this.quizDetail = res.quiz;
+        this.showDetailPopup = true;
+        console.log('Quiz detail:', res.quiz);
+      },
+      error: err => {
+        console.error('Get quiz by ID error:', err);
+      }
+    });
+  }
+
   openPopup(index:number) {
     this.showPopup = true;
     this.selectedIndex = index;
@@ -74,6 +92,11 @@ export class QuizEditAdminComponent implements OnInit {
   closePopup() {
     this.showPopup = false;
     this.selectedIndex = null;
+  }
+
+  closeDetailPopup(){
+    this.showDetailPopup = false;
+    this.quizDetail = null;
   }
 
 }
