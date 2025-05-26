@@ -178,7 +178,7 @@ export class QuizQuestionComponent {
         if(this.currentIndex < this. questions.length){
             this.setCurrentQuestion();
         }else{
-            alert(`Quiz finished! Your score: ${this.score}/${this.questions.length}`);
+            //alert(`Quiz finished! Your score: ${this.score}/${this.questions.length}`);
             const userId = localStorage.getItem('userId');
 
             console.log('questionResults:', this.questionResults);
