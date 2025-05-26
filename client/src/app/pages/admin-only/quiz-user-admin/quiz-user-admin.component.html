@@ -1,14 +1,61 @@
+<h2>Danh sách kết quả quiz của người dùng</h2>
+
 <div *ngIf="isLoading">Đang tải dữ liệu...</div>
 
-<div *ngIf="!isLoading && quizzes.length === 0">Không có dữ liệu hiển thị.</div>
+<table
+  *ngIf="!isLoading && allResults.length > 0"
+  border="1"
+  cellpadding="8"
+  cellspacing="0"
+>
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>Id user</th>
+      <th>Ngày làm</th>
+      <th>số câu</th>
+      <th>tổng điểm</th>
+      <th>Xem chi tiết</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of allResults; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ item.idUser }}</td>
+      <td>{{ item.dateDoQuiz | date: "short" }}</td>
+      <td>{{ item.totalQuestions }}</td>
+      <td>{{ item.totalScore }}</td>
+      <td>
+        <button (click)="openDetail(item.idUser, item.dateDoQuiz)">👁️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<div *ngIf="!isLoading && quizzes.length > 0">
-  <h2>Kết quả bài quiz</h2>
-  <ul>
-    <li *ngFor="let quiz of quizzes; let i = index">
-      <strong>Câu hỏi {{ i + 1 }}:</strong> {{ quiz.question }} <br />
-      - Đáp án của bạn: {{ quiz.yourAnswer }} <br />
-      - Đáp án đúng: {{ quiz.correctAnswer }}
-    </li>
-  </ul>
+<!-- Modal hiển thị chi tiết -->
+<div *ngIf="showDetailModal" class="modal">
+  <h3>Chi tiết quiz của user: {{ selectedUser }}</h3>
+  <button (click)="closeDetail()">Đóng</button>
+  <div class="detail-quiz">
+    <table *ngIf="quizzes.length > 0" border="1" cellpadding="5">
+      <thead>
+        <tr>
+          <th>Tên Quiz</th>
+          <th>Câu hỏi</th>
+          <th>Đáp án đã chọn</th>
+          <th>Đúng?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quiz of quizzes">
+          <td>{{ quiz.quiz?.quizName || "N/A" }}</td>
+          <td>{{ quiz.quiz?.question || "N/A" }}</td>
+          <td>{{ quiz.chooseAnswer || "N/A" }}</td>
+          <td>{{ quiz.result ? "✅" : "❌" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="quizzes.length === 0">Không có chi tiết quiz nào.</div>
 </div>

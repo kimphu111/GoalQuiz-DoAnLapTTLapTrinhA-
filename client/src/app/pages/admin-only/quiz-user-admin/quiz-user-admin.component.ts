@@ -1,67 +1,106 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { CommonModule, NgClass } from '@angular/common';
-import { AuthService } from '../../../services/auth.service';
+import { NgIf, NgForOf, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-quiz-user-admin',
-  standalone: true,
-  imports: [NgClass, CommonModule],
   templateUrl: './quiz-user-admin.component.html',
   styleUrls: ['./quiz-user-admin.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgForOf, DatePipe],
 })
 export class QuizUserAdminComponent implements OnInit {
-  quizzes: any[] = [];
+  allResults: any[] = []; // danh sách tất cả kết quả
+  quizzes: any[] = []; // kết quả chi tiết cho 1 user
   isLoading = false;
-  idUser: string = '';
-  dateDoQuiz: string = '';
+  showDetailModal = false;
+  selectedUser: string = '';
+  selectedDate: string = '';
 
-  constructor(
-    private http: HttpClient,
-    private route: ActivatedRoute,
-    private authService: AuthService,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.idUser = params['idUser'];
-      this.dateDoQuiz = params['dateDoQuiz'];
-
-      console.log('Query Params:', {
-        idUser: this.idUser,
-        dateDoQuiz: this.dateDoQuiz,
-      });
-
-      if (this.idUser && this.dateDoQuiz) {
-        this.fetchQuizData();
-      } else {
-        console.warn('Thiếu idUser hoặc dateDoQuiz trên URL.');
-      }
-    });
+    this.fetchAllQuizzes();
   }
 
-  fetchQuizData() {
-    const token = localStorage.getItem('accessToken');
-
-    const url = `http://localhost:8000/api/play/queryPlayerQuiz?idUser=${this.idUser}&dateDoQuiz=${this.dateDoQuiz}`;
-
+  fetchAllQuizzes() {
     this.isLoading = true;
+    const token = localStorage.getItem('accessToken') || '';
+
     this.http
-      .get<any>(url, {
+      .get<any>('http://localhost:8000/api/play/getAllPlayerResult', {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
         },
       })
       .subscribe({
         next: (res) => {
-          console.log('Kết quả từ API:', res);
-          this.quizzes = res.results || [];
+          console.log('Dữ liệu API:', res); // ✅ Hiển thị mảng 4 phần tử
+          this.allResults = res; // ✅ Gán trực tiếp
           this.isLoading = false;
         },
         error: (err) => {
-          console.error('API error:', err);
+          console.error('Lỗi API:', err);
           this.isLoading = false;
+        },
+      });
+  }
+
+  openDetail(idUser: string, dateDoQuiz: string) {
+    this.selectedUser = idUser;
+    this.selectedDate = dateDoQuiz;
+    this.showDetailModal = true;
+
+    // Gọi API lấy chi tiết kết quả quiz
+    fetch('http://localhost:8000/api/play/queryPlayerQuiz', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken') || ''}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idUser: idUser,
+        dateDoQuiz: dateDoQuiz,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log('Chi tiết quiz:', res);
+        this.quizzes = res.results || []; // ✅ Gán đúng chỗ
+      })
+      .catch((err) => {
+        console.error('Lỗi khi lấy chi tiết quiz:', err);
+        this.quizzes = [];
+      });
+  }
+
+  closeDetail() {
+    this.showDetailModal = false;
+    this.quizzes = [];
+  }
+
+  queryPlayerQuiz(idUser: string, dateDoQuiz: string) {
+    const token = localStorage.getItem('accessToken') || '';
+
+    const body = {
+      idUser,
+      dateDoQuiz,
+    };
+
+    this.http
+      .post<any>('http://localhost:8000/api/play/queryPlayerQuiz', body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .subscribe({
+        next: (res) => {
+          this.quizzes = res.results || [];
+        },
+        error: (err) => {
+          console.error('Lỗi khi fetch detail:', err);
         },
       });
   }
