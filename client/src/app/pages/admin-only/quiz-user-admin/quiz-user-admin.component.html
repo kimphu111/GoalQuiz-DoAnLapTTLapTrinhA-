@@ -1,61 +1,86 @@
-<h2>Danh sách kết quả quiz của người dùng</h2>
+<div class="container-top">
+  <h2 class="page-title">📊 Danh sách kết quả quiz của người dùng</h2>
 
-<div *ngIf="isLoading">Đang tải dữ liệu...</div>
+  <div *ngIf="isLoading" class="loading">
+    <p>Đang tải dữ liệu...</p>
+  </div>
 
-<table
-  *ngIf="!isLoading && allResults.length > 0"
-  border="1"
-  cellpadding="8"
-  cellspacing="0"
->
-  <thead>
-    <tr>
-      <th>STT</th>
-      <th>Id user</th>
-      <th>Ngày làm</th>
-      <th>số câu</th>
-      <th>tổng điểm</th>
-      <th>Xem chi tiết</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of allResults; let i = index">
-      <td>{{ i + 1 }}</td>
-      <td>{{ item.idUser }}</td>
-      <td>{{ item.dateDoQuiz | date: "short" }}</td>
-      <td>{{ item.totalQuestions }}</td>
-      <td>{{ item.totalScore }}</td>
-      <td>
-        <button (click)="openDetail(item.idUser, item.dateDoQuiz)">👁️</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Modal hiển thị chi tiết -->
-<div *ngIf="showDetailModal" class="modal">
-  <h3>Chi tiết quiz của user: {{ selectedUser }}</h3>
-  <button (click)="closeDetail()">Đóng</button>
-  <div class="detail-quiz">
-    <table *ngIf="quizzes.length > 0" border="1" cellpadding="5">
+  <div *ngIf="!isLoading && allResults.length > 0" class="results-container">
+    <table class="results-table">
       <thead>
         <tr>
-          <th>Tên Quiz</th>
-          <th>Câu hỏi</th>
-          <th>Đáp án đã chọn</th>
-          <th>Đúng?</th>
+          <th>#</th>
+          <th>ID User</th>
+          <th>Ngày làm</th>
+          <th>Số câu</th>
+          <th>Tổng điểm</th>
+          <th>Chi tiết</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let quiz of quizzes">
-          <td>{{ quiz.quiz?.quizName || "N/A" }}</td>
-          <td>{{ quiz.quiz?.question || "N/A" }}</td>
-          <td>{{ quiz.chooseAnswer || "N/A" }}</td>
-          <td>{{ quiz.result ? "✅" : "❌" }}</td>
+        <tr *ngFor="let item of allResults; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.idUser }}</td>
+          <td>{{ item.dateDoQuiz | date: "short" }}</td>
+          <td>{{ item.totalQuestions }}</td>
+          <td>{{ item.totalScore }}</td>
+          <td>
+            <button
+              class="view-btn"
+              (click)="openDetail(item.idUser, item.dateDoQuiz)"
+            >
+              👁️
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div *ngIf="quizzes.length === 0">Không có chi tiết quiz nào.</div>
+  <div *ngIf="!isLoading && allResults.length === 0" class="no-results">
+    Không có kết quả nào được tìm thấy.
+  </div>
+</div>
+
+<!-- Modal hiển thị chi tiết -->
+<div *ngIf="showDetailModal" class="modal-overlay">
+  <div class="modal-content">
+    <h3>Chi tiết quiz của user: {{ selectedUser }}</h3>
+    <button class="close-btn" (click)="closeDetail()">Đóng</button>
+
+    <!-- Danh sách các cục quiz -->
+    <div class="quiz-bubbles">
+      <div
+        *ngFor="let quiz of quizzes; let i = index"
+        class="quiz-bubble"
+        [ngClass]="[
+          quiz.result ? 'correct' : 'incorrect',
+          selectedQuiz === quiz ? 'active' : '',
+        ]"
+        (click)="selectQuiz(i)"
+      >
+        {{ i + 1 }}
+      </div>
+    </div>
+
+    <!-- Chi tiết 1 câu quiz -->
+    <div *ngIf="selectedQuiz" class="quiz-detail-box">
+      <h4>
+        <strong>{{ selectedQuiz.quiz?.quizName || "Tên quiz" }}</strong>
+      </h4>
+      <p>
+        <strong>Câu hỏi:</strong> {{ selectedQuiz.quiz?.question || "..." }}
+      </p>
+      <p>
+        <strong>Đáp án đã chọn:</strong>
+        {{ selectedQuiz.chooseAnswer || "..." }}
+      </p>
+      <p>
+        <strong>Kết quả:</strong>
+        {{ selectedQuiz.result ? "✅ Đúng" : "❌ Sai" }}
+      </p>
+    </div>
+
+    <div *ngIf="quizzes.length === 0">Không có chi tiết quiz nào.</div>
+  </div>
 </div>

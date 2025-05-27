@@ -6,6 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d5bdf721-7f7b-4cf9-ac92-ccc4422f7e36" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/admin-navbar/admin-navbar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-edit-admin/quiz-edit-admin.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/app/pages/admin-only/quiz-user-admin/quiz-user-admin.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +125,10 @@
       <workItem from="1747693911280" duration="4551000" />
       <workItem from="1747714142367" duration="3449000" />
       <workItem from="1748097712662" duration="2677000" />
-      <workItem from="1748259509243" duration="9191000" />
+      <workItem from="1748259509243" duration="15557000" />
+      <workItem from="1748311399799" duration="1922000" />
+      <workItem from="1748320102648" duration="88000" />
+      <workItem from="1748320248508" duration="438000" />
     </task>
     <servers />
   </component>

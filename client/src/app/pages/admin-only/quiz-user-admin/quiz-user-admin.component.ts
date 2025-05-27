@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NgIf, NgForOf, DatePipe } from '@angular/common';
+import { NgIf, NgForOf, DatePipe, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-quiz-user-admin',
   templateUrl: './quiz-user-admin.component.html',
   styleUrls: ['./quiz-user-admin.component.scss'],
   standalone: true,
-  imports: [NgIf, NgForOf, DatePipe],
+  imports: [NgIf, NgForOf, DatePipe, NgClass],
 })
 export class QuizUserAdminComponent implements OnInit {
-  allResults: any[] = []; // danh sách tất cả kết quả
-  quizzes: any[] = []; // kết quả chi tiết cho 1 user
+  allResults: any[] = [];
+  quizzes: any[] = [];
   isLoading = false;
   showDetailModal = false;
   selectedUser: string = '';
   selectedDate: string = '';
+  selectedQuiz: any = null;
+  idUser: any = '';
 
   constructor(private http: HttpClient) {}
 
@@ -36,9 +38,16 @@ export class QuizUserAdminComponent implements OnInit {
       })
       .subscribe({
         next: (res) => {
-          console.log('Dữ liệu API:', res); // ✅ Hiển thị mảng 4 phần tử
-          this.allResults = res; // ✅ Gán trực tiếp
+          console.log('Dữ liệu API:', res);
+          this.allResults = res;
           this.isLoading = false;
+
+          this.openDetail(
+            '52ba2944-6ddb-4d03-8641-ba7b26699ff8',
+            '2025-05-26T14:33:55.049Z',
+            //lay theo iduser
+          );
+          this.showDetailModal = false;
         },
         error: (err) => {
           console.error('Lỗi API:', err);
@@ -67,7 +76,13 @@ export class QuizUserAdminComponent implements OnInit {
       .then((response) => response.json())
       .then((res) => {
         console.log('Chi tiết quiz:', res);
-        this.quizzes = res.results || []; // ✅ Gán đúng chỗ
+        this.quizzes = res.results || [];
+
+        //mo san cau1
+        if (this.quizzes.length > 0) {
+          this.selectedQuiz = this.quizzes[0];
+        }
+        this.showDetailModal = true;
       })
       .catch((err) => {
         console.error('Lỗi khi lấy chi tiết quiz:', err);
@@ -80,28 +95,7 @@ export class QuizUserAdminComponent implements OnInit {
     this.quizzes = [];
   }
 
-  queryPlayerQuiz(idUser: string, dateDoQuiz: string) {
-    const token = localStorage.getItem('accessToken') || '';
-
-    const body = {
-      idUser,
-      dateDoQuiz,
-    };
-
-    this.http
-      .post<any>('http://localhost:8000/api/play/queryPlayerQuiz', body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
-      .subscribe({
-        next: (res) => {
-          this.quizzes = res.results || [];
-        },
-        error: (err) => {
-          console.error('Lỗi khi fetch detail:', err);
-        },
-      });
+  selectQuiz(index: number) {
+    this.selectedQuiz = this.quizzes[index];
   }
 }
