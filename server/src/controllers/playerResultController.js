@@ -208,6 +208,10 @@ const queryPlayerQuiz = asyncHandler(async (req, res) => {
           'answerC',
           'answerD'
         ]
+      },
+       {
+        model: User,
+        attributes: ['username']
       }
     ]
   });
