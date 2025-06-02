@@ -1,8 +1,97 @@
 <div id="wrapper">
-    <div id="container">
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'mix', dateDoQuiz: latestMix?.dateDoQuiz}">Quiz Result - Mixed</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'easy', dateDoQuiz: latestEasy?.dateDoQuiz}">Quiz Result - Easy</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'medium', dateDoQuiz: latestMedium?.dateDoQuiz}">Quiz Result - Medium</button>
-        <button routerLink="/quiz-result" [queryParams]="{ level: 'hard', dateDoQuiz: latestHard?.dateDoQuiz}">Quiz Result - Difficult</button>
+    <div class="level-selector">
+        <div class="level-buttons">
+            <button
+                [class.active]="currentLevel === 'mixed'"
+                (click)="selectLevel('mixed')"
+            >
+                Mixed
+            </button>
+            <button
+                [class.active]="currentLevel === 'easy'"
+                (click)="selectLevel('easy')"
+            >
+                Easy
+            </button>
+            <button
+                [class.active]="currentLevel === 'medium'"
+                (click)="selectLevel('medium')"
+            >
+                Medium
+            </button>
+            <button
+                [class.active]="currentLevel === 'hard'"
+                (click)="selectLevel('hard')"
+            >
+                Hard
+            </button>
+        </div>
     </div>
+
+    <table class="quiz-table">
+        <thead>
+            <tr>
+                <th>Level</th>
+                <th>Date Created</th>
+                <th>Score</th>
+                <th class="calendar">
+                    <span class="material-symbols-outlined" (click)="toggleDateFilter()">calendar_month</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (noResult) {
+                <tr><td colspan="4">Không có kết quả cho ngày/level này.</td></tr>
+            }
+            @for(quiz of quizzes; track quiz){
+            <tr>
+                <td>{{quiz.level}}</td>
+                <td>{{quiz.dateCreated}}</td>
+                <td>{{quiz.score}}</td>
+                <td class="show-detail" (click)="goToResult(quiz)">
+                    <span class="material-symbols-outlined">visibility</span>
+                </td>
+            </tr>
+            }
+
+            
+        </tbody>
+    </table>
+
+<!-- =====================Calendar Popup====================== -->
+    @if(showDateFilter){
+        <div class="overlay" (click)="closeDateFilter()"></div>
+        <div class="date-filter-popup" (click)="$event.stopPropagation()">
+            <div class="calendar-header">
+                <div class="button-background">
+                    <button class="nav-btn" (click)="previousMonth()">&lt;</button>
+                </div>
+                <span class="month-year">{{ calendarMonth | date: 'MMMM yyyy'}}</span>
+                <div class="button-background">
+                    <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+                </div>
+            </div>
+
+            <div class="calendar-grid">
+                @for(day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; track day){
+                    <div class="weekday">{{ day }}</div>
+                }
+                @for(day of calendarDays; track day){
+                    <div class="day"
+                        [class.disabled]="!day.isCurrentMonth"
+                        [class.today]="day.isToday"
+                        [class.selected]="day.isSelected"
+                        (click)="selectDay(day)">
+
+                        @if(day.isToday){
+                            <span class="crown">👑</span>
+                        }
+                        {{day.day}}
+                    </div>
+                }
+                <button class="clear-btn" (click)="closeDateFilter()">Close</button>
+            </div>
+        </div>
+    }
+    
 </div>
