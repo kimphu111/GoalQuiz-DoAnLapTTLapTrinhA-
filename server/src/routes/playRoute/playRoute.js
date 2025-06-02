@@ -11,7 +11,7 @@ router.route('/play/leaderboard/:level').get(getTopUsersByLevel);
 
 // private
 router.route('/play/review').get(validateAccessToken,auth(["user"]),review);
-router.route('/play/getAllPlayerResult').get(validateAccessToken,auth(["admin"]),getAllPlayerResult);
+router.route('/play/getAllPlayerResult').get(validateAccessToken,auth(["admin","user"]),getAllPlayerResult);
 router.route('/play/queryPlayerQuiz').post(validateAccessToken,auth(["admin"]),queryPlayerQuiz);
 
 
