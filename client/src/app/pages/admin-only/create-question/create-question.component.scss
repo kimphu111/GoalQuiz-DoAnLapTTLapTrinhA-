@@ -21,17 +21,43 @@
     padding: 30px;
     overflow: auto;
     border-radius: 10px;
+    position: relative;
+    .back-icon{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 2;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
     .question-content{
         @include flex(column);
     }
     .options{
        @include flex(column);
+            align-items: start;
+            justify-content: center;
        .option-row{
             @include flex(row);
             align-items: center;
             justify-content: center;
             gap: 8px;
             margin-bottom: 5px;
+            width: 100%;
+            input[type="radio"] {
+                accent-color: #57CB68;
+                width: 20px;
+                height: 20px;
+                margin-right: 8px;
+                border:none;
+                cursor: pointer;
+                transition: box-shadow 0.2s;
+                box-shadow: 0 0 0 2px transparent;    
+            }
+            input[type="radio"]:checked {
+                background: #43e97b;
+                border:none;
+            }
             label{
                 min-width: 24px;
                 text-align: end;
@@ -39,8 +65,8 @@
                 margin-bottom: 0;
                 padding-top: 5px;
             }
-            input {
-                flex: 1;
+            input {   
+                width: 100%;
             }
        }
 
@@ -153,7 +179,7 @@
         }
         .id-question input[readonly] {
                 pointer-events: none;
-                background: #fff;
+                background: #d6d6d6;
 
             }
         .upload-box{

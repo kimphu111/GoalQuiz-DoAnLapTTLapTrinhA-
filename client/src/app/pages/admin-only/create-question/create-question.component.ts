@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +32,11 @@ export class CreateQuestionComponent {
   isEdit: boolean = false;
   popupType: 'success' | 'failed' = 'success';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router){
+  constructor(private http: HttpClient, 
+              private route: ActivatedRoute, 
+              private router: Router,
+              private location: Location
+            ){
 
   }
 
@@ -223,6 +227,10 @@ export class CreateQuestionComponent {
       case 'hard': return 30;
       default: return 0;
     }
+  }
+
+  goBack(){
+    this.location.back();
   }
   
 

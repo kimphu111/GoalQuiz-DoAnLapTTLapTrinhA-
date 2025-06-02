@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {CommonModule, DatePipe, NgForOf, NgIf} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -9,10 +9,8 @@ import { HttpClient } from '@angular/common/http';
   standalone: true,
   imports: [
     DatePipe,
-    NgForOf,
-    NgIf,
+    CommonModule,
     ReactiveFormsModule,
-    RouterLinkActive,
     RouterLink
   ],
   templateUrl: './quiz-edit-admin.component.html',
@@ -24,6 +22,9 @@ export class QuizEditAdminComponent implements OnInit {
   selectedIndex: number | null = null;
   showDetailPopup = false;
   quizDetail: any = null;
+  showDeleteWarningPopup = false;
+  deleteQuizId: string = '';
+  deleteQuizIndex: number = -1;
 
   constructor(private http: HttpClient){}
 
@@ -66,9 +67,11 @@ export class QuizEditAdminComponent implements OnInit {
         console.log('Delete ERROR', err);
       }
     });
+    this.closeDeletePopup();
   }
 
   getQuizDetail(id: string){
+    this.closePopup();
     const token = localStorage.getItem('accessToken');
     const httpOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
      this.http.get<any>(`http://localhost:8000/api/quiz/getQuizById/${id}`, httpOptions)
@@ -97,6 +100,19 @@ export class QuizEditAdminComponent implements OnInit {
   closeDetailPopup(){
     this.showDetailPopup = false;
     this.quizDetail = null;
+  }
+
+  confirmDelete(id: string, index: number) {
+    this.closePopup();
+    this.showDeleteWarningPopup = true;
+    this.deleteQuizId = id;
+    this.deleteQuizIndex = index;
+  }
+
+  closeDeletePopup() {
+    this.showDeleteWarningPopup = false;
+    this.deleteQuizId = '';
+    this.deleteQuizIndex = -1;
   }
 
 }
