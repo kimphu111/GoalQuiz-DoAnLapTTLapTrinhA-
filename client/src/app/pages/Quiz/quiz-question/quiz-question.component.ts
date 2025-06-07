@@ -63,7 +63,7 @@ export class QuizQuestionComponent {
         this.route.queryParams.subscribe(params => {
             this.level = params['level'] || 'easy';
 
-            this.dateDoQuiz = new Date().toISOString();
+            this.dateDoQuiz = new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString();
             localStorage.setItem('dateDoQuiz', this.dateDoQuiz);
             this.fetchQuiz(this.level);
         });

@@ -40,40 +40,41 @@
         </div>
         <!-- Popup -->
          @if(showPopup){
-         <div class="popup">
-            <div class="popup-content">
-                <span class="material-symbols-outlined back-icon" (click)="closePopup()">arrow_back_ios</span>
-                <div class="question-detail">
+            <div class="popup" (click)="closePopup()">
+                <div class="popup-content" (click)="$event.stopPropagation()">
+                    <span class="material-symbols-outlined back-icon" (click)="closePopup()">arrow_back_ios</span>
+                    <div class="question-detail">
+                        <span class="close-btn" (click)="closePopup()">x</span>
 
-                    <div class="question">
-                        <h3>Question {{selectedResult?.index !== undefined ? selectedResult.index + 1 : ''}}:
-                             {{selectedResult?.questionText || selectedResult?.question || 'No data'}}</h3>
-                    </div>
-                    @if(selectedResult?.image){
-                        <img class="question-image"
-                            [src]="selectedResult?.image"
-                            alt="question image"
-                            (error)="selectedResult.image = null"
-                        />
-                    }
-                    <div class="answer-box">
-                        @for( option of selectedResult?.options || []; track $index ){
-                            <div class="answer"
-                                [ngClass]="{
-                                    'correct': selectedResult?.correctAnswer === getAnswerKey($index),
-                                    'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
-                                    'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
-                                }">
-                                <span class="answer-label">{{ getAnswerKey($index) }}.</span> 
-                                {{option}}
-                            </div>
+                        <div class="question">
+                            <h3>Question {{selectedResult?.index !== undefined ? selectedResult.index + 1 : ''}}:
+                                {{selectedResult?.questionText || selectedResult?.question || 'No data'}}</h3>
+                        </div>
+                        @if(selectedResult?.image){
+                            <img class="question-image"
+                                [src]="selectedResult?.image"
+                                alt="question image"
+                                (error)="selectedResult.image = null"
+                            />
                         }
+                        <div class="answer-box">
+                            @for( option of selectedResult?.options || []; track $index ){
+                                <div class="answer"
+                                    [ngClass]="{
+                                        'correct': selectedResult?.correctAnswer === getAnswerKey($index),
+                                        'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
+                                        'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
+                                    }">
+                                    <span class="answer-label">{{ getAnswerKey($index) }}.</span> 
+                                    {{option}}
+                                </div>
+                            }
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
         }
     </div>
 </div>
