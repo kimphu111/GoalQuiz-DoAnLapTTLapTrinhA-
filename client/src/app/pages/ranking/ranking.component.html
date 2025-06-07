@@ -29,7 +29,10 @@
   </div>
 
   <!-- Danh sách xếp hạng -->
-  <div class="ranking-list">
+  <div *ngIf="isLoading" class="loading">
+    <p>Đang tải xếp hạng...</p>
+  </div>
+  <div *ngIf="!isLoading" class="ranking-list">
     <div
       class="ranking-item"
       *ngFor="let player of currentPlayers; let i = index"
@@ -52,12 +55,10 @@
           <span *ngIf="i === 4" class="medal">
             <img src="assets/medal.spirit.svg" alt="spirit medal" />
           </span>
-          <span *ngIf="i === 5" class="medal">
-            <img src="assets/medal.spirit.svg" alt="spirit medal" />
-          </span>
+          <span *ngIf="i > 4" class="rank-number">{{ i + 1 }}</span>
         </div>
-        <div class="player-name">{{ player.name }}</div>
-        <div class="score">{{ player.score }}</div>
+        <div class="player-name">{{ player.username }}</div>
+        <div class="score">{{ player.totalScore }}</div>
       </div>
     </div>
   </div>
