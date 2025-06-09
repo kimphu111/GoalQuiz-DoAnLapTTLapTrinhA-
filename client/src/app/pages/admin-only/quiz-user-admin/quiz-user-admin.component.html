@@ -1,6 +1,33 @@
-<div class="container-top">
-  <h2 class="page-title">📊 Danh sách kết quả quiz của người dùng</h2>
+<div class="level-selector">
+  <div class="level-buttons">
+    <button
+      [class.active]="currentLevel === 'mix'"
+      (click)="selectLevel('mix')"
+    >
+      Mix
+    </button>
+    <button
+      [class.active]="currentLevel === 'easy'"
+      (click)="selectLevel('easy')"
+    >
+      Easy
+    </button>
+    <button
+      [class.active]="currentLevel === 'medium'"
+      (click)="selectLevel('medium')"
+    >
+      Medium
+    </button>
+    <button
+      [class.active]="currentLevel === 'hard'"
+      (click)="selectLevel('hard')"
+    >
+      Hard
+    </button>
+  </div>
+</div>
 
+<div class="container-top">
   <div *ngIf="isLoading" class="loading">
     <p>Đang tải dữ liệu...</p>
   </div>
@@ -8,79 +35,121 @@
   <div *ngIf="!isLoading && allResults.length > 0" class="results-container">
     <table class="results-table">
       <thead>
-        <tr>
-          <th>#</th>
-          <th>ID User</th>
-          <th>Ngày làm</th>
-          <th>Số câu</th>
-          <th>Tổng điểm</th>
-          <th>Chi tiết</th>
+        <tr class="display-title">
+          <th class="player-name-header">Player name</th>
+          <th>Level</th>
+          <th>Date</th>
+          <th>Point</th>
+          <th>Detail</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of allResults; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ item.idUser }}</td>
-          <td>{{ item.dateDoQuiz | date: "short" }}</td>
-          <td>{{ item.totalQuestions }}</td>
-          <td>{{ item.totalScore }}</td>
-          <td>
+        <tr *ngFor="let item of paginatedResults; let i = index">
+          <td class="center-cell">
+            <a class="player-name-cell">
+              {{ item.username }}
+            </a>
+          </td>
+          <td class="center-cell">{{ item.quizLevel || "N/A" }}</td>
+          <td class="center-cell">
+            {{ item.dateDoQuiz | date: "dd/MM/yyyy" }}
+          </td>
+          <td class="center-cell">
+            <a class="player-point-cell">
+              {{ item.totalScore }}
+            </a>
+          </td>
+          <td class="center-cell">
             <button
               class="view-btn"
               (click)="openDetail(item.idUser, item.dateDoQuiz)"
             >
-              👁️
+              <span class="material-symbols-outlined"> visibility </span>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button
+        *ngFor="let page of pages"
+        [class.active]="page === currentPage"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="!isLoading && allResults.length === 0" class="no-results">
+  <div *ngIf="!isLoading && filteredResults.length === 0" class="no-results">
     Không có kết quả nào được tìm thấy.
   </div>
 </div>
 
-<!-- Modal hiển thị chi tiết -->
+<!-- Modal hiển thị chi tiết (unchanged) -->
 <div *ngIf="showDetailModal" class="modal-overlay">
   <div class="modal-content">
-    <h3>Chi tiết quiz của user: {{ selectedUser }}</h3>
-    <button class="close-btn" (click)="closeDetail()">Đóng</button>
+    <div class="close-button">
+      <button class="close-btn" (click)="closeDetail()">X</button>
+    </div>
 
-    <!-- Danh sách các cục quiz -->
-    <div class="quiz-bubbles">
-      <div
-        *ngFor="let quiz of quizzes; let i = index"
-        class="quiz-bubble"
-        [ngClass]="[
-          quiz.result ? 'correct' : 'incorrect',
-          selectedQuiz === quiz ? 'active' : '',
-        ]"
-        (click)="selectQuiz(i)"
-      >
-        {{ i + 1 }}
+    <div class="detail-quiz">
+      <div class="quiz-bubbles">
+        <div
+          *ngFor="let quiz of quizzes; let i = index"
+          class="quiz-bubble"
+          [ngClass]="[
+            quiz.result ? 'correct' : 'incorrect',
+            selectedQuiz === quiz ? 'active' : '',
+          ]"
+          (click)="selectQuiz(i)"
+        >
+          {{ i + 1 }}
+        </div>
+      </div>
+
+      <div class="detail-question">
+        <div *ngIf="selectedQuiz" class="quiz-detail-box">
+          <p>
+            <strong>Câu hỏi {{ quizzes.indexOf(selectedQuiz) + 1 }}:</strong>
+          </p>
+          <p>{{ selectedQuiz.quiz?.question }}</p>
+
+          <div class="answer-grid">
+            <div
+              class="answer-option"
+              *ngFor="let key of ['A', 'B', 'C', 'D']"
+              [ngClass]="{
+                'selected-wrong':
+                  selectedQuiz.chooseAnswer === key &&
+                  key !== selectedQuiz.quiz?.correctAnswer,
+                'selected-correct':
+                  selectedQuiz.chooseAnswer === key &&
+                  key === selectedQuiz.quiz?.correctAnswer,
+                'correct-answer':
+                  selectedQuiz.chooseAnswer !== key &&
+                  key === selectedQuiz.quiz?.correctAnswer,
+              }"
+            >
+              <strong>{{ key }}.</strong>
+              {{ selectedQuiz.quiz?.["answer" + key] || "Không có dữ liệu" }}
+            </div>
+          </div>
+
+          <p>
+            <strong>Đáp án đã chọn:</strong>
+            {{ selectedQuiz.chooseAnswer || "..." }}
+          </p>
+          <p>
+            <strong>Kết quả:</strong>
+            {{ selectedQuiz.result ? "✅ Đúng" : "❌ Sai" }}
+          </p>
+        </div>
+
+        <div *ngIf="quizzes.length === 0">Không có chi tiết quiz nào.</div>
       </div>
     </div>
-
-    <!-- Chi tiết 1 câu quiz -->
-    <div *ngIf="selectedQuiz" class="quiz-detail-box">
-      <h4>
-        <strong>{{ selectedQuiz.quiz?.quizName || "Tên quiz" }}</strong>
-      </h4>
-      <p>
-        <strong>Câu hỏi:</strong> {{ selectedQuiz.quiz?.question || "..." }}
-      </p>
-      <p>
-        <strong>Đáp án đã chọn:</strong>
-        {{ selectedQuiz.chooseAnswer || "..." }}
-      </p>
-      <p>
-        <strong>Kết quả:</strong>
-        {{ selectedQuiz.result ? "✅ Đúng" : "❌ Sai" }}
-      </p>
-    </div>
-
-    <div *ngIf="quizzes.length === 0">Không có chi tiết quiz nào.</div>
   </div>
 </div>

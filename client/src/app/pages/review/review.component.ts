@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { QuizService } from '../../services/quiz/quiz.service';
 
 
 interface CalendarDay {
@@ -19,19 +19,18 @@ interface CalendarDay {
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss'
 })
-export class ReviewComponent {
+export class ReviewComponent implements OnInit{
   currentLevel = 'mix';
   showDateFilter = false;
   calendarMonth = new Date();
   calendarDays: CalendarDay[] = [];
   selectedDate = '';
   noResult = false;
-  quizzes: any[] = [];
   quizAttempts: any[] = [];
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private quizService: QuizService,
     private route: ActivatedRoute
   ) {}
 
@@ -124,39 +123,25 @@ export class ReviewComponent {
   fetchQuizzes(): void {
     const filterDate = this.selectedDate || this.formatDate(new Date());
     const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('accessToken');
-    const httpOptions = token
-      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
-      : {};
-
-    this.http.get<any[]>(
-      `http://localhost:8000/api/play/getAllPlayerResult?dateDoQuiz=${filterDate}`,
-      httpOptions
-    ).subscribe({
-      next: (res) => {
-        console.log("Res", res);
-        // Gán quizLevel từ phần tử đầu tiên của results (nếu có)
-        const mapped = res
-          .filter(item =>
-            String(item.idUser) === String(userId) &&
-            item.dateDoQuiz?.slice(0, 10) === filterDate
-          )
-          .map(item => ({
-            ...item,
-            quizLevel: Array.isArray(item.results) && item.results.length > 0
-              ? item.results[0].quizLevel || this.currentLevel
-              : this.currentLevel
-          }))
-          .filter(item =>
-            item.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase()
-          );
-        console.log('Filtered by userId, date & level:', mapped);
-
-        this.quizAttempts = mapped;
-        this.noResult = mapped.length === 0;
+    
+    this.quizService.getAllResultsByDate(filterDate).subscribe({
+      next: (res: any[]) => {
+        // Lọc đúng user, ngày, và level (dựa vào quizLevel trong results)
+        const filtered = res.filter(item =>
+          String(item.idUser) === String(userId) &&
+          item.dateDoQuiz?.slice(0, 10) === filterDate &&
+          Array.isArray(item.results) &&
+          item.results.some((r: any) => r.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase())
+        ).map(item => ({
+          ...item,
+          quizLevel: Array.isArray(item.results) && item.results.length > 0
+            ? item.results[0].quizLevel || this.currentLevel
+            : this.currentLevel
+        }));
+        this.quizAttempts = filtered;
+        this.noResult = filtered.length === 0;
       },
       error: (err) => {
-        console.error('Failed to fetch quiz results:', err);
         this.quizAttempts = [];
         this.noResult = true;
       }
@@ -189,8 +174,8 @@ export class ReviewComponent {
   goToResult(quiz: any): void {
     this.router.navigate(['/quiz-result'], {
       queryParams: {
-        level: quiz.level.toLowerCase(),
-        dateDoQuiz: quiz.dateCreated
+        level: quiz.quizLevel?.toLowerCase() || this.currentLevel,
+        dateDoQuiz: quiz.dateDoQuiz
       }
     });
   }
