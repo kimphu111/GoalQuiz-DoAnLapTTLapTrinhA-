@@ -1,10 +1,14 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
+
+  constructor(private http: HttpClient) {}
+
   private selectedDateSubject = new BehaviorSubject<string>('');
   selectedDate$ = this.selectedDateSubject.asObservable();
 
@@ -25,5 +29,53 @@ export class QuizService {
 
   clearSelectedLevel() {
     this.selectedLevelSubject.next('mix');
+  }
+
+  getQuiz(level: string): Observable<any> {
+    let apiUrl= '';
+    switch (level){
+      case 'easy': apiUrl = 'http://localhost:8000/api/quiz/getEasyQuiz'; break;
+      case 'medium': apiUrl = 'http://localhost:8000/api/quiz/getMediumQuiz'; break;
+      case 'hard': apiUrl = 'http://localhost:8000/api/quiz/getHardQuiz'; break;
+      case 'mix':
+      case 'mixed': apiUrl = 'http://localhost:8000/api/quiz/getMixQuiz'; break;
+      default: throw new Error('Invalid quiz level');
+    }
+
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}`})}
+      : {};
+    return this.http.get(apiUrl, httpOptions);
+  }
+
+  submitAnswer(data: any): Observable<any> {
+     const token = localStorage.getItem('accessToken');
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
+    return this.http.post('http://localhost:8000/api/play/postPlayerResult', data, httpOptions);
+  }
+
+  getUserResults(userId: string, date: string, level: string): Observable<any>{
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
+    return this.http.get(
+      `http://localhost:8000/api/play/review?dateDoQuiz=${date}&quizLevel=${level}`,
+      httpOptions
+    );
+  }
+
+  getAllResultsByDate(date: string): Observable<any>{
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
+    return this.http.get(
+      `http://localhost:8000/api/play/getAllPlayerResult?dateDoQuiz=${date}`,
+      httpOptions
+    );
   }
 }

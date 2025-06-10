@@ -1,5 +1,6 @@
 <div id="container">
     <div class="left-panel">
+        <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
         <div class="question-content">
             <label>Question Content</label>
             <textarea [(ngModel)]="questionData.question"  placeholder="Please enter content!"></textarea>
@@ -10,31 +11,36 @@
             <div class="options">
 
                 <div class="option-row">
+                    <input type="radio" [(ngModel)]="questionData.correctAnswer" value="A">
                     <label>A.</label>
                     <input [(ngModel)]="questionData.optionA" type="text">
                 </div>
 
                 <div class="option-row">
+                    <input type="radio" [(ngModel)]="questionData.correctAnswer" value="B">
                     <label>B.</label>
                     <input [(ngModel)]="questionData.optionB" type="text">
                 </div>
 
                 <div class="option-row">
+                    <input type="radio" [(ngModel)]="questionData.correctAnswer" value="C">
                     <label>C.</label>
                     <input [(ngModel)]="questionData.optionC" type="text">
                 </div>
 
                 <div class="option-row">
+                    <input type="radio" [(ngModel)]="questionData.correctAnswer" value="D">
                     <label>D.</label>
                     <input [(ngModel)]="questionData.optionD" type="text">
                 </div>
 
             </div>
 
-            <div class="correct-answer">
+            <!-- <div class="correct-answer">
                 <label>Correct Answer</label>
                 <input [(ngModel)]="questionData.correctAnswer" type="text">
-            </div>
+            </div> -->
+            
         </div>
 
         <div class="level">
@@ -66,7 +72,7 @@
                 </div>
 
                 <div class="score">
-                    <span>{{ score }}</span>
+                    <span>Score: {{ score }}</span>
                 </div>
             </div>
         </div>
