@@ -1,8 +1,8 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { QuizService } from '../../../services/quiz/quiz.service';
 
 @Component({
   selector: 'app-quiz-result',
@@ -11,132 +11,124 @@ import { Location } from '@angular/common';
   templateUrl: './quiz-result.component.html',
   styleUrl: './quiz-result.component.scss'
 })
-export class QuizResultComponent {
-  questionResults: { isCorrect: boolean }[] = [];
+export class QuizResultComponent implements OnInit {
+  questionResults: any[] = [];
   userId: string = '';
   quizLevel: string = '';
   score: number = 0;
   quizTime: string = '';
   quizDate: string = '';
 
-  latestEasy: any = {};
-  latestMedium: any = {};
-  latestHard: any = {};
-  latestMix: any = {};
-
+  latestResults: Record<string, any[]> = {};
   selectedResult: any = null;
   showPopup: boolean = false;
 
-
-  constructor(private router: Router,
-              private http: HttpClient,
-              private location: Location,
-              private route: ActivatedRoute
-            ) {
-
-              this.userId = localStorage.getItem('userId') || '';
-              this.route.queryParams.subscribe(params => {
-                let level = params['level'] || 'easy';
-                let dateDoQuiz = params['dateDoQuiz'] || localStorage.getItem('dateDoQuiz') || '';
-                console.log(`Level: ${level} DateDoQuiz: ${dateDoQuiz}`);
-                this.quizLevel = level;
-                
-                const token = localStorage.getItem('accessToken');
-                const httpOptions = token
-                ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }// Xác thực người dùng
-                : {};
-                
-                
-                // Gọi API lấy kết quả từ DB
-                if(this.userId && dateDoQuiz){
-                  this.http.get<any>(`http://localhost:8000/api/play/review?dateDoQuiz=${dateDoQuiz}&quizLevel=${this.quizLevel}`,
-                  httpOptions
-                ).subscribe({
-                    next: (res) => {
-                      console.log('API response:', res)
-                      // Map lại cho đúng với dữ liệu backend trả về 
-                      this.questionResults = (res.results || [])
-                        .map((item:any) => ({
-                          ...item,
-                          isCorrect: item.result,
-                          options: item.quiz ? [
-                            item.quiz?.answerA,
-                            item.quiz?.answerB,
-                            item.quiz?.answerC,
-                            item.quiz?.answerD
-                          ]: [],
-                          questionText: item.quiz?.question || 'No data',
-                          correctAnswer: item.quiz?.correctAnswer || '',
-                          chooseAnswer: item.chooseAnswer,
-                          image: item.quiz?.image || ''
-                        }));
-                        console.log('Mapped questionResults:', this.questionResults);
-                        this.score = res.totalScore || 0;
-
-                      if (dateDoQuiz) {
-                        const dateObj = new Date(dateDoQuiz);
-                        this.quizDate = dateObj.toLocaleDateString('vi-VN');
-                        this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-                      } else {
-                        this.quizDate = '';
-                        this.quizTime = '';
-                      }
-
-                      // Lưu kết quả mới nhất theo level (ghi đè)
-                      const key = `latestQuizResult_${this.quizLevel}`;
-                      localStorage.setItem(key, JSON.stringify({
-                        dateDoQuiz,
-                        quizLevel: this.quizLevel,
-                        score: this.score,
-                        totalQuestions: res.totalQuestions,
-                        results: this.questionResults
-                      }));
-                    },
-                    error: (err) => {
-                      this.questionResults = [];
-                      this.score = 0;
-                    }
-                  });
-                }
-              });
-  }
+  constructor(
+    private router: Router,
+    private quizService: QuizService,
+    private location: Location,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.latestEasy = JSON.parse(localStorage.getItem('latestQuizResult_easy') || '{}');
-    this.latestMedium = JSON.parse(localStorage.getItem('latestQuizResult_medium') || '{}');
-    this.latestHard = JSON.parse(localStorage.getItem('latestQuizResult_hard') || '{}');
-    this.latestMix = JSON.parse(localStorage.getItem('latestQuizResult_mix') || '{}');
-    console.log('Kết quả easy:', this.latestEasy);
-    console.log('Kết quả medium:', this.latestMedium);
-    console.log('Kết quả hard:', this.latestHard);
-    console.log('Kết quả mix:', this.latestMix);
+    this.userId = localStorage.getItem('userId') || '';
 
-    // Nếu không có kết quả cho level hiện tại, xóa questionResults để hiển thị "chưa làm quiz"
-    if (this.quizLevel === 'easy' && (!this.latestEasy.results || this.latestEasy.results.length === 0)) {
-      this.questionResults = [];
-    }
-    if (this.quizLevel === 'medium' && (!this.latestMedium.results || this.latestMedium.results.length === 0)) {
-      this.questionResults = [];
-    }
-    if (this.quizLevel === 'hard' && (!this.latestHard.results || this.latestHard.results.length === 0)) {
-      this.questionResults = [];
-    }
-    if (this.quizLevel === 'mix' && (!this.latestMix.results || this.latestMix.results.length === 0)) {
-      this.questionResults = [];
-    }
+    this.route.queryParams.subscribe(params => {
+      this.quizLevel = params['level'] || 'easy';
+      const dateDoQuiz = params['dateDoQuiz'] || localStorage.getItem('dateDoQuiz') || '';
+
+      if (this.userId && dateDoQuiz) {
+        this.quizService.getUserResults(this.userId, dateDoQuiz, this.quizLevel).subscribe({
+          next: (res) => {
+            if (!Array.isArray(res.results)) {
+              console.warn('Invalid data format from API');
+              return;
+            }
+
+            this.questionResults = res.results.map((item: any) => ({
+              ...item,
+              isCorrect: item.result,
+              options: item.quiz ? [
+                item.quiz?.answerA,
+                item.quiz?.answerB,
+                item.quiz?.answerC,
+                item.quiz?.answerD
+              ] : [],
+              questionText: item.quiz?.question || 'No data',
+              correctAnswer: item.quiz?.correctAnswer || '',
+              chooseAnswer: item.chooseAnswer,
+              image: item.quiz?.image || ''
+            }));
+
+            this.score = res.totalScore || 0;
+
+            const dateObj = new Date(dateDoQuiz);
+            this.quizDate = dateObj.toLocaleDateString('vi-VN');
+            this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+            // Save multiple results for each level
+            const key = `latestQuizResult_${this.quizLevel}`;
+            let oldArr: any;
+            try{
+              oldArr = JSON.parse(localStorage.getItem(key) || '[]' );
+              if(!Array.isArray(oldArr)) oldArr = [];
+            }catch {
+              oldArr = [];
+            }
+            const newResult = {
+              dateDoQuiz,
+              quizLevel: this.quizLevel,
+              score: this.score,
+              totalQuestions: res.totalQuestions,
+              results: this.questionResults
+            };
+            oldArr.push(newResult);
+            localStorage.setItem(key, JSON.stringify(oldArr));
+
+            // Also store in memory for reuse
+            this.latestResults[this.quizLevel] = oldArr;
+          },
+          error: (err) => {
+            console.error('Failed to load quiz results:', err);
+            this.questionResults = [];
+            this.score = 0;
+          }
+        });
+      }
+
+      // Load all latest results from localStorage (for reuse or display)
+      ['easy', 'medium', 'hard', 'mix'].forEach(level => {
+        const stored = localStorage.getItem(`latestQuizResult_${level}`);
+        this.latestResults[level] = stored ? JSON.parse(stored) : [];
+      });
+
+      // Nếu không có kết quả thì xóa hiện thị
+      const currentResults = this.latestResults[this.quizLevel];
+      if (!Array.isArray(currentResults) || currentResults.length === 0) {
+        this.questionResults = [];
+      } else {
+        // Lấy lần làm gần nhất để hiển thị mặc định
+        const lastResult = currentResults[currentResults.length - 1];
+        this.questionResults = lastResult?.results || [];
+        this.score = lastResult?.score || 0;
+        if (lastResult?.dateDoQuiz) {
+          const dateObj = new Date(lastResult.dateDoQuiz);
+          this.quizDate = dateObj.toLocaleDateString('vi-VN');
+          this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+      }
+    });
   }
 
-  showQuestionDetail(result: any, index: number){
-    console.log('Show popup for:', result);
-    this.selectedResult = {...result, index};
+  showQuestionDetail(result: any, index: number): void {
+    this.selectedResult = { ...result, index };
     this.showPopup = true;
   }
 
-  closePopup(){
+  closePopup(): void {
     this.showPopup = false;
     this.selectedResult = null;
   }
-
 
   goBack(): void {
     const fromQuiz = sessionStorage.getItem('fromQuizQuestion');
@@ -147,9 +139,8 @@ export class QuizResultComponent {
       this.location.back();
     }
   }
-  getAnswerKey(index: number): string {
-    return String.fromCharCode(65 + index); // 0 -> 'A', 1 -> 'B', ...
-  }
 
-  
+  getAnswerKey(index: number): string {
+    return index >= 0 && index < 4 ? String.fromCharCode(65 + index) : '';
+  }
 }

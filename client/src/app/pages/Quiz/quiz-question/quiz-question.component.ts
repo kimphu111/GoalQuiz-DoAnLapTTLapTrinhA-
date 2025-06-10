@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location, NgClass, CommonModule } from '@angular/common'; // Import CommonModule
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of } from 'rxjs';
+import { QuizService } from '../../../services/quiz/quiz.service';
 
 // Define Question interface
 interface RawQuestion {
@@ -41,7 +42,7 @@ interface QuizQuestion extends RawQuestion {
 })
 
 
-export class QuizQuestionComponent {
+export class QuizQuestionComponent implements OnInit {
 	questions: QuizQuestion[] = [];
 	currentQuestion: QuizQuestion | null = null;
 	currentIndex: number = 0;
@@ -57,59 +58,29 @@ export class QuizQuestionComponent {
         private router: Router,
         private route: ActivatedRoute,
         private http: HttpClient,
+        private quizService: QuizService,
     ) {}
 
     ngOnInit(): void {
         this.route.queryParams.subscribe(params => {
             this.level = params['level'] || 'easy';
 
-            this.dateDoQuiz = new Date().toISOString();
+            this.dateDoQuiz = new Date(Date.now() + 7 * 60 * 60 * 1000).toISOString();
             localStorage.setItem('dateDoQuiz', this.dateDoQuiz);
-            this.fetchQuiz(this.level);
+            this.fetchQuiz();
         });
     }
 
-    fetchQuiz(level: string): void{
-        let apiUrl = '';
-
-        switch(level){
-            case 'easy':
-                apiUrl = 'http://localhost:8000/api/quiz/getEasyQuiz';
-                break;
-            case 'medium':
-                apiUrl = 'http://localhost:8000/api/quiz/getMediumQuiz';
-                break;
-            case 'hard':
-                apiUrl = 'http://localhost:8000/api/quiz/getHardQuiz';
-                break;
-            case 'mix':
-                apiUrl = 'http://localhost:8000/api/quiz/getMixQuiz';
-                break;
-            default:
-                alert('Invalid quiz level!');
-                this.router.navigate(['/quiz']);
-                return;
-        }
-
-        this.http
-            .get<any>(apiUrl)
-            .pipe(
-                catchError((err) => {
-                    console.log('Error fetching quiz!');
-                    this.router.navigate(['/quiz']);
-                    return of(null);
-                })
-            )
-            .subscribe((res) => {
-                //console.log('Quiz data:', res);
+    fetchQuiz(): void {
+        this.quizService.getQuiz(this.level).subscribe({
+            next: (res) => {
                 if(!res || !res.success || !res.data){
                     console.log('No quiz data received!');
                     this.router.navigate(['/quiz']);
                     return;
                 }
-
                 this.questions = res.data.map((q: RawQuestion) => {
-
+    
                     const options: Option[] = this.shuffleArray([
                         { label: 'A', text: q.answerA },
                         { label: 'B', text: q.answerB },
@@ -123,11 +94,15 @@ export class QuizQuestionComponent {
                         answer: q.correctAnswer,
                     };
                 });
-
+    
                 this.currentIndex = 0;
                 this.score = 0;
                 this.setCurrentQuestion();
-            });
+            },
+            error: () => {
+                this.router.navigate(['/quiz']);
+            }
+        });
     }
 
     setCurrentQuestion(): void{
@@ -136,33 +111,29 @@ export class QuizQuestionComponent {
         this.answered = false;
     }
 
-    selectAnswer(option: string): void{
-        if(this.answered || !this.currentQuestion) return;
+    selectAnswer(option: string): void {
+        if (this.answered || !this.currentQuestion) return;
 
         this.selectedOption = option;
         this.answered = true;
 
         const isCorrect = option === this.currentQuestion.answer;
-        this.questionResults[this.currentIndex] = {isCorrect};
+        this.questionResults[this.currentIndex] = { isCorrect };
 
-        if(isCorrect){
+        if (isCorrect) {
             this.score++;
         }
 
-        const token = localStorage.getItem('accessToken');
-        const httpOptions = token
-            ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }// Xác thực người dùng
-            : {};
-
-        this.http.post('http://localhost:8000/api/play/postPlayerResult', {
+        // Gửi kết quả qua QuizService
+        this.quizService.submitAnswer({
             idQuestion: this.currentQuestion.id,
             chooseAnswer: option,
             dateDoQuiz: this.dateDoQuiz,
             quizLevel: this.level
-        }, httpOptions).pipe(
+        }).pipe(
             catchError((err) => {
-              console.error('Gửi kết quả thất bại:', err);
-              return of(null); // Trả về observable null để tiếp tục thực thi
+                console.error('Gửi kết quả thất bại:', err);
+                return of(null);
             })
         ).subscribe({
             next: (res => console.log('Kết quả đã gửi:', res)),
