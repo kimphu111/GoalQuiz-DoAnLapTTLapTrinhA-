@@ -5,6 +5,8 @@ import { catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 
+
+//xoa di t test lan 2
 @Injectable({
   providedIn: 'root',
 })
