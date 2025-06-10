@@ -6,7 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 
 
-//xoa di t test lan     2
+//xoa di t test lan 2
 @Injectable({
   providedIn: 'root',
 })
