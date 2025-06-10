@@ -1,5 +1,5 @@
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   Router,
@@ -57,42 +57,61 @@ interface CalendarDay {
   styleUrl: './admin-navbar.component.scss',
 })
 export class AdminNavbarComponent implements OnInit {
+  @ViewChild('searchInput') searchInput: any; // de tham chieu den input tim kiem o component khác
   selectedDate: string = '';
   filteredQuizzes: Quiz[] = [];
   paginatedQuizzes: Quiz[] = [];
   itemsPerPage: number = 8;
   currentPage: number = 1;
   totalPages: number = 0;
-  currentDate: string = new Date().toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-  });
+  currentDate: string = format(new Date(), 'dd/MM/yyyy');
   showDateFilter = false;
   calendarMonth: Date = new Date();
   calendarDays: CalendarDay[] = [];
 
   constructor(
     private router: Router,
-    private quizService: QuizService,
+    protected quizService: QuizService,
   ) {}
 
   ngOnInit() {
     this.filteredQuizzes.forEach((q) => (q.showParticipants = false));
     this.updatePagination();
     this.generateCalendar();
+    this.quizService.selectedDate$.subscribe((date) => {
+      this.selectedDate = date;
+      this.calendarDays.forEach((d) => {
+        d.isSelected = d.date && format(d.date, 'yyyy-MM-dd') === date;
+      });
+    });
+  }
+  onSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const searchTerm = input.value.trim();
+    this.quizService.setSearchTerm(searchTerm);
   }
 
-  selectDay(day: CalendarDay) {
+  clearSearch(): void {
+    console.log('Clear search called');
+    this.quizService.setSearchTerm('');
+    if (this.searchInput && this.searchInput.nativeElement) {
+      this.searchInput.nativeElement.value = '';
+    }
+    this.quizService.refreshFilter(); // Kích hoạt làm mới bộ lọc
+  }
+  selectDay(day: CalendarDay): void {
     if (!day.isCurrentMonth) return;
+    console.log('Day clicked:', day); // Debug
     this.selectedDate = format(day.date, 'yyyy-MM-dd');
-    console.log('Ngày được chọn từ lịch:', this.selectedDate);
+    console.log('Selected date:', this.selectedDate); // Debug
     this.calendarDays.forEach((d) => (d.isSelected = false));
     day.isSelected = true;
     this.quizService.setSelectedDate(this.selectedDate);
     this.showDateFilter = false;
   }
+
   clearDate() {
-    this.selectedDate = '';
+    this.selectedDate = 'mixed';
     this.calendarDays.forEach((d) => (d.isSelected = false));
     this.quizService.setSelectedDate(''); // Gửi rỗng để reset filter
     this.showDateFilter = false;

@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
 import { QuizService } from '../../../services/quiz/quiz.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-quiz-user-admin',
@@ -35,6 +36,7 @@ export class QuizUserAdminComponent implements OnInit {
   pages: number[] = [];
   currentLevel: string = 'mix'; // Mức độ quiz hiện tại
   filteredResults: any[] = [];
+  protected searchTerm: string = '';
 
   // private dateSub!: Subscription;
   private subscriptions: Subscription = new Subscription();
@@ -47,20 +49,22 @@ export class QuizUserAdminComponent implements OnInit {
   ngOnInit() {
     this.username = localStorage.getItem('username') || 'Guest';
     this.fetchAllQuizzes();
-
     this.subscriptions.add(
       combineLatest([
         this.quizService.selectedDate$,
         this.quizService.selectedLevel$,
-      ]).subscribe(([date, level]) => {
+        this.quizService.searchTerm$,
+      ]).subscribe(([date, level, searchTerm]) => {
         this.selectedDate = date;
         this.currentLevel = level;
-        console.log(
-          'Ngày được chọn:',
-          this.selectedDate,
-          'Mức độ:',
-          this.currentLevel,
-        );
+        this.searchTerm = searchTerm;
+        console.log('QuizService update:', { date, level, searchTerm }); // Debug
+        this.filterResults();
+      }),
+    );
+    this.subscriptions.add(
+      this.quizService.refreshFilter$.subscribe(() => {
+        console.log('Refresh filter triggered'); // Debug
         this.filterResults();
       }),
     );
@@ -130,10 +134,9 @@ export class QuizUserAdminComponent implements OnInit {
                 new Date(b.dateDoQuiz).getTime() -
                 new Date(a.dateDoQuiz).getTime(),
             );
-            this.filteredResults = this.allResults; // Khởi tạo filteredResults
+            this.filteredResults = this.allResults;
             this.filterResults();
-            // this.filterResultsByDate(); // Áp dụng bộ lọc ngày nếu có
-            this.selectLevel('mix'); // Áp dụng bộ lọc Mixed mặc định
+            this.selectLevel('mix');
             this.updatePagination();
             this.isLoading = false;
           });
@@ -147,10 +150,9 @@ export class QuizUserAdminComponent implements OnInit {
         },
       });
   }
-  filterResults() {
-    this.filteredResults = [...this.allResults].filter((item) => {
-      // Chuẩn hóa định dạng ngày từ item.dateDoQuiz
-      const quizDate = new Date(item.dateDoQuiz).toISOString().split('T')[0];
+  filterResults(): void {
+    this.filteredResults = this.allResults.filter((item) => {
+      const quizDate = format(new Date(item.dateDoQuiz), 'yyyy-MM-dd'); // Chuẩn hóa định dạng
       const matchesDate = this.selectedDate
         ? quizDate === this.selectedDate
         : true;
@@ -158,24 +160,11 @@ export class QuizUserAdminComponent implements OnInit {
         this.currentLevel === 'mix'
           ? true
           : item.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase();
-      console.log(
-        `Item: ${quizDate}, Matches date: ${matchesDate}, Matches level: ${matchesLevel}`,
-      );
-      return matchesDate && matchesLevel;
+      const matchesSearch = this.searchTerm
+        ? item.username.toLowerCase().includes(this.searchTerm.toLowerCase())
+        : true;
+      return matchesDate && matchesLevel && matchesSearch;
     });
-    console.log('Filtered results:', this.filteredResults);
-    this.currentPage = 1;
-    this.updatePagination();
-  }
-  filterResultsByDate() {
-    if (!this.selectedDate) {
-      this.filteredResults = this.allResults;
-    } else {
-      this.filteredResults = this.allResults.filter((item) => {
-        const quizDate = new Date(item.dateDoQuiz).toISOString().split('T')[0];
-        return quizDate === this.selectedDate;
-      });
-    }
     this.currentPage = 1;
     this.updatePagination();
   }
@@ -252,11 +241,14 @@ export class QuizUserAdminComponent implements OnInit {
     this.updatePagination();
     this.isLoading = false;
   }
+
   clearFilters() {
     this.quizService.clearSelectedDate();
     this.quizService.clearSelectedLevel();
+    this.quizService.clearSearchTerm();
     this.selectedDate = '';
     this.currentLevel = 'mix';
+    this.searchTerm = '';
     this.filterResults();
   }
 }

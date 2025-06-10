@@ -109,7 +109,18 @@
       <div class="header-right">
         <div class="search-bar">
           <span class="material-symbols-outlined search-icon">search</span>
-          <input type="text" placeholder="Search..." />
+          <input
+            #searchInput
+            type="text"
+            placeholder="Search by username..."
+            (input)="onSearch($event)"
+          />
+          <button
+            *ngIf="quizService.searchTerm$ | async"
+            (click)="clearSearch()"
+          >
+            X
+          </button>
         </div>
         <button class="notification-btn">
           <span class="material-symbols-outlined">notifications</span>
