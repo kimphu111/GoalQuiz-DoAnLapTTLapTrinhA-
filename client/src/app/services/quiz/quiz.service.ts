@@ -40,7 +40,7 @@ export class QuizService {
   }
 
   setSearchTerm(term: string) {
-    this.searchTermSubject.next(term); // Cập nhật giá trị tìm kiếm
+    this.searchTermSubject.next(term);
   }
 
   clearSearchTerm() {
@@ -51,6 +51,15 @@ export class QuizService {
   refreshFilter() {
     this.refreshFilterSubject.next();
   }
+
+  clearAllFilters() {
+    this.selectedDateSubject.next('');
+    this.selectedLevelSubject.next('mix');
+    this.searchTermSubject.next('');
+    this.refreshFilterSubject.next();
+  }
+
+
 
   getQuiz(level: string): Observable<any> {
     let apiUrl= '';

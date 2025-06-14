@@ -143,7 +143,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
-    width: 120px;
+    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
@@ -394,6 +394,10 @@
     justify-content: center;
     margin-bottom: 20px;
     gap: 8px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
 
     button {
       width: 40px;
@@ -424,6 +428,7 @@
       }
     }
   }
+
 }
 
 // Trường hợp không có quiz
@@ -433,3 +438,82 @@
 //  color: #888;
 //  font-style: italic;
 //}
+
+@media(max-width: 1440px){
+
+  .level-selector {
+    .level-buttons {
+      button {
+        min-width: 120px;
+      }
+    }
+  }
+  .container-top {
+    width: 1062px;
+    height: 486px;
+    padding: 20px;
+  }
+
+  .results-table th,
+  .results-table td {
+    font-size: 14px; // Giảm kích thước chữ cho thiết bị nhỏ
+  }
+
+  .detail-quiz .quiz-bubble {
+    width: 80px; // Giảm kích thước bubble
+    height: 80px;
+    font-size: 24px; // Giảm kích thước chữ trong bubble
+  }
+}
+@media(max-width: 1024px){
+  .level-selector {
+    .level-buttons {
+      width: 700px;
+      height: 40px;
+
+      button {
+        width: 170px;
+        height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .container-top {
+    width: 760px;
+    height: 486px;
+    font-size: 10px;
+    padding: 0;
+    .results-container{
+      padding: 0;
+      .player-name-header {
+        padding-left: 8px;
+        font-size: 12px;
+        .player-name-cell{
+          width: 100px;
+          height: 30px;
+          font-size: 12px;
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+
+
+  .results-table th,
+  .results-table td {
+    font-size: 14px; // Giảm kích thước chữ cho thiết bị nhỏ
+  }
+
+
+  .pagination{
+    position: fixed;
+
+    bottom: 20px;
+
+
+    transform: translateX(-50%);
+
+  }
+}
+

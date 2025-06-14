@@ -1,3 +1,5 @@
+
+
 * {
   box-sizing: border-box;
 }
@@ -6,6 +8,9 @@
   min-height: 100vh;
   width: 100%;
   color: white;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-start;
 }
 .sidebar {
   width: 270px;
@@ -15,6 +20,25 @@
   margin-right: 30px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .hamburger-btn {
+    display: none;
+
+    @media (max-width: 1023px) {
+      display: block;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+      .material-symbols-outlined {
+        font-size: 2rem;
+        color: #333;
+      }
+    }
+  }
+
 
   .sidebar-header {
     font-size: 1.5rem;
@@ -52,7 +76,6 @@
       margin-bottom: 10px;
 
       .icon {
-        color: #00ff6f;
         margin-right: 4px;
       }
 
@@ -84,7 +107,7 @@
 }
 
 .main-content {
-  flex: 1; /* Chiếm không gian còn lại */
+  flex: 1;
   min-height: 100vh;
 
   .content-top {
@@ -92,7 +115,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
@@ -381,5 +404,85 @@
       max-width: none;
       height: auto;
     }
+  }
+}
+
+@media(max-width: 1440px){
+  .sidebar {
+    width: 260px;
+    font-size: 14px;
+  }
+
+  .main-content {
+    width: 1100px;
+  }
+}
+$primary-color: #38a565;
+$border-radius: 10px;
+$shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  color: white;
+  margin: 0;
+  padding: 0;
+  justify-content: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .sidebar {
+    width: 100px;
+    font-size: 11px;
+    gap: 0;
+    padding: 0;
+    height: auto;
+
+    .sidebar-header {
+      img {
+        margin-top: 50px;
+        width: 100px;
+      }
+    }
+    .sidebar-menu{
+      a {
+        padding: 0.5rem;
+        font-size: 13px;
+        .icon {
+          margin-right: 5px;
+          font-size:20px;
+        }
+        .text {
+          display: none;
+        }
+      }
+    }
+
+  }
+  .content-top{
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    height: 100px;
+  }
+
+  .main-content {
+    width: auto;
   }
 }

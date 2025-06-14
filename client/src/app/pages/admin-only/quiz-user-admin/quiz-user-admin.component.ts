@@ -34,7 +34,7 @@ export class QuizUserAdminComponent implements OnInit {
   totalPages: number = 0;
   paginatedResults: any[] = [];
   pages: number[] = [];
-  currentLevel: string = 'mix'; // Mức độ quiz hiện tại
+  currentLevel: string = 'mix';
   filteredResults: any[] = [];
   protected searchTerm: string = '';
 
@@ -56,7 +56,7 @@ export class QuizUserAdminComponent implements OnInit {
         this.quizService.searchTerm$,
       ]).subscribe(([date, level, searchTerm]) => {
         this.selectedDate = date;
-        this.currentLevel = level;
+        this.currentLevel = level || 'mix';
         this.searchTerm = searchTerm;
         console.log('QuizService update:', { date, level, searchTerm }); // Debug
         this.filterResults();
@@ -65,6 +65,7 @@ export class QuizUserAdminComponent implements OnInit {
     this.subscriptions.add(
       this.quizService.refreshFilter$.subscribe(() => {
         console.log('Refresh filter triggered'); // Debug
+        this.currentLevel = 'mix';
         this.filterResults();
       }),
     );
@@ -152,14 +153,9 @@ export class QuizUserAdminComponent implements OnInit {
   }
   filterResults(): void {
     this.filteredResults = this.allResults.filter((item) => {
-      const quizDate = format(new Date(item.dateDoQuiz), 'yyyy-MM-dd'); // Chuẩn hóa định dạng
-      const matchesDate = this.selectedDate
-        ? quizDate === this.selectedDate
-        : true;
-      const matchesLevel =
-        this.currentLevel === 'mix'
-          ? true
-          : item.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase();
+      const quizDate = format(new Date(item.dateDoQuiz), 'yyyy-MM-dd');
+      const matchesDate = this.selectedDate ? quizDate === this.selectedDate : true;
+      const matchesLevel = item.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase();
       const matchesSearch = this.searchTerm
         ? item.username.toLowerCase().includes(this.searchTerm.toLowerCase())
         : true;
@@ -232,20 +228,13 @@ export class QuizUserAdminComponent implements OnInit {
   selectLevel(level: string): void {
     this.currentLevel = level;
     this.isLoading = true;
-
-    this.filteredResults = this.allResults.filter(
-      (item) => item.quizLevel?.toLowerCase() === level.toLowerCase(),
-    );
-
-    this.currentPage = 1;
-    this.updatePagination();
+    this.quizService.setSelectedLevel(level); // Đồng bộ với QuizService
+    this.filterResults(); // Sử dụng filterResults để lọc
     this.isLoading = false;
   }
 
   clearFilters() {
-    this.quizService.clearSelectedDate();
-    this.quizService.clearSelectedLevel();
-    this.quizService.clearSearchTerm();
+    this.quizService.clearAllFilters();
     this.selectedDate = '';
     this.currentLevel = 'mix';
     this.searchTerm = '';

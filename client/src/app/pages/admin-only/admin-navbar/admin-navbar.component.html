@@ -2,8 +2,14 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <img src="/assets/logo.png" alt="Logo" />
+      <img class="logo" src="/assets/logo.png" alt="Logo" />
     </div>
+
+    <!-- Trong .header-right -->
+    <button class="hamburger-btn" (click)="toggleSidebar()">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
     <ul class="sidebar-menu">
       <li class="sidebar-item">
         <a [routerLink]="['/home']" routerLinkActive="active">
@@ -18,7 +24,7 @@
           [routerLinkActiveOptions]="{ exact: false }"
         >
           <span class="material-symbols-outlined icon colored">help</span>
-          <span class="label">Question Management</span>
+          <span class="label">Quiz Manage</span>
         </a>
       </li>
       <li class="sidebar-item">
@@ -28,7 +34,7 @@
           [routerLinkActiveOptions]="{ exact: false }"
         >
           <span class="material-symbols-outlined icon colored">assignment</span>
-          <span class="label">Quiz User</span>
+          <span class="label">User Manage</span>
         </a>
       </li>
     </ul>
@@ -38,6 +44,7 @@
   <div class="main-content">
     <header class="content-top">
       <div class="header-left">
+
         <div class="user-info">
           <img src="/assets/admin.jpg" alt="Admin" class="rounded-full" />
           <span>ADMIN</span>

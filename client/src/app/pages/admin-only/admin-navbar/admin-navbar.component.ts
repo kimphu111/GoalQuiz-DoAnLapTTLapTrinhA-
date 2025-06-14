@@ -68,6 +68,8 @@ export class AdminNavbarComponent implements OnInit {
   showDateFilter = false;
   calendarMonth: Date = new Date();
   calendarDays: CalendarDay[] = [];
+  isSidebarVisible = false;
+
 
   constructor(
     private router: Router,
@@ -111,9 +113,11 @@ export class AdminNavbarComponent implements OnInit {
   }
 
   clearDate() {
-    this.selectedDate = 'mixed';
+    this.selectedDate = ''; // hoặc null nếu bạn muốn đồng nhất
     this.calendarDays.forEach((d) => (d.isSelected = false));
-    this.quizService.setSelectedDate(''); // Gửi rỗng để reset filter
+    this.quizService.setSelectedDate(''); // Đảm bảo reset date
+    this.quizService.setSelectedLevel('mix'); // Đặt lại level về mix
+    this.quizService.refreshFilter(); // Kích hoạt làm mới bộ lọc
     this.showDateFilter = false;
   }
 
@@ -215,7 +219,7 @@ export class AdminNavbarComponent implements OnInit {
     if (this.selectedDate) {
       this.router.navigate([], {
         queryParams: { date: this.selectedDate },
-        queryParamsHandling: 'merge', // Giữ các params khác nếu có
+        queryParamsHandling: 'merge',
       });
     } else {
       this.router.navigate([], {
@@ -232,4 +236,14 @@ export class AdminNavbarComponent implements OnInit {
   closeDateFilter() {
     this.showDateFilter = false;
   }
+
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
+  closeSidebar() {
+    this.isSidebarVisible = false;
+  }
+
 }
