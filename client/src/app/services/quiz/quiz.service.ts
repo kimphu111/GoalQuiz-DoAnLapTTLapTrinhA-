@@ -91,6 +91,7 @@ export class QuizService {
 
   getAllResultsByDate(date: string): Observable<any>{
     const token = localStorage.getItem('accessToken');
+    //console.log('Token:', token);
     const httpOptions = token
       ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
       : {};

@@ -78,7 +78,7 @@
                 @for(day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; track day){
                     <div class="weekday">{{ day }}</div>
                 }
-                @for(day of calendarDays; track day){
+                @for(day of calendarDays; track day.date.getTime()){
                     <div class="day"
                         [class.disabled]="!day.isCurrentMonth"
                         [class.today]="day.isToday"
