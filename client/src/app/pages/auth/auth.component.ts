@@ -39,6 +39,7 @@ export class AuthComponent {
     this.message = '';
     this.isSuccess = false;
     this.showSpinner = false;
+    $event.preventDefault();  // xóa nữa làm chos
   }
 
   onLogin(event: Event, form: NgForm) {

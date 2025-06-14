@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './ranking.component.scss',
 })
 export class RankingComponent implements OnInit {
-  currentLevel: string = 'mixed'; // Mức độ mặc định
+  currentLevel: string = 'mix'; // Mức độ mặc định
   currentPlayers: {
     idUser: string;
     totalScore: number;
