@@ -5,19 +5,19 @@
         <div class="header">
             <div class="header-info">
 
-                <div class="date">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <span>{{quizDate}}</span>
+                <div class="result-time">
+                    <span class="material-symbols-outlined" title="hour">schedule</span>
+                    <span title="hour">{{quizTime}}</span>
                 </div>
 
-                <div class="result-time">
-                    <span class="material-symbols-outlined">schedule</span>
-                    <span>{{quizTime}}</span>
+                <div class="date">
+                    <span class="material-symbols-outlined" title="date">calendar_month</span>
+                    <span title="date">{{quizDate}}</span>
                 </div>
 
                 <div class="score">
                     <img src="/assets/icon-park-solid_success.png" alt="pic"/>
-                    <div class="score-number">{{score}}</div>
+                    <div class="score-number">Score: {{score}}</div>
                     <div class="quiz-level">{{ quizLevel | titlecase }} Level</div>
                 </div>
                 
