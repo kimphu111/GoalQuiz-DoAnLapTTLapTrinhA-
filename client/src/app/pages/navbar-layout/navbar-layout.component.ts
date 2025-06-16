@@ -1,10 +1,5 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-} from '@angular/router';
+import { Component, HostListener, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
   imports: [NgClass, RouterLink, RouterOutlet, RouterLinkActive],
   standalone: true,
 })
-export class NavbarLayoutComponent {
+export class NavbarLayoutComponent implements AfterViewInit {
   username: string = 'Guest';
   email: string = '';
   role: string | null = null;
@@ -24,12 +19,13 @@ export class NavbarLayoutComponent {
   isSidebarVisible: boolean = true;
   isLoading: boolean = false;
   isBrowser: boolean;
+  isMobileView: boolean = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
     this.loadTheme();
@@ -37,26 +33,45 @@ export class NavbarLayoutComponent {
 
   ngOnInit() {
     this.isLoading = true;
-
+    this.loadTheme();
+    this.checkScreenSize();
     if (this.isBrowser) {
       if (!this.authService.isLoggedIn()) {
         this.router.navigate(['/login']);
         this.isLoading = false;
         return;
       }
-
-      // Lấy username từ localStorage (giá trị tạm thời)
       this.username = localStorage.getItem('username') || 'Guest';
       this.email = localStorage.getItem('email') || '';
       this.role = localStorage.getItem('role');
-
-      // Gọi API để lấy dữ liệu người dùng
       this.fetchUserProfile();
+      setTimeout(() => this.checkScreenSize(), 100); // Đảm bảo chạy sau khi DOM sẵn sàng
     }
-
     setTimeout(() => {
       this.isLoading = false;
     }, 500);
+  }
+
+  ngAfterViewInit() {
+    if (this.isBrowser) {
+      this.checkScreenSize();
+      setTimeout(() => this.checkScreenSize(), 0);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  private checkScreenSize() {
+    console.log('Checking screen size...');
+    console.log('isBrowser:', this.isBrowser);
+    console.log('Window width:', this.isBrowser ? window.innerWidth : 'N/A');
+    this.isMobileView = this.isBrowser ? window.innerWidth <= 768 : true;
+    this.isSidebarVisible = !this.isMobileView;
+    console.log('isMobileView:', this.isMobileView);
+    console.log('isSidebarVisible:', this.isSidebarVisible);
   }
 
   private fetchUserProfile() {
@@ -73,17 +88,10 @@ export class NavbarLayoutComponent {
       })
       .subscribe({
         next: (response: any) => {
-          // this.username = response.user.username || response.user.email || 'Guest';
-          // this.email = response.user.email || '';
-
-          // Nếu response.user tồn tại thì lấy, không thì fallback sang response
-          // Tránh Cannot read properties undefined(reading 'username')
           const user = response.user || response;
           this.username = user.username || user.email;
           this.email = user.email || '';
           this.role = user.role || localStorage.getItem('role');
-
-
           if (this.isBrowser) {
             localStorage.setItem('username', this.username);
             localStorage.setItem('email', this.email);
@@ -91,7 +99,6 @@ export class NavbarLayoutComponent {
               localStorage.setItem('role', user.role);
             }
           }
-          console.log('Username from API:', this.username);
           this.isLoading = false;
         },
         error: (error: any) => {
@@ -128,10 +135,6 @@ export class NavbarLayoutComponent {
     if (this.isBrowser) {
       document.body.classList.toggle('light-mode', !this.isDarkMode);
     }
-  }
-
-  toggleSidebar() {
-    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
   onLogout() {

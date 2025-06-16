@@ -684,7 +684,7 @@ $light-highlighted-day-bg: #ff9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
     width: 550px;
     height: auto;
     margin: 40px 0 20px 0 ;
@@ -696,9 +696,9 @@ $light-highlighted-day-bg: #ff9999;
       height: 250px;
 
       img {
-        width: 100%;
-        height: 210px;
-        max-height: 180px;
+        width: 120px;
+        height: 220px;
+        max-height: 220px;
         object-fit: cover;
       }
     }
