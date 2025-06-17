@@ -15,12 +15,18 @@
                     <span title="date">{{quizDate}}</span>
                 </div>
 
+              <!-- Thêm thời gian làm bài -->
+              <div class="duration">
+                <span class="material-symbols-outlined" title="duration">hourglass_top</span>
+                <span title="duration">{{ quizDuration }}</span>
+              </div>
+
                 <div class="score">
                     <img src="/assets/icon-park-solid_success.png" alt="pic"/>
                     <div class="score-number">Score: {{score}}</div>
                     <div class="quiz-level">{{ quizLevel | titlecase }} Level</div>
                 </div>
-                
+
             </div>
         </div>
 
@@ -65,7 +71,7 @@
                                         'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
                                         'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
                                     }">
-                                    <span class="answer-label">{{ getAnswerKey($index) }}.</span> 
+                                    <span class="answer-label">{{ getAnswerKey($index) }}.</span>
                                     {{option}}
                                 </div>
                             }

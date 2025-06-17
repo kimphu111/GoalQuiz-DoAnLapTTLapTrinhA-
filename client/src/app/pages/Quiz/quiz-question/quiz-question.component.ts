@@ -52,7 +52,7 @@ export class QuizQuestionComponent implements OnInit {
 	answered: boolean = false;
     questionResults: {isCorrect: boolean}[] = [];
     dateDoQuiz: string = '';
-	
+
     constructor(
         private location: Location,
         private router: Router,
@@ -80,21 +80,21 @@ export class QuizQuestionComponent implements OnInit {
                     return;
                 }
                 this.questions = res.data.map((q: RawQuestion) => {
-    
+
                     const options: Option[] = this.shuffleArray([
                         { label: 'A', text: q.answerA },
                         { label: 'B', text: q.answerB },
                         { label: 'C', text: q.answerC },
                         { label: 'D', text: q.answerD }
                     ]);
-                    
+
                     return {
                         ...q,
                         options,
                         answer: q.correctAnswer,
                     };
                 });
-    
+
                 this.currentIndex = 0;
                 this.score = 0;
                 this.setCurrentQuestion();
@@ -145,7 +145,7 @@ export class QuizQuestionComponent implements OnInit {
 
     nextQuestion(): void{
         this.currentIndex++;
-        
+
         if(this.currentIndex < this. questions.length){
             this.setCurrentQuestion();
         }else{

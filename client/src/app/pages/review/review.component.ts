@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { QuizService } from '../../services/quiz/quiz.service';
 
-
 interface CalendarDay {
   day: number;
   isCurrentMonth: boolean;
@@ -19,7 +18,7 @@ interface CalendarDay {
   templateUrl: './review.component.html',
   styleUrl: './review.component.scss'
 })
-export class ReviewComponent implements OnInit{
+export class ReviewComponent implements OnInit {
   currentLevel = 'mix';
   showDateFilter = false;
   calendarMonth = new Date();
@@ -123,27 +122,44 @@ export class ReviewComponent implements OnInit{
   fetchQuizzes(): void {
     const filterDate = this.selectedDate || this.formatDate(new Date());
     const userId = localStorage.getItem('userId');
-    
-    this.quizService.getAllResultsByDate(filterDate).subscribe({
-      next: (res: any[]) => {
-        // Lọc đúng user, ngày, và level (dựa vào quizLevel trong results)
-        const filtered = res.filter(item =>
-          String(item.idUser) === String(userId) &&
-          item.dateDoQuiz?.slice(0, 10) === filterDate &&
-          Array.isArray(item.results) &&
-          item.results.some((r: any) => r.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase())
-        ).map(item => ({
-          ...item,
-          quizLevel: Array.isArray(item.results) && item.results.length > 0
-            ? item.results[0].quizLevel || this.currentLevel
-            : this.currentLevel
-        }));
-        this.quizAttempts = filtered;
-        this.noResult = filtered.length === 0;
+
+    if (!userId) {
+      alert('Thiếu thông tin người dùng. Vui lòng đăng nhập lại.');
+      this.quizAttempts = [];
+      this.noResult = true;
+      return;
+    }
+
+    this.quizService.getUserResults(userId, filterDate, this.currentLevel).subscribe({
+      next: (res) => {
+        if (!Array.isArray(res.results) || res.results.length === 0) {
+          this.quizAttempts = [];
+          this.noResult = true;
+          return;
+        }
+
+        // Chuyển đổi dữ liệu thành quizAttempts
+        this.quizAttempts = [{
+          idUser: userId,
+          dateDoQuiz: filterDate,
+          quizLevel: this.currentLevel,
+          results: res.results,
+          totalScore: res.totalScore,
+          totalQuestions: res.totalQuestions
+        }];
+        this.noResult = false;
       },
       error: (err) => {
+        console.error('Error fetching quizzes:', err);
         this.quizAttempts = [];
         this.noResult = true;
+        if (err.status === 404) {
+          alert('Không tìm thấy kết quả bài quiz cho ngày này.');
+        } else if (err.status === 401) {
+          alert('Không thể tải danh sách bài quiz. Vui lòng đăng nhập lại.');
+        } else {
+          alert('Có lỗi xảy ra khi tải danh sách bài quiz.');
+        }
       }
     });
   }

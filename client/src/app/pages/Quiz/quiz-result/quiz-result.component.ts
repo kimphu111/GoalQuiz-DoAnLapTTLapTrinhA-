@@ -19,6 +19,9 @@ export class QuizResultComponent implements OnInit {
   quizTime: string = '';
   quizDate: string = '';
 
+  //Phu lam
+  quizDuration : string = '';
+//
   latestResults: Record<string, any[]> = {};
   selectedResult: any = null;
   showPopup: boolean = false;
@@ -118,6 +121,13 @@ export class QuizResultComponent implements OnInit {
         }
       }
     });
+
+
+    //Phu code
+    // Lưu thời gian bắt đầu khi quiz được khởi tạo
+    const startTime = new Date().toISOString();
+    localStorage.setItem('quizStartTime', startTime);
+    localStorage.setItem('dateDoQuiz', startTime); // Đồng bộ với dateDoQuiz
   }
 
   showQuestionDetail(result: any, index: number): void {
@@ -142,5 +152,18 @@ export class QuizResultComponent implements OnInit {
 
   getAnswerKey(index: number): string {
     return index >= 0 && index < 4 ? String.fromCharCode(65 + index) : '';
+  }
+
+
+
+  // tao code (Phu)
+  startQuiz(level: string): void {
+    // Gọi API để lấy câu hỏi
+    this.quizService.getQuiz(level).subscribe({
+      next: (res) => {
+        // Xử lý câu hỏi
+      },
+      error: (err) => console.error('Lỗi khi lấy quiz:', err)
+    });
   }
 }
