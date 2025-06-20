@@ -2,7 +2,7 @@
 $dark-bg-gradient: linear-gradient(135deg, #0f500d 0%, #1a3c34 100%);
 $dark-text-color: #fff;
 $dark-card-bg: #2a2a2a;
-$dark-text-secondary: #c8c8c8;
+$dark-text-secondary: #ff0000;
 $dark-highlight-color: #38a565;
 
 $light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
@@ -18,7 +18,6 @@ $light-highlight-color: #38a565;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
-  margin-top: 10px;
 
   body.dark-mode & {
     background: $dark-card-bg;
@@ -29,12 +28,13 @@ $light-highlight-color: #38a565;
   .avatar-section {
     display: flex;
     align-items: center;
-    padding: 14px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
-    width: 943px;
+    width: 970px;
+    margin: 15px 0 0 5px;
 
     body.dark-mode & {
       background: #333;
@@ -101,7 +101,8 @@ $light-highlight-color: #38a565;
     border: 1px solid #ccc;
     border-radius: 8px;
     background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    width: 960px;
+    margin: 0 auto;
 
     body.dark-mode & {
       background: #333;
@@ -110,18 +111,17 @@ $light-highlight-color: #38a565;
 
     .form-row {
       display: flex;
-      gap: 20px;
+      gap: 10px;
+      width: 970px;
+      margin: 0 auto;
+    }
+
+    .form-row .form-group {
+      flex: 0 0 475px;
     }
 
     .form-group {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      margin-bottom: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
 
       label {
         display: block;
@@ -135,7 +135,7 @@ $light-highlight-color: #38a565;
       }
 
       input {
-        width: 98%;
+        width: 100%;
         height: 32px;
         padding: 6px 10px;
         font-size: 0.95rem;
@@ -143,6 +143,7 @@ $light-highlight-color: #38a565;
         border-radius: 6px;
         background: #fff;
         color: $light-text-color;
+        box-sizing: border-box;
 
         body.dark-mode & {
           background: #444;
@@ -172,24 +173,13 @@ $light-highlight-color: #38a565;
         .location-input {
           position: relative;
 
-          .material-icons {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            transform: translateY(-50%);
-            color: $light-text-secondary;
-
-            body.dark-mode & {
-              color: $dark-text-secondary;
-            }
-          }
-
           input {
             padding-left: 35px;
           }
         }
       }
     }
+
 
     .form-actions {
       text-align: right;

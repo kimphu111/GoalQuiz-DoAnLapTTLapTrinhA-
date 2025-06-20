@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuizService {
+
   constructor(private http: HttpClient) {}
 
   private selectedDateSubject = new BehaviorSubject<string>('');
@@ -58,9 +59,11 @@ export class QuizService {
     this.refreshFilterSubject.next();
   }
 
+
+
   getQuiz(level: string): Observable<any> {
-    let apiUrl = '';
-    switch (level) {
+    let apiUrl= '';
+    switch (level){
       case 'easy': apiUrl = 'http://localhost:8000/api/quiz/getEasyQuiz'; break;
       case 'medium': apiUrl = 'http://localhost:8000/api/quiz/getMediumQuiz'; break;
       case 'hard': apiUrl = 'http://localhost:8000/api/quiz/getHardQuiz'; break;
@@ -71,31 +74,38 @@ export class QuizService {
 
     const token = localStorage.getItem('accessToken');
     const httpOptions = token
-      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}`})}
       : {};
     return this.http.get(apiUrl, httpOptions);
   }
 
   submitAnswer(data: any): Observable<any> {
-    const token = localStorage.getItem('accessToken');
+     const token = localStorage.getItem('accessToken');
     const httpOptions = token
       ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
       : {};
     return this.http.post('http://localhost:8000/api/play/postPlayerResult', data, httpOptions);
   }
 
-  getUserResults(userId: string, date: string, level: string): Observable<any> {
+  getUserResults(userId: string, date: string, level: string): Observable<any>{
     const token = localStorage.getItem('accessToken');
-    console.log('Token:', token);
-    if (!token) {
-      return throwError(() => ({ status: 401, message: 'No access token available' }));
-    }
-    const httpOptions = {
-      headers: new HttpHeaders({ Authorization: `Bearer ${token}` })
-    };
-    const formattedDate = new Date(date).toISOString().split('T')[0];
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
     return this.http.get(
-      `http://localhost:8000/api/play/review?dateDoQuiz=${formattedDate}&quizLevel=${level}`,
+      `http://localhost:8000/api/play/review?dateDoQuiz=${date}&quizLevel=${level}`,
+      httpOptions
+    );
+  }
+
+  getAllResultsByDate(date: string): Observable<any>{
+    const token = localStorage.getItem('accessToken');
+    //console.log('Token:', token);
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
+    return this.http.get(
+      `http://localhost:8000/api/play/getAllPlayerResult?dateDoQuiz=${date}`,
       httpOptions
     );
   }

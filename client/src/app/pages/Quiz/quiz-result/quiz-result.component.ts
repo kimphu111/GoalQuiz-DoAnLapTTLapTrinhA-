@@ -18,10 +18,7 @@ export class QuizResultComponent implements OnInit {
   score: number = 0;
   quizTime: string = '';
   quizDate: string = '';
-
-  //Phu lam
-  quizDuration : string = '';
-//
+  quizDuration: string = '';
   latestResults: Record<string, any[]> = {};
   selectedResult: any = null;
   showPopup: boolean = false;
@@ -40,11 +37,31 @@ export class QuizResultComponent implements OnInit {
       this.quizLevel = params['level'] || 'easy';
       const dateDoQuiz = params['dateDoQuiz'] || localStorage.getItem('dateDoQuiz') || '';
 
+      // Lấy và định dạng thời gian làm bài từ quizDuration
+      const quizDuration = Number(sessionStorage.getItem('quizDuration')) || 0;
+      this.quizTime = this.formatDuration(quizDuration);
+
+
+      // Định dạng quizDate
+      const dateObj = new Date(dateDoQuiz);
+      this.quizDate = dateObj.toLocaleString('vi-VN', {
+        timeZone: 'Asia/Ho_Chi_Minh',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+
+      console.log(this.quizDate);
+
       if (this.userId && dateDoQuiz) {
         this.quizService.getUserResults(this.userId, dateDoQuiz, this.quizLevel).subscribe({
           next: (res) => {
             if (!Array.isArray(res.results)) {
               console.warn('Invalid data format from API');
+              this.questionResults = [];
               return;
             }
 
@@ -56,82 +73,102 @@ export class QuizResultComponent implements OnInit {
                 item.quiz?.answerB,
                 item.quiz?.answerC,
                 item.quiz?.answerD
-              ] : [],
-              questionText: item.quiz?.question || 'No data',
+              ].filter(Boolean) : [], // Đảm bảo options là mảng
+              questionText: item.quiz?.question || 'Không có dữ liệu',
               correctAnswer: item.quiz?.correctAnswer || '',
-              chooseAnswer: item.chooseAnswer,
+              chooseAnswer: item.chooseAnswer || '',
               image: item.quiz?.image || ''
             }));
 
             this.score = res.totalScore || 0;
 
-            const dateObj = new Date(dateDoQuiz);
-            this.quizDate = dateObj.toLocaleDateString('vi-VN');
-            this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-            // Save multiple results for each level
+            // Lưu kết quả vào localStorage
             const key = `latestQuizResult_${this.quizLevel}`;
-            let oldArr: any;
-            try{
-              oldArr = JSON.parse(localStorage.getItem(key) || '[]' );
-              if(!Array.isArray(oldArr)) oldArr = [];
-            }catch {
+            let oldArr: any[] = [];
+            try {
+              oldArr = JSON.parse(localStorage.getItem(key) || '[]');
+              if (!Array.isArray(oldArr)) oldArr = [];
+            } catch {
               oldArr = [];
             }
             const newResult = {
+
               dateDoQuiz,
               quizLevel: this.quizLevel,
               score: this.score,
               totalQuestions: res.totalQuestions,
-              results: this.questionResults
+              results: this.questionResults,
+              quizDuration,
             };
             oldArr.push(newResult);
             localStorage.setItem(key, JSON.stringify(oldArr));
 
-            // Also store in memory for reuse
+            // Lưu vào latestResults
             this.latestResults[this.quizLevel] = oldArr;
           },
           error: (err) => {
             console.error('Failed to load quiz results:', err);
             this.questionResults = [];
             this.score = 0;
+            console.log(this.quizDate);
           }
         });
       }
 
-      // Load all latest results from localStorage (for reuse or display)
+      // Load tất cả kết quả từ localStorage
       ['easy', 'medium', 'hard', 'mix'].forEach(level => {
         const stored = localStorage.getItem(`latestQuizResult_${level}`);
         this.latestResults[level] = stored ? JSON.parse(stored) : [];
       });
 
-      // Nếu không có kết quả thì xóa hiện thị
+      // Hiển thị kết quả mặc định từ latestResults
       const currentResults = this.latestResults[this.quizLevel];
       if (!Array.isArray(currentResults) || currentResults.length === 0) {
         this.questionResults = [];
       } else {
-        // Lấy lần làm gần nhất để hiển thị mặc định
         const lastResult = currentResults[currentResults.length - 1];
-        this.questionResults = lastResult?.results || [];
+        this.questionResults = lastResult?.results.map((item: any) => ({
+          ...item,
+          options: Array.isArray(item.options) ? item.options : [] // Đảm bảo options là mảng
+        })) || [];
         this.score = lastResult?.score || 0;
         if (lastResult?.dateDoQuiz) {
           const dateObj = new Date(lastResult.dateDoQuiz);
-          this.quizDate = dateObj.toLocaleDateString('vi-VN');
-          this.quizTime = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+          this.quizDate = dateObj.toLocaleString('vi-VN', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
         }
       }
     });
+  }
 
-
-    //Phu code
-    // Lưu thời gian bắt đầu khi quiz được khởi tạo
-    const startTime = new Date().toISOString();
-    localStorage.setItem('quizStartTime', startTime);
-    localStorage.setItem('dateDoQuiz', startTime); // Đồng bộ với dateDoQuiz
+  private formatDuration(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    if (seconds === 0) {
+      return '0 giây';
+    }
+    if (minutes === 0) {
+      return `${remainingSeconds} giây`;
+    }
+    if (remainingSeconds === 0) {
+      return `${minutes} phút`;
+    }
+    return `${minutes} phút ${remainingSeconds} giây`;
   }
 
   showQuestionDetail(result: any, index: number): void {
-    this.selectedResult = { ...result, index };
+    this.selectedResult = {
+      ...result,
+      index,
+      options: Array.isArray(result.options) ? result.options : [] // Đảm bảo options là mảng
+    };
     this.showPopup = true;
   }
 
@@ -154,11 +191,7 @@ export class QuizResultComponent implements OnInit {
     return index >= 0 && index < 4 ? String.fromCharCode(65 + index) : '';
   }
 
-
-
-  // tao code (Phu)
   startQuiz(level: string): void {
-    // Gọi API để lấy câu hỏi
     this.quizService.getQuiz(level).subscribe({
       next: (res) => {
         // Xử lý câu hỏi
@@ -166,4 +199,6 @@ export class QuizResultComponent implements OnInit {
       error: (err) => console.error('Lỗi khi lấy quiz:', err)
     });
   }
+
+  protected readonly Array = Array;
 }

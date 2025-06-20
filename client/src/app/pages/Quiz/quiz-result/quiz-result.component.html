@@ -15,12 +15,6 @@
                     <span title="date">{{quizDate}}</span>
                 </div>
 
-              <!-- Thêm thời gian làm bài -->
-              <div class="duration">
-                <span class="material-symbols-outlined" title="duration">hourglass_top</span>
-                <span title="duration">{{ quizDuration }}</span>
-              </div>
-
                 <div class="score">
                     <img src="/assets/icon-park-solid_success.png" alt="pic"/>
                     <div class="score-number">Score: {{score}}</div>
@@ -64,23 +58,25 @@
                             />
                         }
                         <div class="answer-box">
-                            @for( option of selectedResult?.options || []; track $index ){
-                                <div class="answer"
-                                    [ngClass]="{
-                                        'correct': selectedResult?.correctAnswer === getAnswerKey($index),
-                                        'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
-                                        'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
-                                    }">
-                                    <span class="answer-label">{{ getAnswerKey($index) }}.</span>
-                                    {{option}}
-                                </div>
+                          @if (selectedResult.options && Array.isArray(selectedResult.options) && selectedResult.options.length > 0) {
+                            @for (option of selectedResult.options; track $index) {
+                              <div class="answer"
+                                   [ngClass]="{
+                         'correct': selectedResult.correctAnswer === getAnswerKey($index),
+                         'incorrect': selectedResult.chooseAnswer === getAnswerKey($index) && selectedResult.isCorrect === false,
+                         'chosen': selectedResult.chooseAnswer === getAnswerKey($index)
+                       }">
+                                <span class="answer-label">{{ getAnswerKey($index) }}.</span>
+                                {{ option }}
+                              </div>
                             }
+                          } @else {
+                            <div class="no-options">Không có đáp án</div>
+                          }
                         </div>
-
                     </div>
-
                 </div>
             </div>
-        }
+         }
     </div>
 </div>

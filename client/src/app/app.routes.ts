@@ -4,7 +4,6 @@ import { AuthComponent } from './pages/auth/auth.component';
 import { AuthGuard } from './guards/auth.guards';
 import { AlbumQuizComponent } from './pages/Quiz/album-quiz/album-quiz.component';
 import { ProfileComponent } from './pages/profile/profile.component';
-import { PersonalPointsComponent } from './pages/personal-points/personal-points.component';
 import { ReviewComponent } from './pages/review/review.component';
 import { NavbarLayoutComponent } from './pages/navbar-layout/navbar-layout.component';
 import { QuizQuestionComponent } from './pages/Quiz/quiz-question/quiz-question.component';
@@ -24,7 +23,6 @@ export const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'quiz', component: AlbumQuizComponent },
-      { path: 'points', component: PersonalPointsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'review', component: ReviewComponent },
       { path: 'quiz-question', component: QuizQuestionComponent },
@@ -33,7 +31,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'auth', component: AuthComponent },
-  
+
   {
   path: 'admin',
   canActivate: [AuthGuard],

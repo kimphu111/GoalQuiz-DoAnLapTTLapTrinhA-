@@ -10,19 +10,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './ranking.component.scss',
 })
 export class RankingComponent implements OnInit {
-  currentLevel: string = 'mix'; // Mức độ mặc định
+  currentLevel: string = 'mix';
   currentPlayers: {
     idUser: string;
     totalScore: number;
     username: string;
     email: string;
+    duration: string; // Thay quizDuration bằng duration kiểu string
   }[] = [];
   isLoading = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.selectLevel(this.currentLevel); // Khởi tạo với mức độ mặc định
+    this.selectLevel(this.currentLevel);
   }
 
   selectLevel(level: string): void {
@@ -30,6 +31,9 @@ export class RankingComponent implements OnInit {
     this.isLoading = true;
 
     const token = localStorage.getItem('accessToken') || '';
+    const localKey = `latestQuizResult_${level}`;
+    const localResults = JSON.parse(localStorage.getItem(localKey) || '[]');
+
     this.http
       .get<any>(`http://localhost:8000/api/play/leaderboard/${level}`, {
         headers: {
@@ -40,13 +44,19 @@ export class RankingComponent implements OnInit {
       .subscribe({
         next: (res) => {
           console.log('Ranking data:', res);
-          // Định dạng lại dữ liệu để khớp với template
+
           this.currentPlayers = res.map((player: any) => ({
             idUser: player.idUser,
             totalScore: player.totalScore,
-            username: player.username || player.email, // Dùng username hoặc email nếu username không có
+            username: player.username || player.email,
             email: player.email,
-          }));
+            duration: player.duration || '00:00:00', // Sử dụng duration từ API, dự phòng nếu không có
+          })).sort((a: { totalScore: number; duration: string }, b: { totalScore: number; duration: string }) => {
+            if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
+            // So sánh duration dưới dạng giây nếu cần
+            return this.parseDuration(a.duration) - this.parseDuration(b.duration);
+          });
+
           this.isLoading = false;
         },
         error: (err) => {
@@ -57,18 +67,19 @@ export class RankingComponent implements OnInit {
       });
   }
 
+  // Hàm chuyển duration (HH:mm:ss) thành giây để so sánh
+  private parseDuration(duration: string): number {
+    const [hours, minutes, seconds] = duration.split(':').map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
   getRankClass(index: number): string {
     switch (index) {
-      case 0:
-        return 'rank-1';
-      case 1:
-        return 'rank-2';
-      case 2:
-        return 'rank-3';
-      case 3:
-        return 'rank-4';
-      default:
-        return 'rank-default';
+      case 0: return 'rank-1';
+      case 1: return 'rank-2';
+      case 2: return 'rank-3';
+      case 3: return 'rank-4';
+      default: return 'rank-default';
     }
   }
 }

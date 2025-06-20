@@ -21,7 +21,7 @@
   </div>
 
   <!-- Form thông tin cá nhân -->
-  <div class="card-section profile-form">
+  <div class="card-section-profile-form">
     <form class="profile-form">
       <div class="form-row">
         <div class="form-group">
@@ -33,6 +33,7 @@
             [(ngModel)]="profile.firstName"
             placeholder="Enter your First Name"
             required
+            class="name-field"
           />
         </div>
         <div class="form-group">
@@ -44,6 +45,7 @@
             [(ngModel)]="profile.lastName"
             placeholder="Enter your Last Name"
             required
+            class="name-field"
           />
         </div>
       </div>
@@ -86,7 +88,6 @@
       <div class="form-group">
         <label for="location">Location (không bắt buộc)</label>
         <div class="location-input">
-          <span class="material-icons">place</span>
           <input
             type="text"
             id="location"
