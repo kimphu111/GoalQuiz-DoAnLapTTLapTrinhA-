@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const PlayerResult = require("../models/playerResultModel");
 const Quiz = require("../models/quizModel");
 const User = require('../models/userModel');
-const { fn, col, literal } = require('sequelize');
+const { fn, col, literal, Op } = require('sequelize');
 
 
 // const models = {
@@ -20,9 +20,9 @@ const { fn, col, literal } = require('sequelize');
 //@route POST /api/play/postPlayerResult
 //@access public
 const postPlayerResult = asyncHandler(async (req, res) => {
-  const { idQuestion, chooseAnswer, dateDoQuiz, quizLevel } = req.body;
+  const { idQuestion, chooseAnswer, dateDoQuiz, quizLevel, dateFinishQuiz } = req.body;
   const userId = req.user.id;
-  if (!idQuestion || !chooseAnswer || !dateDoQuiz || !quizLevel) {
+  if (!idQuestion || !chooseAnswer || !dateDoQuiz || !quizLevel || !dateFinishQuiz) {
     res.status(400);
     throw new Error("Need fill idQuestion and chooseAnswer!");
   }
@@ -40,6 +40,7 @@ const postPlayerResult = asyncHandler(async (req, res) => {
     result: isCorrect,
     score: question.score,
     dateDoQuiz,
+    dateFinishQuiz,
     quizLevel
   });
 
@@ -53,46 +54,97 @@ const postPlayerResult = asyncHandler(async (req, res) => {
 //@route GET /api/play/leaderboard/:level
 //@access private
 const getTopUsersByLevel = asyncHandler(async (req, res) => {
-    const { level } = req.params; // "easy", "medium", "hard", "mix"
-  
-    if (!['easy', 'medium', 'hard', 'mix'].includes(level)) {
-      return res.status(400).json({ message: 'Invalid quiz level' });
-    }
-  
-    try {
-      const topUsers = await PlayerResult.findAll({
-        attributes: [
-          'idUser',
-          [fn('SUM', literal('CASE WHEN result = true THEN score ELSE 0 END')), 'totalScore']
-        ],
-        where: {
-          quizLevel: level,
-        },
-        group: ['idUser'],
-        order: [[literal('totalScore'), 'DESC']],
-        limit: 5,
-        include: [
-          {
-            model: User,
-            attributes: ['email', 'username']
-          }
-        ]
-      });
-  
-      const formattedTopUsers = topUsers.map(user => ({
-        idUser: user.idUser,
-        totalScore: user.dataValues.totalScore,
-        username: user.User?.username,
-        email: user.User?.email
-      }));
+  const { level } = req.params;
 
-      res.status(200).json(formattedTopUsers);
-      
-    } catch (error) {
-      console.error('Error fetching top users:', error);
-      res.status(500).json({ message: 'Internal server error' });
+  if (!['easy', 'medium', 'hard', 'mix'].includes(level)) {
+    return res.status(400).json({ message: 'Invalid quiz level' });
+  }
+
+  try {
+    const results = await PlayerResult.findAll({
+      where: {
+        quizLevel: level,
+      },
+      attributes: [
+        'idUser',
+        'dateDoQuiz',
+        [fn('SUM', literal('CASE WHEN result = true THEN score ELSE 0 END')), 'quizScore']
+      ],
+      group: ['idUser', 'dateDoQuiz'],
+      raw: true,
+    });
+
+    const bestScoresByUser = {};
+
+    for (const r of results) {
+      const { idUser, dateDoQuiz, quizScore } = r;
+
+      if (!bestScoresByUser[idUser] || bestScoresByUser[idUser].quizScore < quizScore) {
+        bestScoresByUser[idUser] = { idUser, dateDoQuiz, quizScore };
+      }
     }
-  });
+
+    const topUsersRaw = Object.values(bestScoresByUser)
+      .sort((a, b) => b.quizScore - a.quizScore)
+      .slice(0, 5);
+
+    const userIds = topUsersRaw.map(u => u.idUser);
+    const users = await User.findAll({
+      where: { id: { [Op.in]: userIds } },
+      attributes: ['id', 'username', 'email'],
+    });
+
+    const userMap = {};
+    users.forEach(user => {
+      userMap[user.id] = user;
+    });
+
+    const formattedTopUsers = await Promise.all(
+      topUsersRaw.map(async item => {
+        const quizRecord = await PlayerResult.findOne({
+          where: {
+            idUser: item.idUser,
+            dateDoQuiz: item.dateDoQuiz,
+            quizLevel: level
+          },
+          order: [['createdAt', 'DESC']],
+          attributes: ['dateDoQuiz', 'dateFinishQuiz'],
+          raw: true
+        });
+
+        let durationFormatted = 'N/A';
+        if (quizRecord?.dateDoQuiz && quizRecord?.dateFinishQuiz) {
+          const start = new Date(quizRecord.dateDoQuiz);
+          const end = new Date(quizRecord.dateFinishQuiz);
+          const diffMs = end - start;
+
+          if (!isNaN(diffMs)) {
+            const hours = Math.floor(diffMs / (1000 * 60 * 60));
+            const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+            durationFormatted = `${hours.toString().padStart(2, '0')}:${minutes
+              .toString()
+              .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+          }
+        }
+
+        return {
+          idUser: item.idUser,
+          username: userMap[item.idUser]?.username || 'Unknown',
+          email: userMap[item.idUser]?.email || 'Unknown',
+          totalScore: item.quizScore,
+          dateDoQuiz: item.dateDoQuiz,
+          duration: durationFormatted,
+        };
+      })
+    );
+
+    res.status(200).json(formattedTopUsers);
+  } catch (error) {
+    console.error('Error fetching top users by best quiz:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 //@desc review  PlayerResult
 //@route GET /api/play/review
