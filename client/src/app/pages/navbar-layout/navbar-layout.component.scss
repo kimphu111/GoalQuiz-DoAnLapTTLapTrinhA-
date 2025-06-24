@@ -252,20 +252,18 @@ $light-highlighted-day-bg: #ff9999;
 }
 
 .home-container .mobile-sidebar {
-  display: none;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: $dark-sidebar-bg;
   padding: 8px 0;
   z-index: 10000;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 80px;
-  gap: 15px;
+  gap: 20px;
+  background-color: transparent;
 
 
 
@@ -278,8 +276,8 @@ $light-highlighted-day-bg: #ff9999;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -288,6 +286,7 @@ $light-highlighted-day-bg: #ff9999;
     color: #000;
     font-size: 0.6rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
 
 
     .material-symbols-outlined {
@@ -446,11 +445,10 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .mobile-sidebar {
-    background: $light-sidebar-bg;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    background: transparent;
+    border: none;
 
     .mobile-item {
-      color: $light-text-secondary;
 
       &.active-link,
       &:hover {
@@ -752,7 +750,6 @@ $light-highlighted-day-bg: #ff9999;
       }
     }
   }
-
   .mobile-sidebar {
     .mobile-item {
       width: 55px;

@@ -36,8 +36,6 @@ export class QuizResultComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.quizLevel = params['level'] || 'easy';
       const dateDoQuiz = params['dateDoQuiz'] || localStorage.getItem('dateDoQuiz') || '';
-
-      // Lấy và định dạng thời gian làm bài từ quizDuration
       const quizDuration = Number(sessionStorage.getItem('quizDuration')) || 0;
       this.quizTime = this.formatDuration(quizDuration);
 

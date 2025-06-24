@@ -151,10 +151,14 @@ export class ProfileComponent implements OnInit {
   }
 
   onSave() {
-    if (!this.isBrowser) return;
+    console.log('onSave() được gọi'); // Debug ngay đầu hàm
+    if (!this.isBrowser) {
+      console.log('Không phải môi trường browser');
+      return;
+    }
 
-    // Kiểm tra các trường bắt buộc
     if (!this.profile.firstName || !this.profile.lastName) {
+      console.log('Thiếu firstName hoặc lastName');
       this.errorMessage = 'Vui lòng điền đầy đủ First Name và Last Name.';
       this.successMessage = null;
       return;
@@ -162,15 +166,9 @@ export class ProfileComponent implements OnInit {
 
     const token = this.authService.getAccessToken();
     if (!token) {
+      console.log('Không có token');
       this.errorMessage = 'Không tìm thấy token. Vui lòng đăng nhập lại.';
       this.router.navigate(['/auth']);
-      return;
-    }
-
-    const decodedToken = this.authService.decodeToken(token);
-    const userId = decodedToken?.user?.id || null;
-    if (!userId) {
-      this.errorMessage = 'Không tìm thấy ID người dùng. Vui lòng đăng nhập lại.';
       return;
     }
 
@@ -180,50 +178,54 @@ export class ProfileComponent implements OnInit {
       birthday: this.profile.birthday || null,
       phonenumber: this.profile.phone || null,
       address: this.profile.address || null,
-      avatar: this.profile.avatar || null,
     };
 
     const formData = new FormData();
     formData.append('userInformation', JSON.stringify(userInformation));
     if (this.selectedFile) {
+      console.log('File avatar:', this.selectedFile.name, this.selectedFile.size, this.selectedFile.type); // Debug file
       formData.append('avatar', this.selectedFile);
+    } else {
+      console.log('Không có file mới, gửi avatar cũ:', this.profile.avatar); // Debug avatar cũ
+      formData.append('avatar', this.profile.avatar || '');
+    }
+
+    // Debug FormData
+    for (let pair of (formData as any).entries()) {
+      console.log('FormData:', pair[0], pair[1]);
     }
 
     this.isLoading = true;
+    console.log('Gửi request tới:', this.updateApiUrl);
     this.http
       .post(this.updateApiUrl, formData, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .subscribe({
         next: (response: any) => {
-          this.successMessage = response.message || 'Thông tin đã được lưu thành công!';
-          this.errorMessage = null;
-          console.log('Lưu thông tin thành công:', response);
-
+          console.log('Response backend:', response); // Debug response
           if (response.avatar) {
             this.profile.avatar = response.avatar;
-            this.selectedFile = null;
+            this.successMessage = 'Cập nhật thông tin và avatar thành công!';
+          } else {
+            this.successMessage = 'Cập nhật thông tin thành công, nhưng avatar không được lưu!';
           }
-
+          this.errorMessage = null;
+          this.selectedFile = null;
           this.fetchUserProfile();
         },
         error: (error) => {
-          const errorMsg =
-            error.status === 404
-              ? 'Không tìm thấy endpoint. Vui lòng kiểm tra backend.'
-              : error.status === 400
-                ? 'Dữ liệu không hợp lệ. Vui lòng kiểm tra lại thông tin.'
-                : error.status === 500
-                  ? 'Lỗi server. Vui lòng thử lại sau.'
-                  : error.error?.message || 'Lưu thông tin thất bại. Vui lòng thử lại.';
-          this.errorMessage = errorMsg;
+          console.error('Lỗi:', error); // Log lỗi
+          this.errorMessage = error.error?.message || 'Cập nhật thất bại!';
           this.successMessage = null;
-          console.error('Lỗi khi lưu thông tin:', error);
           this.isLoading = false;
         },
         complete: () => {
+          console.log('Request hoàn tất');
           this.isLoading = false;
         },
       });
   }
 }
+
+

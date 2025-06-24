@@ -5,6 +5,13 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts'; // Thêm lại NgChartsModule
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { AuthService } from '../../services/auth.service';
+import {QuizService} from '../../services/quiz/quiz.service';
+
+interface QuizAttempt{
+  quizLevel: string;
+  score: number;
+  dateDoQuiz: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -14,7 +21,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  username: string = '';
+  username: string = '' ;
   email: string = '';
   isLoading: boolean = false;
   currentMonth: string = '';
@@ -25,6 +32,8 @@ export class HomeComponent implements OnInit {
   isBrowser: boolean;
   isDarkMode: boolean = true;
   isSidebarVisible = true;
+  isDesktop = window.innerWidth > 768;
+  recentAttempts: { quizLevel: any; dateDoQuiz: string; totalScore: number }[] = [];
 
   // Dữ liệu cho biểu đồ cột
   barChartData: ChartData<'bar'> = {
@@ -73,6 +82,7 @@ export class HomeComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
+    private quizService: QuizService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -82,6 +92,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+
+    window.addEventListener('resize', () => {
+      this.isDesktop = window.innerWidth > 768;
+    });
 
     if (this.isBrowser) {
       this.username = localStorage.getItem('username') || 'Guest';
@@ -94,7 +108,8 @@ export class HomeComponent implements OnInit {
       }
       this.applyTheme();
       this.updateChartData();
-      this.fetchTopPlayers();
+      // this.fetchTopPlayers();
+      this.fetchRecentQuizzes();
     }
 
     setTimeout(() => {
@@ -102,17 +117,30 @@ export class HomeComponent implements OnInit {
     }, 500);
   }
 
-  private fetchTopPlayers() {
-    // this.http.get('http://localhost:8000/api/rankings/top-4').subscribe({
-    //   next: (response: any) => {
-    //     this.topPlayers = response.players.slice(0, 4);
-    //     this.updateChartData();
-    //   },
-    //   error: (error) => {
-    //     console.error('Lỗi lấy danh sách top người chơi:', error);
-    //   },
-    // });
+  private fetchRecentQuizzes() {
+    const userId = localStorage.getItem('userId');
+    if (!userId) return;
+
+    this.quizService.getAllPlayerResults().subscribe({
+      next: (res: any[]) => {
+        this.recentAttempts = res
+          .filter(item => String(item.idUser) === String(userId))
+          .map(item => ({
+            quizLevel: item.results?.[0]?.quizLevel || 'Unknown',
+            totalScore: item.totalScore || 0,
+            dateDoQuiz: item.dateDoQuiz || new Date().toISOString(),
+          }))
+          .sort((a, b) => new Date(b.dateDoQuiz).getTime() - new Date(a.dateDoQuiz).getTime())
+          .slice(0, 3); // Chỉ lấy 3 bài gần nhất
+      },
+      error: (err) => {
+        console.error('Lỗi khi lấy danh sách quiz:', err);
+        this.recentAttempts = [];
+      },
+    });
   }
+
+
 
   private updateChartData() {
     this.barChartData.labels = this.topPlayers.map((player) => player.name);
@@ -207,6 +235,13 @@ export class HomeComponent implements OnInit {
         }
         this.router.navigate(['/auth']);
       },
+    });
+  }
+  formatDate(date: string): string {
+    return new Date(date).toLocaleDateString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
     });
   }
 }
