@@ -20,7 +20,7 @@
                     <div class="score-number">Score: {{score}}</div>
                     <div class="quiz-level">{{ quizLevel | titlecase }} Level</div>
                 </div>
-
+                
             </div>
         </div>
 
@@ -58,25 +58,23 @@
                             />
                         }
                         <div class="answer-box">
-                          @if (selectedResult.options && Array.isArray(selectedResult.options) && selectedResult.options.length > 0) {
-                            @for (option of selectedResult.options; track $index) {
-                              <div class="answer"
-                                   [ngClass]="{
-                         'correct': selectedResult.correctAnswer === getAnswerKey($index),
-                         'incorrect': selectedResult.chooseAnswer === getAnswerKey($index) && selectedResult.isCorrect === false,
-                         'chosen': selectedResult.chooseAnswer === getAnswerKey($index)
-                       }">
-                                <span class="answer-label">{{ getAnswerKey($index) }}.</span>
-                                {{ option }}
-                              </div>
+                            @for( option of selectedResult?.options || []; track $index ){
+                                <div class="answer"
+                                    [ngClass]="{
+                                        'correct': selectedResult?.correctAnswer === getAnswerKey($index),
+                                        'incorrect': selectedResult?.chooseAnswer === getAnswerKey($index) && selectedResult?.isCorrect === false,
+                                        'chosen': selectedResult?.chooseAnswer === getAnswerKey($index)
+                                    }">
+                                    <span class="answer-label">{{ getAnswerKey($index) }}.</span> 
+                                    {{option}}
+                                </div>
                             }
-                          } @else {
-                            <div class="no-options">Không có đáp án</div>
-                          }
                         </div>
+
                     </div>
+
                 </div>
             </div>
-         }
+        }
     </div>
 </div>

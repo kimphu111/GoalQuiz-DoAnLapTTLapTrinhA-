@@ -51,7 +51,8 @@ export class QuizResultComponent implements OnInit {
         year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit'
+        second: '2-digit',
+        hour12: false
       });
 
       console.log(this.quizDate);
@@ -59,6 +60,7 @@ export class QuizResultComponent implements OnInit {
       if (this.userId && dateDoQuiz) {
         this.quizService.getUserResults(this.userId, dateDoQuiz, this.quizLevel).subscribe({
           next: (res) => {
+             console.log('Kết quả từ getUserResults:', res);
             if (!Array.isArray(res.results)) {
               console.warn('Invalid data format from API');
               this.questionResults = [];
@@ -105,6 +107,18 @@ export class QuizResultComponent implements OnInit {
 
             // Lưu vào latestResults
             this.latestResults[this.quizLevel] = oldArr;
+
+            // Cập nhật quizDate, score, questionResults từ newResult luôn
+            this.quizDate = new Date(dateDoQuiz).toLocaleString('vi-VN', {
+              timeZone: 'Asia/Ho_Chi_Minh',
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false
+            });
           },
           error: (err) => {
             console.error('Failed to load quiz results:', err);
@@ -141,7 +155,8 @@ export class QuizResultComponent implements OnInit {
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit'
+            second: '2-digit',
+            hour12: false
           });
         }
       }
@@ -191,14 +206,14 @@ export class QuizResultComponent implements OnInit {
     return index >= 0 && index < 4 ? String.fromCharCode(65 + index) : '';
   }
 
-  startQuiz(level: string): void {
-    this.quizService.getQuiz(level).subscribe({
-      next: (res) => {
-        // Xử lý câu hỏi
-      },
-      error: (err) => console.error('Lỗi khi lấy quiz:', err)
-    });
-  }
+  // startQuiz(level: string): void {
+  //   this.quizService.getQuiz(level).subscribe({
+  //     next: (res) => {
+  //       // Xử lý câu hỏi
+  //     },
+  //     error: (err) => console.error('Lỗi khi lấy quiz:', err)
+  //   });
+  // }
 
   protected readonly Array = Array;
 }
