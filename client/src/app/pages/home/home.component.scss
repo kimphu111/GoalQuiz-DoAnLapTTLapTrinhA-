@@ -6,7 +6,7 @@ $dark-sidebar-bg: #2a2a2a;
 $dark-card-bg: #2a2a2a;
 $dark-card-gradient: linear-gradient(135deg, #2a2a2a, #333333);
 $dark-text-secondary: #c8c8c8;
-$dark-highlight-color: #38a565;
+$dark-highlight-color: #000000;
 $dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
 $dark-calendar-day-text: #d1d5db;
 $dark-highlighted-day-bg: #ff9999; /* Màu hồng nhạt cho ngày được highlight */
@@ -45,6 +45,18 @@ $light-highlighted-day-bg: #ff9999;
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Edge */
   }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    //padding: 20px;
+  }
+
+  .main-content-mobile {
+    display: none;
+
+  }
+
 }
 
 .main-content {
@@ -669,93 +681,168 @@ $light-highlighted-day-bg: #ff9999;
     }
   }
 }
+
 @media (max-width: 768px) {
-  .home-container {
-    width: 100%;
-    padding: 0 10px;
-    margin:0 auto;
-  }
-
   .main-content {
-    height: auto;
+    display: none !important;
   }
 
-  .content-row {
+  .main-content-mobile {
+    display: flex !important;
+  }
+
+  .home-container{
+    width: 100%;
+    height: 90vh;
+    padding: 0;
+    margin: 0;
+  }
+
+  .main-content-mobile {
+    width: 600px;
+    height: 100vh;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    //gap: 20px;
+  }
+
+  .user-info-card {
+    width: 450px;
+    height: 150px;
+    padding: 10px;
+    margin: 100px auto 0 auto ;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 5px;
-    width: 550px;
-    height: auto;
-    margin: 40px 0 20px 0 ;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
 
-    .illustration-card {
-      flex: 1 1 45%;
-      max-width: 45%;
-      height: 250px;
+    .avt_user {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #BBBBBB;
 
-      img {
-        width: 120px;
-        height: 220px;
-        max-height: 220px;
-        object-fit: cover;
-      }
     }
 
-    .chart-card {
-      max-width: 350px;
-      height: 250px;
-      h3 {
-        font-size: 12px;
-        font-weight: 600;
-        color: $dark-highlight-color;
-        text-align: center;
-        width: 300px;
-        height: 20px;
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #000000;
+    }
+
+    .username {
+      font-weight: bold;
+      color: #000000;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+    }
+  }
+
+  .features-section {
+    background: transparent;
+    border-radius: 8px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+
+    h3 {
+      font-size: 16px;
+      margin: 0 0 0 10px;
+      color: #000000;
+      font-family: Roboto, sans-serif;
+    }
+
+    .features-row {
+      display: flex;
+      gap: 30px;
+      margin-left: 25px;
+
+      .feature-card {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
-      }
+        justify-content: center;
 
-      canvas {
-        height: 230px !important;
-        width: 350px !important;
-      }
-    }
-  }
+        .feature-box {
+          background-color: #ffffff;
+          border-radius: 20px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 70px;
+          height: 70px;
+          transition: transform 0.2s;
 
-  .calendar-card {
-    width: 520px;
-    height: 340px;
-    margin-left: 0;
+          &:hover {
+            transform: translateY(-4px);
+          }
 
-    .calendar-header {
-      h3 {
-        font-size: 1.1rem;
-        width: 200px;
-        height: 30px;
-      }
+          .material-icons {
+            font-size: 40px;
+            color: #000000;
+          }
+        }
 
-      .nav-button {
-        font-size: 1.3rem;
-        width: 26px;
-        height: 26px;
-      }
-    }
-
-    .calendar-grid {
-      grid-template-columns: repeat(8, 1fr);
-      gap: 8px;
-
-      .calendar-day {
-        width: 55px;
-        height: 55px;
-        font-size: 15px;
+        p {
+          font-size: 12px;
+          font-weight: 500;
+          color: #444;
+          margin-top: 8px;
+          text-align: center;
+        }
       }
     }
   }
+
+
+
+  .recent-attempts {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+    font-family: Roboto, sans-serif;
+
+    h3 {
+      font-size: 16px;
+      color: #000000;
+      margin-left: 10px;
+    }
+
+    .attempt {
+      font-size: 16px;
+      margin: 6px 10px;
+      color: #000000;
+      background-color: white;
+      width: 100%;
+      height:50px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      font-family: Roboto, sans-serif;
+    }
+  }
+
 }
+
+
 
 
 

@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class QuizService {
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) {}
 
@@ -108,5 +109,13 @@ export class QuizService {
       `http://localhost:8000/api/play/getAllPlayerResult?dateDoQuiz=${date}`,
       httpOptions
     );
+  }
+
+  getAllPlayerResults(): Observable<any> {
+    const token = localStorage.getItem('accessToken');
+    const httpOptions = token
+      ? { headers: new HttpHeaders({ Authorization: `Bearer ${token}` }) }
+      : {};
+    return this.http.get(`${this.apiUrl}/play/getAllPlayerResult`, httpOptions);
   }
 }

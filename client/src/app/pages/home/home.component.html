@@ -1,5 +1,5 @@
 <div class="home-container">
-  <!-- Nội dung chính -->
+  <!-- Nội dung desktop -->
   <div class="main-content">
     <section class="content">
       <div class="content-row" *ngIf="!isLoading; else loadingTemplate">
@@ -8,9 +8,10 @@
           <img src="assets/illustrationPiictureHome.png" alt="Minh họa Quiz" loading="lazy" />
           <p>QUIZ BÓNG ĐÁ</p>
         </div>
+
         <!-- Card biểu đồ -->
         <div class="chart-card" *ngIf="isBrowser">
-          <h3>Top 4 Người Chơi </h3>
+          <h3>Top 4 Người Chơi</h3>
           <canvas
             baseChart
             [data]="barChartData"
@@ -43,6 +44,53 @@
     </section>
   </div>
 
+  <!-- Nội dung mobile -->
+  <div class="main-content-mobile">
+    <!-- Thông tin user -->
+    <div class="user-info-card">
+      <div class="avt_user">
+        <img src="assets/admin.jpg" alt="User Avatar" />
+      </div>
+      <span class="username">{{ username }}</span>
+    </div>
+
+    <!-- Các chức năng phổ biến -->
+    <div class="features-section">
+      <h3>Common Features</h3>
+      <div class="features-row">
+        <div class="feature-card">
+          <div class="feature-box">
+            <span class="material-icons">person</span>
+          </div>
+          <p>Personal Points</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-box">
+            <span class="material-icons">emoji_events</span>
+          </div>
+          <p>Rankings</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Thử gần nhất -->
+    <div class="recent-attempts">
+      <h3>Most Recent Attempts</h3>
+      <div *ngIf="recentAttempts.length === 0" class="no-attempts">
+        Chưa có bài quiz nào được thực hiện.
+      </div>
+      <div *ngFor="let attempt of recentAttempts" class="attempt">
+        <span>Level: {{ attempt.quizLevel }}</span>
+        <span>Điểm: {{ attempt.totalScore }}</span>
+        <div class="timeDoQuiz">
+          {{ formatDate(attempt.dateDoQuiz) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
   <ng-template #loadingTemplate>
     <div class="loading">Đang tải dữ liệu...</div>
   </ng-template>

@@ -22,6 +22,8 @@ interface RawQuestion {
 
 //Tạo giá trị ổn định cho trackBy
 //Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
+//Tạo giá trị ổn định cho trackBy
+//Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
 interface Option {
   label: string;
   text: string;
@@ -147,6 +149,7 @@ export class QuizQuestionComponent implements OnInit {
 
     // Lưu questionResults vào sessionStorage
     //sessionStorage.setItem('questionResults', JSON.stringify(this.questionResults));
+    //sessionStorage.setItem('questionResults', JSON.stringify(this.questionResults));
 
     setTimeout(() => this.nextQuestion(), 1300);
   }
@@ -157,6 +160,11 @@ export class QuizQuestionComponent implements OnInit {
       this.setCurrentQuestion();
     } else {
       const userId = localStorage.getItem('userId');
+
+      console.log('Kết quả quiz:', this.questionResults);
+      console.log('questionResults:', this.questionResults);
+      console.log('userId:', userId, 'quizLevel:', this.level);
+
 
       console.log('Kết quả quiz:', this.questionResults);
       console.log('questionResults:', this.questionResults);
