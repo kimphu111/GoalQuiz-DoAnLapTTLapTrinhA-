@@ -77,7 +77,8 @@ export class QuizResultComponent implements OnInit {
               questionText: item.quiz?.question || 'Không có dữ liệu',
               correctAnswer: item.quiz?.correctAnswer || '',
               chooseAnswer: item.chooseAnswer || '',
-              image: item.quiz?.image || ''
+              image: item.quiz?.image || '',
+              quizDuration: quizDuration // Thêm thời gian làm bài cho từng câu hỏi
             }));
 
             this.score = res.totalScore || 0;
@@ -92,19 +93,22 @@ export class QuizResultComponent implements OnInit {
               oldArr = [];
             }
             const newResult = {
-
               dateDoQuiz,
               quizLevel: this.quizLevel,
               score: this.score,
               totalQuestions: res.totalQuestions,
               results: this.questionResults,
               quizDuration,
+              formattedQuizTime: this.formatDuration(quizDuration), // Thêm thời gian đã format
             };
             oldArr.push(newResult);
             localStorage.setItem(key, JSON.stringify(oldArr));
 
             // Lưu vào latestResults
             this.latestResults[this.quizLevel] = oldArr;
+
+            // Cập nhật quizTime để hiển thị thời gian của bài làm hiện tại
+            this.quizTime = this.formatDuration(quizDuration);
 
             // Cập nhật quizDate, score, questionResults từ newResult luôn
             this.quizDate = new Date(dateDoQuiz).toLocaleString('vi-VN', {
@@ -137,6 +141,7 @@ export class QuizResultComponent implements OnInit {
       const currentResults = this.latestResults[this.quizLevel];
       if (!Array.isArray(currentResults) || currentResults.length === 0) {
         this.questionResults = [];
+        this.quizTime = '0 giây';
       } else {
         const lastResult = currentResults[currentResults.length - 1];
         this.questionResults = lastResult?.results.map((item: any) => ({
@@ -144,6 +149,7 @@ export class QuizResultComponent implements OnInit {
           options: Array.isArray(item.options) ? item.options : [] // Đảm bảo options là mảng
         })) || [];
         this.score = lastResult?.score || 0;
+        this.quizTime = lastResult?.formattedQuizTime || this.formatDuration(lastResult?.quizDuration || 0);
         if (lastResult?.dateDoQuiz) {
           const dateObj = new Date(lastResult.dateDoQuiz);
           this.quizDate = dateObj.toLocaleString('vi-VN', {
@@ -161,7 +167,7 @@ export class QuizResultComponent implements OnInit {
     });
   }
 
-  private formatDuration(seconds: number): string {
+  public formatDuration(seconds: number): string {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     if (seconds === 0) {
@@ -174,6 +180,23 @@ export class QuizResultComponent implements OnInit {
       return `${minutes} phút`;
     }
     return `${minutes} phút ${remainingSeconds} giây`;
+  }
+
+  // Lấy thời gian của bài làm hiện tại dựa trên dateDoQuiz
+  getCurrentQuizTime(): string {
+    const currentDateDoQuiz = this.route.snapshot.queryParams['dateDoQuiz'] || localStorage.getItem('dateDoQuiz') || '';
+    if (!currentDateDoQuiz) {
+      return this.quizTime;
+    }
+
+    const currentResults = this.latestResults[this.quizLevel] || [];
+    const matchingResult = currentResults.find(result => result.dateDoQuiz === currentDateDoQuiz);
+    
+    if (matchingResult) {
+      return matchingResult.formattedQuizTime || this.formatDuration(matchingResult.quizDuration || 0);
+    }
+    
+    return this.quizTime;
   }
 
   showQuestionDetail(result: any, index: number): void {
@@ -212,6 +235,5 @@ export class QuizResultComponent implements OnInit {
   //     error: (err) => console.error('Lỗi khi lấy quiz:', err)
   //   });
   // }
-
   protected readonly Array = Array;
 }
