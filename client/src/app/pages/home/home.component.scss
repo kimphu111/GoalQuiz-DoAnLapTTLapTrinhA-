@@ -708,10 +708,11 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .user-info-card {
-    width: 450px;
+    width: 100%;
+    max-width: 500px;
     height: 150px;
     padding: 10px;
-    margin: 100px auto 0 auto ;
+    margin: 20px 50px 0 50px ;
     background-color: #FFFFFF;
     border-radius: 8px;
     display: flex;
@@ -761,6 +762,7 @@ $light-highlighted-day-bg: #ff9999;
       margin: 0 0 0 10px;
       color: #000000;
       font-family: Roboto, sans-serif;
+      font-weight: 550;
     }
 
     .features-row {
@@ -797,9 +799,9 @@ $light-highlighted-day-bg: #ff9999;
         }
 
         p {
-          font-size: 12px;
+          font-size: 14px;
           font-weight: 500;
-          color: #444;
+          color: #000000;
           margin-top: 8px;
           text-align: center;
         }
@@ -814,29 +816,44 @@ $light-highlighted-day-bg: #ff9999;
     border-radius: 20px;
     padding: 0;
     margin: 0 auto;
-    width: 100%;
-    max-width: 500px;
+    width: 500px;
     font-family: Roboto, sans-serif;
 
     h3 {
       font-size: 16px;
+      margin: 0 0 0 10px;
       color: #000000;
-      margin-left: 10px;
+      font-family: Roboto, sans-serif;
+      font-weight: 550;
     }
 
     .attempt {
       font-size: 16px;
-      margin: 6px 10px;
+      margin: 6px 0px;
       color: #000000;
       background-color: white;
-      width: 100%;
+      width: 500px;
       height:50px;
       border-radius: 10px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 0 10px;
       font-family: Roboto, sans-serif;
+      justify-content: space-between;
+      span,
+      .timeDoQuiz {
+        flex: 1;
+        text-align: center;
+      }
+
+      span:first-child {
+        text-align: left;
+      }
+
+      .timeDoQuiz {
+        text-align: right;
+      }
+
     }
   }
 

@@ -112,13 +112,14 @@ $light-highlight-color: #38a565;
     .form-row {
       display: flex;
       gap: 10px;
-      width: 970px;
+      width: 100%; // 🔁 từ 970px → 100% để match dòng dưới
       margin: 0 auto;
+
+      .form-group {
+        flex: 1 1 50%; // ✨ giúp chia đôi chính xác 2 input
+      }
     }
 
-    .form-row .form-group {
-      flex: 0 0 475px;
-    }
 
     .form-group {
       margin-bottom: 12px;
@@ -225,3 +226,214 @@ $light-highlight-color: #38a565;
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 16px;
+    margin-left: 0px;
+
+    .avatar-section,
+    .profile-form {
+      width: 780px;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .avatar-section {
+      .avatar {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
+      }
+
+      .avatar-buttons {
+        flex-direction: row;
+        gap: 10px;
+
+        button {
+          font-size: 0.8rem;
+          padding: 6px 10px;
+        }
+      }
+    }
+
+    .profile-form {
+      padding: 12px;
+      width: 776px;
+    }
+
+    // 👉 Vẫn giữ First Name + Last Name nằm ngang
+    .form-row {
+      display: flex;
+      flex-direction: row; // ✨ giữ ngang
+      width: 100% !important;
+      gap: 10px;
+
+      .form-group {
+        flex: 1 1 50%;
+        width: 100%;
+      }
+    }
+
+    .form-group {
+      input {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+    }
+
+    .form-actions {
+      text-align: center;
+
+      .save-button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* Mặc định: ẩn mobile ở desktop */
+.desktop-profile {
+  display: block;
+}
+
+.mobile-profile-menu {
+  display: none;
+}
+
+.mobile-profile-menu {
+  display: none;
+  padding: 0 16px;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .user-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+
+    .btn {
+      flex: 1;
+      padding: 10px;
+      background-color: #38a565;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 0 6px;
+    }
+  }
+
+  .menu-section {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .menu-item {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      .material-icons {
+        font-size: 18px;
+        color: #333;
+      }
+
+      .label {
+        flex: 1;
+        margin-left: 12px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: #000;
+      }
+
+      &.logout {
+        justify-content: center;
+        color: #ff4444;
+
+        .material-icons {
+          color: #ff4444;
+          margin-right: 6px;
+        }
+
+        .label {
+          color: #ff4444;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-profile-menu {
+    display: block;
+  }
+
+  .desktop-profile {
+    display: none;
+  }
+
+  .profile-container{
+    padding: 16px;
+    margin-top: 110px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-info-card {
+    max-width: 500px;
+    height: 150px;
+    padding: 10px;
+    margin: 20px 50px 0 50px ;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+
+    .avt_user {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #BBBBBB;
+
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #000000;
+    }
+
+    .username {
+      font-weight: bold;
+      color: #000000;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+    }
+  }
+}
+
+

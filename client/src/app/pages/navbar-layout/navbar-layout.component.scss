@@ -39,6 +39,10 @@ $light-highlighted-day-bg: #ff9999;
   flex-direction: column;
   min-height: 100vh;
   transition: background-color 0.5s, color 0.5s;
+
+  .mobile-sidebar{
+    display: none;
+  }
 }
 
 .header {
@@ -173,7 +177,7 @@ $light-highlighted-day-bg: #ff9999;
 .content {
   width: 100%;
   height: 100%;
-  margin: 130px 0 0 250px; /* Điều chỉnh margin-top thành 60px để khớp header */
+  margin: 130px 0 0 250px;
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
@@ -264,6 +268,7 @@ $light-highlighted-day-bg: #ff9999;
   height: 80px;
   gap: 20px;
   background-color: transparent;
+  margin-bottom: 20px;
 
 
 
@@ -276,15 +281,15 @@ $light-highlighted-day-bg: #ff9999;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 65px;
-    height: 65px;
+    width: 80px;
+    height: 80px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     text-decoration: none;
     color: #000;
-    font-size: 0.6rem;
+    font-size: 14px;
     transition: background-color 0.3s ease, transform 0.3s ease;
     border: none;
 
@@ -298,8 +303,8 @@ $light-highlighted-day-bg: #ff9999;
 
     &.active-link {
       background-color: #F44336 !important; /* Màu đỏ cố định, tăng ưu tiên */
-      color: #fff;
       transform: scale(1.3);
+      margin-bottom: 20px;
 
       .material-symbols-outlined {
         font-size: 28px;
@@ -621,6 +626,7 @@ $light-highlighted-day-bg: #ff9999;
     margin-top: 80px;
     margin-left: 0;
     padding-bottom: 80px; /* Đảm bảo nội dung không bị che bởi mobile-sidebar */
+    background: linear-gradient(to bottom, #9AC099 0%, #F2F2F2 90%);
   }
 }
 
@@ -802,8 +808,8 @@ $light-highlighted-day-bg: #ff9999;
 
   .mobile-sidebar {
     .mobile-item {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       font-size: 0.6rem;
 
       .material-symbols-outlined {

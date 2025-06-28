@@ -80,19 +80,6 @@
 
     <!-- Mobile sidebar luôn hiển thị ở mobile view -->
     <div class="mobile-sidebar">
-
-      <a class="mobile-item" routerLink="/profile" routerLinkActive="active-link">
-        <span class="material-symbols-outlined">person</span>
-        Hồ sơ
-      </a>
-      <a class="mobile-item" routerLink="/quiz" routerLinkActive="active-link">
-        <span class="material-symbols-outlined">quiz</span>
-        Quiz
-      </a>
-      <a class="mobile-item" routerLink="/home" routerLinkActive="active-link">
-        <span class="material-symbols-outlined">home</span>
-        Trang chủ
-      </a>
       <a class="mobile-item" routerLink="/review" routerLinkActive="active-link">
         <span class="material-symbols-outlined">fact_check</span>
         Xem lại
@@ -100,6 +87,18 @@
       <a class="mobile-item" routerLink="/ranking" routerLinkActive="active-link">
         <span class="material-symbols-outlined">leaderboard</span>
         Xếp hạng
+      </a>
+      <a class="mobile-item" routerLink="/home" routerLinkActive="active-link">
+        <span class="material-symbols-outlined">home</span>
+        Trang chủ
+      </a>
+      <a class="mobile-item" routerLink="/quiz" routerLinkActive="active-link">
+        <span class="material-symbols-outlined">quiz</span>
+        Quiz
+      </a>
+      <a class="mobile-item" routerLink="/profile" routerLinkActive="active-link">
+        <span class="material-symbols-outlined">person</span>
+        Hồ sơ
       </a>
       <a
         *ngIf="role === 'admin'"
