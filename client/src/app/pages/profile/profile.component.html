@@ -1,19 +1,25 @@
 <div class="profile-container">
   <!-- Phần ảnh đại diện -->
-  <div class="desktop-profile">
-    <!-- avatar + form -->
+  <div class="desktop-profile" [ngClass]="{'show-popup': showPopup}">
+    <div class="back-button" (click)="closePopup()">
+      <span class="material-icons">chevron_left</span>
+    </div>
     <div class="card-section avatar-section">
-      <img
-        [src]="
-        isFullUrl(profile.avatar)
-          ? profile.avatar
-          : profile.avatar.startsWith('data:')
-            ? profile.avatar
-            : 'https://via.placeholder.com/100'
-      "
-        alt="Avatar"
-        class="avatar"
-      />
+<!--      tấm ảnh còn lỗi-->
+<!--      <img-->
+<!--        [src]="-->
+<!--        isFullUrl(profile.avatar)-->
+<!--          ? profile.avatar-->
+<!--          : profile.avatar.startsWith('data:')-->
+<!--            ? profile.avatar-->
+<!--            : 'https://via.placeholder.com/100'-->
+<!--      "-->
+<!--        alt="Avatar"-->
+<!--        class="avatar"-->
+<!--      />-->
+
+      <img class="avatar" src="assets/admin.jpg" alt="User Avatar" />
+
       <div class="avatar-buttons">
         <button class="upload-button" (click)="onUpload()">
           Upload new pictures
@@ -100,7 +106,7 @@
           </div>
         </div>
 
-        <!-- Nút Save -->
+        <!-- Nút Save và Close -->
         <div class="form-actions">
           <button
             type="button"
@@ -109,6 +115,13 @@
             [disabled]="isLoading"
           >
             {{ isLoading ? "Đang lưu..." : "Save" }}
+          </button>
+          <button
+            type="button"
+            class="close-button"
+            (click)="closePopup()"
+          >
+            Đóng
           </button>
         </div>
 
@@ -121,19 +134,17 @@
     </div>
   </div>
 
-
-
   <div class="mobile-profile-menu">
     <!-- Hai nút phía trên -->
     <div class="user-info-card">
       <div class="avt_user">
         <img src="assets/admin.jpg" alt="User Avatar" />
+        <div class="username">{{ profile.firstName }}</div>
       </div>
-<!--      <span class="username">{{ username }}</span>-->
     </div>
     <div class="user-actions">
-      <button class="btn edit-btn">
-        <span class="material-icons">edit</span> Edit information
+      <button class="btn edit-btn" (click)="openPopup()">
+        <span class="material-icons">edit</span> Chỉnh sửa thông tin
       </button>
       <button class="btn detail-btn">
         <span class="material-icons">person</span> Personal details
@@ -152,12 +163,6 @@
         <span class="label">Setting</span>
         <span class="material-icons">chevron_right</span>
       </div>
-
-
     </div>
   </div>
-
 </div>
-
-
-
