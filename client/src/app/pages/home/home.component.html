@@ -82,7 +82,7 @@
       </div>
       <div *ngFor="let attempt of recentAttempts" class="attempt">
         <span>Level: {{ attempt.quizLevel }}</span>
-        <span>Điểm: {{ attempt.totalScore }}</span>
+        <span class="info-center">Điểm: {{ attempt.totalScore }}</span>
         <div class="timeDoQuiz">
           {{ formatDate(attempt.dateDoQuiz) }}
         </div>
@@ -95,3 +95,5 @@
     <div class="loading">Đang tải dữ liệu...</div>
   </ng-template>
 </div>
+
+
