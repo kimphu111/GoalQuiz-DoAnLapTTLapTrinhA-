@@ -129,7 +129,8 @@ export class ReviewComponent implements OnInit{
         // Lọc đúng user, ngày, và level (dựa vào quizLevel trong results)
         const filtered = res.filter(item =>
           String(item.idUser) === String(userId) &&
-          item.dateDoQuiz?.slice(0, 10) === filterDate &&
+          new Date(item.dateDoQuiz).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) ===
+            new Date(filterDate).toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) &&
           Array.isArray(item.results) &&
           item.results.some((r: any) => r.quizLevel?.toLowerCase() === this.currentLevel.toLowerCase())
         ).map(item => ({
@@ -137,7 +138,9 @@ export class ReviewComponent implements OnInit{
           quizLevel: Array.isArray(item.results) && item.results.length > 0
             ? item.results[0].quizLevel || this.currentLevel
             : this.currentLevel
-        }));
+        }))
+        .sort((a, b) => new Date(b.dateDoQuiz).getTime() - new Date(a.dateDoQuiz).getTime());
+        
         this.quizAttempts = filtered;
         this.noResult = filtered.length === 0;
       },
@@ -156,6 +159,7 @@ export class ReviewComponent implements OnInit{
       isSelected: d.date.getTime() === day.date.getTime(),
     }));
     this.fetchQuizzes();
+    console.log(day);
   }
 
   toggleDateFilter(): void {
@@ -175,7 +179,7 @@ export class ReviewComponent implements OnInit{
     this.router.navigate(['/quiz-result'], {
       queryParams: {
         level: quiz.quizLevel?.toLowerCase() || this.currentLevel,
-        dateDoQuiz: quiz.dateDoQuiz
+        dateDoQuiz: quiz.dateCreated
       }
     });
   }
