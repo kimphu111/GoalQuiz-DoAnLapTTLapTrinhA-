@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   isSidebarVisible = true;
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  showPopup: boolean = true; // Biến để điều khiển popup
+  showPopup: boolean = false; // Biến để điều khiển popup
 
   profile = {
     avatar: 'D:\\DoAnLapTrinhA\\GoalQuizClient\\client\\src\\assets\\admin.jpg', // Thay URL dài bằng placeholder

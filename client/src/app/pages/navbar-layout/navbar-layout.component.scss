@@ -127,7 +127,6 @@ $light-highlighted-day-bg: #ff9999;
 
 .main-content {
   display: flex;
-  margin-top: 70px;
   height: calc(1024px - 60px);
 }
 
@@ -469,6 +468,7 @@ $light-highlighted-day-bg: #ff9999;
   .home-container {
     width: 1200px;
     margin: 0 auto;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
   }
 
   .header {
@@ -484,17 +484,18 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .content {
-    margin: 130px 0 0 170px;
+    margin: 110px 0 0 170px;
   }
 
   .main-content {
-    margin-top: 0px;
+    margin-top: 0 !important;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
   }
 }
 
 @media (max-width: 1024px) {
   .content {
-    margin: 110px 0 0 150px;
+    margin: 70px 0 0 150px;
   }
 
   .home-container {
