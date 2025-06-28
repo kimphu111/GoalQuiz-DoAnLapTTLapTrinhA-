@@ -22,6 +22,8 @@ interface RawQuestion {
 
 //Tạo giá trị ổn định cho trackBy
 //Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
+//Tạo giá trị ổn định cho trackBy
+//Dùng để xáo trộn mảng mà vẫn giữ label nguyên vẹn
 interface Option {
   label: string;
   text: string;
@@ -65,6 +67,7 @@ export class QuizQuestionComponent implements OnInit {
       this.level = params['level'] || 'easy';
       // Lấy ngày giờ theo định dạng ISO 8601 (UTC)
       this.dateDoQuiz = new Date().toISOString();
+      console.log(this.dateDoQuiz);
       localStorage.setItem('dateDoQuiz', this.dateDoQuiz);
       this.fetchQuiz();
     });
@@ -95,8 +98,6 @@ export class QuizQuestionComponent implements OnInit {
 
         this.currentIndex = 0;
         this.score = 0;
-        // this.dateDoQuiz = new Date().toISOString();
-        // localStorage.setItem('dateDoQuiz', this.dateDoQuiz);
         //this.questionResults = []; // Reset questionResults
         this.setCurrentQuestion();
       },
@@ -148,6 +149,7 @@ export class QuizQuestionComponent implements OnInit {
 
     // Lưu questionResults vào sessionStorage
     //sessionStorage.setItem('questionResults', JSON.stringify(this.questionResults));
+    //sessionStorage.setItem('questionResults', JSON.stringify(this.questionResults));
 
     setTimeout(() => this.nextQuestion(), 1300);
   }
@@ -163,6 +165,11 @@ export class QuizQuestionComponent implements OnInit {
       console.log('questionResults:', this.questionResults);
       console.log('userId:', userId, 'quizLevel:', this.level);
 
+
+      console.log('Kết quả quiz:', this.questionResults);
+      console.log('questionResults:', this.questionResults);
+      console.log('userId:', userId, 'quizLevel:', this.level);
+
       // Lấy dateFinishQuiz theo định dạng ISO 8601
       this.dateFinishQuiz = new Date().toISOString();
 
@@ -170,14 +177,12 @@ export class QuizQuestionComponent implements OnInit {
       this.calculateQuizDuration(this.dateDoQuiz, dateFinishQuiz);
       sessionStorage.setItem('fromQuizQuestion', '1');
       sessionStorage.setItem('quizDuration', this.quizDuration.toString());
-
-
-
+      
       this.router.navigate(['/quiz-result'], {
         queryParams: { level: this.level}
       });
+      }
     }
-  }
 
   private calculateQuizDuration(dateDoQuiz: string, dateFinishQuiz: string): void {
     const start = new Date(dateDoQuiz).getTime();

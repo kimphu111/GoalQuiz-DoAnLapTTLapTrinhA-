@@ -26,43 +26,45 @@
     box-sizing: border-box;
     //==============================Level Selector=================================
     .level-selector {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    overflow-x:auto ;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-     &::-webkit-scrollbar {
-        display: none;
-      }
-      overflow-y: hidden;
-
-    .level-buttons {
       display: flex;
-      overflow-x: auto;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+      overflow-x:auto ;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-      background-color: #2a4d43;
-      border-radius: 50px;
-      padding: 5px;
-      gap: 5px;
-      height: 50px;
-      width: 100%;
-      max-width: 800px;
-
       &::-webkit-scrollbar {
-        display: none;
-      }
+          display: none;
+        }
+        overflow-y: hidden;
 
-      button {
-        //flex: 0 0 auto;
-        min-width: 170px;
-      }
+      .level-buttons {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        background-color: #2a4d43;
+        border-radius: 50px;
+        padding: 5px;
+        gap: 5px;
+        height: 50px;
+        width: 100%;
+        max-width: 800px;
 
-    //   &.dragging {
-    //     cursor: grabbing;
-    //     user-select: none;
-    //   }
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        button {
+          //flex: 0 0 auto;
+          min-width: 170px;
+        }
+
+      //   &.dragging {
+      //     cursor: grabbing;
+      //     user-select: none;
+      //   }
     }
 
     button {
@@ -92,7 +94,7 @@
 }
 //========================Quiz table==============================
 .content{
-  min-height: 500px;
+  min-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
 
