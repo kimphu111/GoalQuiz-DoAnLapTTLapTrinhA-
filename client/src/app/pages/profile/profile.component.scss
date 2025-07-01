@@ -34,7 +34,7 @@ $light-highlight-color: #38a565;
     background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     width: 970px;
-    margin: 50px 0 0 5px;
+    margin: 50px 0 0 0px;
 
     body.dark-mode & {
       background: #333;
@@ -102,7 +102,6 @@ $light-highlight-color: #38a565;
     border-radius: 8px;
     background: #fff;
     width: 960px;
-    margin: 0 auto;
 
     body.dark-mode & {
       background: #333;
