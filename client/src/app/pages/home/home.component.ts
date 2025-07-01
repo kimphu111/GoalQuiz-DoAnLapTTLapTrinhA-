@@ -2,26 +2,35 @@ import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { NgChartsModule } from 'ng2-charts'; // Thêm lại NgChartsModule
+import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { AuthService } from '../../services/auth.service';
-import {QuizService} from '../../services/quiz/quiz.service';
+import { QuizService } from '../../services/quiz/quiz.service';
 
-interface QuizAttempt{
+interface QuizAttempt {
   quizLevel: string;
   score: number;
   dateDoQuiz: string;
 }
 
+interface Player {
+  idUser: string;
+  totalScore: number;
+  username: string;
+  email: string;
+  duration: string;
+  level: string; // Thêm level để lưu cấp độ
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, NgChartsModule], // Thêm NgChartsModule
+  imports: [RouterLink, CommonModule, NgChartsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  username: string = '' ;
+  username: string = '';
   email: string = '';
   isLoading: boolean = false;
   currentMonth: string = '';
@@ -33,18 +42,17 @@ export class HomeComponent implements OnInit {
   isDarkMode: boolean = true;
   isSidebarVisible = true;
   isDesktop = window.innerWidth > 768;
-  recentAttempts: { quizLevel: any; dateDoQuiz: string; totalScore: number }[] = [];
+  recentAttempts: { quizLevel: string; dateDoQuiz: string; totalScore: number }[] = [];
 
   // Dữ liệu cho biểu đồ cột
   barChartData: ChartData<'bar'> = {
     labels: [],
-    // mode: 'bar',    0: 'rank-1',
     datasets: [
       {
-        data: [], // Sẽ cập nhật từ topPlayers
+        data: [],
         label: 'Điểm số',
-        backgroundColor: '#38a565',
-        borderColor: '#38a565',
+        backgroundColor: ['#3c7363', '#888df2', '#ffd2e4', '#C8C8C8'], // Màu theo rank
+        borderColor: ['#3c7363', '#888df2', '#ffd2e4', '#C8C8C8'],
         borderWidth: 1,
       },
     ],
@@ -57,21 +65,26 @@ export class HomeComponent implements OnInit {
         beginAtZero: true,
         title: { display: true, text: 'Điểm' },
       },
-      // x: {
-      //   title: { display: true, text: 'Người chơi' },
-      // },
+      x: {
+        title: { display: true, text: 'Người chơi' },
+      },
     },
     plugins: {
       legend: { display: true },
+      tooltip: {
+        callbacks: {
+          // Tùy chỉnh tooltip để hiển thị tên và level
+          label: (context) => {
+            const index = context.dataIndex;
+            const player = this.topPlayers[index];
+            return `${player.username}: ${player.totalScore} điểm (Level: ${player.level})`;
+          },
+        },
+      },
     },
   };
 
-  private topPlayers: { name: string; score: number; mode: string }[] = [
-    { name: 'Johnie!', score: 170, mode: 'easy' },
-    { name: 'Enzo', score: 160, mode: 'easy' },
-    { name: 'Maloch!', score: 140, mode: 'easy' },
-    { name: 'Billow', score: 130, mode: 'easy' },
-  ];
+  private topPlayers: Player[] = [];
 
   private months: string[] = [
     'Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu',
@@ -107,14 +120,70 @@ export class HomeComponent implements OnInit {
         return;
       }
       this.applyTheme();
-      this.updateChartData();
-      // this.fetchTopPlayers();
+      this.fetchTopPlayers(); // Gọi hàm lấy top players
       this.fetchRecentQuizzes();
     }
 
     setTimeout(() => {
       this.isLoading = false;
     }, 500);
+  }
+
+  private fetchTopPlayers() {
+    const levels = ['mix', 'easy', 'medium', 'hard'];
+    const token = localStorage.getItem('accessToken') || '';
+    let allPlayers: Player[] = [];
+
+    // Gọi API cho từng level
+    const requests = levels.map((level) =>
+      this.http.get<any>(`http://localhost:8000/api/play/leaderboard/${level}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+    );
+
+    // Chờ tất cả các request hoàn thành
+    Promise.all(requests.map((req, index) =>
+      req.toPromise().then((res: any) => {
+        return res.map((player: any) => ({
+          idUser: player.idUser,
+          totalScore: player.totalScore,
+          username: player.username || player.email,
+          email: player.email,
+          duration: player.duration || '00:00:00',
+          level: levels[index], // Gán level tương ứng
+        }));
+      }).catch((err) => {
+        console.error(`Lỗi khi lấy xếp hạng ${levels[index]}:`, err);
+        return [];
+      })
+    )).then((results) => {
+      // Gộp tất cả players từ các level
+      allPlayers = results.flat();
+      // Sắp xếp theo totalScore và duration, lấy top 4
+      this.topPlayers = allPlayers
+        .sort((a, b) => {
+          if (b.totalScore !== a.totalScore) return b.totalScore - a.totalScore;
+          return this.parseDuration(a.duration) - this.parseDuration(b.duration);
+        })
+        .slice(0, 4);
+
+      // Cập nhật dữ liệu biểu đồ
+      this.updateChartData();
+    });
+  }
+
+  // Hàm chuyển duration (HH:mm:ss) thành giây để so sánh
+  private parseDuration(duration: string): number {
+    const [hours, minutes, seconds] = duration.split(':').map(Number);
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+  private updateChartData() {
+    this.barChartData.labels = this.topPlayers.map((player) => player.username);
+    this.barChartData.datasets[0].data = this.topPlayers.map((player) => player.totalScore);
   }
 
   private fetchRecentQuizzes() {
@@ -124,27 +193,20 @@ export class HomeComponent implements OnInit {
     this.quizService.getAllPlayerResults().subscribe({
       next: (res: any[]) => {
         this.recentAttempts = res
-          .filter(item => String(item.idUser) === String(userId))
-          .map(item => ({
+          .filter((item) => String(item.idUser) === String(userId))
+          .map((item) => ({
             quizLevel: item.results?.[0]?.quizLevel || 'Unknown',
             totalScore: item.totalScore || 0,
             dateDoQuiz: item.dateDoQuiz || new Date().toISOString(),
           }))
           .sort((a, b) => new Date(b.dateDoQuiz).getTime() - new Date(a.dateDoQuiz).getTime())
-          .slice(0, 3); // Chỉ lấy 3 bài gần nhất
+          .slice(0, 3);
       },
       error: (err) => {
         console.error('Lỗi khi lấy danh sách quiz:', err);
         this.recentAttempts = [];
       },
     });
-  }
-
-
-
-  private updateChartData() {
-    this.barChartData.labels = this.topPlayers.map((player) => player.name);
-    this.barChartData.datasets[0].data = this.topPlayers.map((player) => player.score);
   }
 
   private loadTheme() {
@@ -237,6 +299,7 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+
   formatDate(date: string): string {
     return new Date(date).toLocaleDateString('vi-VN', {
       day: '2-digit',

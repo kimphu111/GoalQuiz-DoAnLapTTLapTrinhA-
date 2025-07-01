@@ -63,6 +63,7 @@ $light-highlighted-day-bg: #ff9999;
   display: flex;
   height: calc(1024px - 60px);
   overflow: hidden;
+  margin-top: 20px;
 }
 
 .content-row {
@@ -294,7 +295,7 @@ $light-highlighted-day-bg: #ff9999;
 /* Light mode */
 :host-context(body.light-mode) {
   .home-container {
-    background: $light-bg-gradient;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
     color: $light-text-color;
   }
 
@@ -486,7 +487,6 @@ $light-highlighted-day-bg: #ff9999;
 
   .content-row {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 10px;
     width: 100%;
@@ -559,7 +559,7 @@ $light-highlighted-day-bg: #ff9999;
   }
 
   .calendar-card {
-    width: 915px;
+    width: 907px;
     height: 300px;
     margin-left: 0;
   }
@@ -704,7 +704,7 @@ $light-highlighted-day-bg: #ff9999;
     background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
     display: flex;
     flex-direction: column;
-    //gap: 20px;
+    margin-top: 90px;
   }
 
   .user-info-card {
@@ -821,7 +821,7 @@ $light-highlighted-day-bg: #ff9999;
 
     h3 {
       font-size: 16px;
-      margin: 0 0 0 10px;
+      margin: 0 0 -10px 10px;
       color: #000000;
       font-family: Roboto, sans-serif;
       font-weight: 550;

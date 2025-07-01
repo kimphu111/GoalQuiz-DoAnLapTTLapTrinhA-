@@ -370,6 +370,8 @@ $light-highlight-color: #38a565;
   @media (max-width: 768px) {
     .mobile-profile-menu {
       display: block;
+      margin: 110px 0 0 15px;
+      flex-direction: column;
     }
 
 

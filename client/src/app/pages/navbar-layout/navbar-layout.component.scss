@@ -32,7 +32,6 @@ $light-highlighted-day-bg: #ff9999;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  background: $dark-bg-gradient;
   color: $dark-text-color;
   font-family: "Roboto", sans-serif;
   display: flex;
@@ -126,8 +125,7 @@ $light-highlighted-day-bg: #ff9999;
 }
 
 .main-content {
-  display: flex;
-  height: calc(1024px - 60px);
+  height: 100%;
 }
 
 .sidebar {
@@ -176,9 +174,8 @@ $light-highlighted-day-bg: #ff9999;
 .content {
   width: 100%;
   height: 100%;
-  margin: 130px 0 0 250px;
+  margin: 20px 0 0 250px;
   flex: 1;
-  overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 
@@ -280,15 +277,15 @@ $light-highlighted-day-bg: #ff9999;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     text-decoration: none;
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     transition: background-color 0.3s ease, transform 0.3s ease;
     border: none;
 
@@ -388,7 +385,7 @@ $light-highlighted-day-bg: #ff9999;
 /* Light mode */
 :host-context(body.light-mode) {
   .home-container {
-    background: $light-bg-gradient;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);;
     color: $light-text-color;
     margin: 0 auto;
     padding: 0;
@@ -451,6 +448,7 @@ $light-highlighted-day-bg: #ff9999;
   .mobile-sidebar {
     background: transparent;
     border: none;
+    margin: 0;
 
     .mobile-item {
 
