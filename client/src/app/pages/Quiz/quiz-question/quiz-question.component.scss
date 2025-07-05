@@ -1,7 +1,10 @@
 :host {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    justify-content: center;
+    padding-left: 50px;
+    padding-right: 50px;
     height: 100%; 
     overflow: hidden;
     position: relative;
@@ -11,16 +14,14 @@
     position: relative;
     top: 0;
     left: 0;
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
     background-color: white;
-    margin-left: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     border-radius: 10px;
-    margin-top: 20px;
 }
 #container{
     width: 100%;
@@ -30,7 +31,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 100px;
+    padding: 60px;
     text-align: center;
     user-select: none;
     .question{
@@ -121,4 +122,377 @@
     max-width: 400px;
     max-height: 200px;
 	border-radius: 10px;
+}
+
+//======================Responsive============================ 
+@media (min-width: 2441px) {
+  :host {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  #wrapper {
+    margin-top: 100px;
+    width: 75%;
+    height: 85%;
+  }
+  
+  #container {
+    padding: 80px;
+    
+    .question {
+      font-size: 2rem;
+      padding: 40px 0;
+      margin-bottom: 50px;
+    }
+    
+    .answer {
+      column-gap: 50px;
+      row-gap: 40px;
+      margin-top: 40px;
+    }
+    
+    button {
+      font-size: 1.8rem;
+      padding: 25px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 2rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 40px;
+    left: 40px;
+    font-size: 2rem;
+  }
+  
+  .question-image {
+    max-width: 500px;
+    max-height: 250px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2440px) {
+  :host {
+    padding-left: 40px;
+    padding-right: 40px;
+    display: flex;
+    justify-content: start;
+  }
+  
+  #wrapper {
+    width: 82%;
+    height: 72%;
+  }
+  
+  #container {
+    padding: 70px;
+    
+    .question {
+      font-size: 1.7rem;
+      padding: 35px 0;
+      margin-bottom: 45px;
+    }
+    
+    .answer {
+      column-gap: 45px;
+      row-gap: 35px;
+      margin-top: 35px;
+    }
+    
+    button {
+      font-size: 1.6rem;
+      padding: 22px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 1.8rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 35px;
+    left: 35px;
+    font-size: 1.8rem;
+  }
+  
+  .question-image {
+    max-width: 450px;
+    max-height: 225px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :host {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  
+  #wrapper {
+    width: 85%;
+    height: 85%;
+    margin-top: 100px;
+  }
+  
+  #container {
+    padding: 50px;
+    
+    .question {
+      font-size: 1.4rem;
+      padding: 25px 0;
+      margin-bottom: 35px;
+      margin-left: 0;
+    }
+    
+    .answer {
+      column-gap: 30px;
+      row-gap: 25px;
+      margin-top: 25px;
+    }
+    
+    button {
+      font-size: 1.3rem;
+      padding: 18px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 1.5rem;
+      }
+      
+      .option-label {
+        margin-right: 10px;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 25px;
+    left: 25px;
+    font-size: 1.5rem;
+  }
+  
+  .question-image {
+    max-width: 350px;
+    max-height: 175px;
+  }
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+  :host {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  
+  #wrapper {
+    width: 90%;
+    height: 85%;
+  }
+  
+  #container {
+    padding: 30px;
+    
+    .question {
+      font-size: 1.2rem;
+      padding: 20px 0;
+      margin-bottom: 25px;
+      margin-left: 0;
+    }
+    
+    .answer {
+      column-gap: 20px;
+      row-gap: 15px;
+      margin-top: 20px;
+    }
+    
+    button {
+      font-size: 1.1rem;
+      padding: 15px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 1.3rem;
+        margin-left: 4px;
+      }
+      
+      .option-label {
+        margin-right: 8px;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 20px;
+    left: 20px;
+    font-size: 1.3rem;
+  }
+  
+  .question-image {
+    max-width: 300px;
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 425px) {
+  :host {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  #wrapper {
+    width: 95%;
+    height: 80%;
+  }
+  
+  #container {
+    padding: 20px;
+    
+    .question {
+      font-size: 1rem;
+      padding: 15px 0;
+      margin-bottom: 20px;
+      margin-left: 0;
+    }
+    
+    .answer {
+      grid-template-columns: 1fr; // Chuyển từ 2x2 thành 1x4
+      grid-template-rows: repeat(4, 1fr);
+      column-gap: 0;
+      row-gap: 12px;
+      margin-top: 15px;
+    }
+    
+    button {
+      font-size: 0.95rem;
+      padding: 12px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 1.1rem;
+        margin-left: 3px;
+      }
+      
+      .option-label {
+        margin-right: 6px;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 15px;
+    left: 15px;
+    font-size: 1.1rem;
+  }
+  
+  .question-image {
+    max-width: 250px;
+    max-height: 125px;
+  }
+}
+
+@media (max-width: 375px) {
+  :host {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  #wrapper {
+    width: 98%;
+    height: 75%;
+  }
+  
+  #container {
+    padding: 15px;
+    
+    .question {
+      font-size: 0.9rem;
+      padding: 12px 0;
+      margin-bottom: 15px;
+    }
+    
+    .answer {
+      row-gap: 10px;
+      margin-top: 12px;
+    }
+    
+    button {
+      font-size: 0.85rem;
+      padding: 10px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 1rem;
+      }
+      
+      .option-label {
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 12px;
+    left: 12px;
+    font-size: 1rem;
+  }
+  
+  .question-image {
+    max-width: 200px;
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 320px) {
+  :host {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  #wrapper {
+    width: 100%;
+    height: 70%;
+  }
+  
+  #container {
+    padding: 10px;
+    
+    .question {
+      font-size: 0.8rem;
+      padding: 10px 0;
+      margin-bottom: 12px;
+    }
+    
+    .answer {
+      row-gap: 8px;
+      margin-top: 10px;
+    }
+    
+    button {
+      font-size: 0.75rem;
+      padding: 8px;
+      
+      .correct-icon,
+      .wrong-icon {
+        font-size: 0.9rem;
+      }
+      
+      .option-label {
+        margin-right: 4px;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 10px;
+    left: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .question-image {
+    max-width: 180px;
+    max-height: 90px;
+  }
 }
