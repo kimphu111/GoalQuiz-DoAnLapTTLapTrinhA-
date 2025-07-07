@@ -710,7 +710,7 @@ $light-highlighted-day-bg: #ff9999;
   .user-info-card {
     width: 100%;
     max-width: 500px;
-    height: 150px;
+    height: 200px;
     padding: 10px;
     margin: 20px 50px 0 50px ;
     background-color: #FFFFFF;
@@ -747,6 +747,21 @@ $light-highlighted-day-bg: #ff9999;
       color: #000000;
       font-size: 13px;
       font-family: Roboto, sans-serif;
+    }
+
+    .button-profile{
+      text-decoration: none;
+      background-color: #0d8f20;
+      width: 200px;
+      height: 40px;
+      font-size: 14px;
+      display: flex;
+      text-align:  center;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      color: white;
+
     }
   }
 
@@ -828,12 +843,12 @@ $light-highlighted-day-bg: #ff9999;
     }
 
     .attempt {
-      font-size: 16px;
+      font-size: 20px;
       margin: 6px 0px;
       color: #000000;
       background-color: white;
       width: 500px;
-      height:50px;
+      height:70px;
       border-radius: 10px;
       display: flex;
       align-items: center;

@@ -1,11 +1,11 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { AuthService } from '../../services/auth.service';
 import { QuizService } from '../../services/quiz/quiz.service';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 interface QuizAttempt {
   quizLevel: string;
@@ -25,7 +25,7 @@ interface Player {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule, NgChartsModule],
+  imports: [RouterLink, CommonModule, NgChartsModule, RouterLinkActive],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -200,7 +200,7 @@ export class HomeComponent implements OnInit {
             dateDoQuiz: item.dateDoQuiz || new Date().toISOString(),
           }))
           .sort((a, b) => new Date(b.dateDoQuiz).getTime() - new Date(a.dateDoQuiz).getTime())
-          .slice(0, 3);
+          .slice(0, 6);
       },
       error: (err) => {
         console.error('Lỗi khi lấy danh sách quiz:', err);

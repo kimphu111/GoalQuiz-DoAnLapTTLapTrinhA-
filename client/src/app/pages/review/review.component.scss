@@ -1,8 +1,7 @@
 :host {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100%; 
+    height: 100%;
     overflow: hidden;
     position: relative;
 }
@@ -17,19 +16,15 @@
     margin-left: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
     overflow: hidden;
     border-radius: 10px;
     margin-top: 20px;
     padding: 20px;
     box-sizing: border-box;
-    //==============================Level Selector=================================
     .level-selector {
       display: flex;
       padding-top: 50px;
       padding-bottom: 50px;
-      justify-content: center;
       margin-bottom: 20px;
       overflow-x:auto ;
       scroll-behavior: smooth;
@@ -49,8 +44,8 @@
         padding: 5px;
         gap: 5px;
         height: 50px;
-        width: 100%;
-        max-width: 800px;
+        width: 1200px;
+        max-width: 980px;
 
         &::-webkit-scrollbar {
           display: none;
@@ -58,13 +53,9 @@
 
         button {
           //flex: 0 0 auto;
-          min-width: 170px;
+          min-width: 240px;
         }
 
-      //   &.dragging {
-      //     cursor: grabbing;
-      //     user-select: none;
-      //   }
     }
 
     button {
@@ -100,7 +91,7 @@
 
 }
 .quiz-table{
-    width: 100%;
+    width: 1000px;
     table-layout: fixed;
     border-collapse: collapse;
     margin-top: 10px;
@@ -123,7 +114,7 @@
             filter: brightness(0.7);
         }
     }
-    
+
 }
 //====================================Calendar==============================
 .date-filter-popup {

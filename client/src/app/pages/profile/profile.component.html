@@ -5,26 +5,25 @@
       <span class="material-icons">chevron_left</span>
     </div>
     <div class="card-section avatar-section">
-<!--      tấm ảnh còn lỗi-->
-<!--      <img-->
-<!--        [src]="-->
-<!--        isFullUrl(profile.avatar)-->
-<!--          ? profile.avatar-->
-<!--          : profile.avatar.startsWith('data:')-->
-<!--            ? profile.avatar-->
-<!--            : 'https://via.placeholder.com/100'-->
-<!--      "-->
-<!--        alt="Avatar"-->
-<!--        class="avatar"-->
-<!--      />-->
 
-      <img class="avatar" src="assets/admin.jpg" alt="User Avatar" />
+      <img
+        [src]="
+        isFullUrl(profile.avatar)
+          ? profile.avatar
+          : profile.avatar.startsWith('data:')
+            ? profile.avatar
+            : 'https://via.placeholder.com/100'
+      "
+        alt="Avatar"
+        class="avatar"
+      />
+
+<!--      <img class="avatar" src="assets/admin.jpg" alt="User Avatar" />-->
 
       <div class="avatar-buttons">
         <button class="upload-button" (click)="onUpload()">
           Upload new pictures
         </button>
-        <button class="delete-button" (click)="onDelete()">Delete</button>
       </div>
     </div>
 

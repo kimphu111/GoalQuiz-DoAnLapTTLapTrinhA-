@@ -223,7 +223,7 @@ export class ProfileComponent implements OnInit {
             this.profile.avatar = response.avatar;
             this.successMessage = 'Cập nhật thông tin và avatar thành công!';
           } else {
-            this.successMessage = 'Cập nhật thông tin thành công, nhưng avatar không được lưu!';
+            this.successMessage = 'Cập nhật thông tin thành công';
           }
           this.errorMessage = null;
           this.selectedFile = null;

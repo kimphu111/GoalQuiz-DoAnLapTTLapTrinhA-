@@ -52,27 +52,11 @@
         <img src="assets/admin.jpg" alt="User Avatar" />
       </div>
       <span class="username">{{ username }}</span>
-    </div>
 
-    <!-- Các chức năng phổ biến -->
-    <div class="features-section">
-      <h3>Common Features</h3>
-      <div class="features-row">
-        <div class="feature-card">
-          <div class="feature-box">
-            <span class="material-icons">person</span>
-          </div>
-          <p>Personal Points</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-box">
-            <span class="material-icons">emoji_events</span>
-          </div>
-          <p>Rankings</p>
-        </div>
-      </div>
-    </div>
+        <a class="button-profile" [routerLink]="['/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">Thông tin cá nhân
+        </a>
 
+    </div>
 
     <!-- Thử gần nhất -->
     <div class="recent-attempts">
