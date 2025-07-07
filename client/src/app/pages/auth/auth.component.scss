@@ -352,3 +352,466 @@
 
 @media screen and (max-width: 1200px) {
 }
+
+//=======================Responsive=========================
+@media (min-width: 2441px) {
+  .auth-container {
+    max-width: 1600px;
+    height: 100vh;
+  }
+  
+  .container {
+    max-width: 1400px;
+  }
+  
+  .form-container {
+    width: 650px;
+    height: 800px;
+    
+    h2 {
+      font-size: 56px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      label {
+        font-size: 24px;
+      }
+      
+      input {
+        width: 420px;
+        height: 50px;
+        font-size: 16px;
+      }
+    }
+    
+    button {
+      width: 420px;
+      height: 60px;
+      font-size: 1.2rem;
+    }
+    
+    .textLogin {
+      font-size: 22px;
+    }
+  }
+  
+  .image-container {
+    width: 850px;
+    height: 1000px;
+  }
+  
+  .ball_img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+// @media (min-width: 1024px) and (max-width: 2440px) {
+//   .auth-container {
+//     max-width: 1300px;
+//   }
+  
+//   .container {
+//     max-width: 1100px;
+//   }
+  
+//   .form-container {
+//     width: 650px;
+//     height: 750px;
+    
+//     h2 {
+//       font-size: 52px;
+//     }
+    
+//     .form-group,
+//     .form-group-register {
+//       label {
+//         font-size: 22px;
+//       }
+      
+//       input {
+//         width: 380px;
+//         height: 45px;
+//         font-size: 15px;
+//       }
+//     }
+    
+//     button {
+//       width: 380px;
+//       height: 55px;
+//       font-size: 1.1rem;
+//     }
+    
+//     .textLogin {
+//       font-size: 21px;
+//     }
+//   }
+  
+//   .image-container {
+//     width: 800px;
+//     height: 1050px;
+//   }
+  
+//   .ball_img {
+//     width: 55px;
+//     height: 55px;
+//   }
+// }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .auth-container {
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  
+  .container {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+  }
+  
+  .form-container {
+    width: 100%;
+    //max-width: 1500px;
+    height: auto;
+    min-height: 600px;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    
+    h2 {
+      font-size: 40px;
+    }
+    .login-form{
+      padding: 20px;
+    }
+    .form-group,
+    .form-group-register {
+      box-sizing: border-box;
+      label {
+        font-size: 18px;
+      }
+      
+      input {
+        width: 100%;
+        max-width: 320px;
+        height: 45px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+    }
+    
+    button {
+      width: 100%;
+      max-width: 320px;
+      height: 50px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    
+    .textLogin {
+      font-size: 18px;
+    }
+  }
+  
+  .ball_img {
+    width: 45px;
+    height: 45px;
+  }
+  
+  // Ẩn image container
+  .image-container {
+    display: none !important;
+  }
+  
+  // Override transform cho tablet
+  .auth-container.sign-in-active,
+  .auth-container.sign-up-active {
+    .form-container {
+      transform: translateX(0) !important;
+    }
+  }
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .auth-container {
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 95%;
+    flex-direction: column;
+    gap: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+  }
+  
+  .form-container {
+    width: 95%;
+    max-width: 450px;
+    height: auto;
+    min-height: 550px;
+    padding: 25px 15px;
+    
+    h2 {
+      font-size: 32px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      label {
+        font-size: 16px;
+      }
+      
+      input {
+        width: 100%;
+        max-width: 280px;
+        height: 40px;
+        font-size: 13px;
+      }
+    }
+    
+    button {
+      width: 100%;
+      max-width: 280px;
+      height: 45px;
+      font-size: 0.95rem;
+    }
+    
+    .textLogin {
+      font-size: 16px;
+    }
+    
+    .remember-me {
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+      
+      label {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .ball_img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .message-container {
+    font-size: 16px;
+  }
+  
+  // Ẩn image container
+  .image-container {
+    display: none !important;
+  }
+  
+  // Override transform cho mobile landscape
+  .auth-container.sign-in-active,
+  .auth-container.sign-up-active {
+    .form-container {
+      transform: translateX(0) !important;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .auth-container {
+    flex-direction: column;
+    height: 100vh;
+    background-color: #0f500d; // Giữ background xanh đậm
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 95%;
+    flex-direction: column;
+    gap: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+  }
+  
+  .form-container {
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    min-height: 600px;
+    padding: 30px 20px;
+    
+    .login-form {
+      background-color: #2a2a2a; // Background đen cho login
+    }
+    
+    .register-form {
+      background-color: #e2e2e2; // Background xám cho register
+    }
+    
+    h2 {
+      font-size: 32px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      label {
+        font-size: 16px;
+      }
+      
+      input {
+        width: 100%;
+        max-width: 300px;
+        height: 40px;
+        font-size: 14px;
+      }
+    }
+    
+    button {
+      width: 100%;
+      max-width: 300px;
+      height: 45px;
+      font-size: 1rem;
+    }
+    
+    .textLogin {
+      font-size: 16px;
+    }
+    
+    .remember-me {
+      input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+      }
+      
+      label {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  // Ẩn image container hoàn toàn
+  .image-container {
+    display: none !important;
+  }
+  
+  .ball_img {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .message-container {
+    font-size: 16px;
+  }
+  
+  // Override transform - không cần animation
+  .auth-container.sign-in-active,
+  .auth-container.sign-up-active {
+    .form-container {
+      transform: translateX(0) !important;
+    }
+    
+    .image-container {
+      display: none !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    width: 95%;
+    max-width: 350px;
+    padding: 25px 15px;
+    
+    h2 {
+      font-size: 28px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      label {
+        font-size: 14px;
+      }
+      
+      input {
+        max-width: 250px;
+        height: 38px;
+        font-size: 12px;
+      }
+    }
+    
+    button {
+      max-width: 250px;
+      height: 42px;
+      font-size: 0.9rem;
+    }
+    
+    .textLogin {
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .form-container {
+    max-width: 320px;
+    padding: 20px 10px;
+    
+    h2 {
+      font-size: 24px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      input {
+        max-width: 220px;
+        height: 36px;
+      }
+    }
+    
+    button {
+      max-width: 220px;
+      height: 40px;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .form-container {
+    max-width: 300px;
+    padding: 15px 8px;
+    
+    h2 {
+      font-size: 22px;
+    }
+    
+    .form-group,
+    .form-group-register {
+      input {
+        max-width: 200px;
+        height: 34px;
+        font-size: 11px;
+      }
+    }
+    
+    button {
+      max-width: 200px;
+      height: 38px;
+      font-size: 0.8rem;
+    }
+  }
+}

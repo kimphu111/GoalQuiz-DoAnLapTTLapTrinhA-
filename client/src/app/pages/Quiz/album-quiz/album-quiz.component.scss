@@ -1,18 +1,19 @@
 :host {
     display: block;
     overflow-x: hidden;
-    height: 100%;
+    height: 100vh; // Thay đổi từ height: 100% thành 100vh
+
 }
 #wrapper{
     position: relative;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 85%;
+    height: 85%;
     //background-color: white;
     margin-left: 10px;
     display: flex;
-    align-items: start;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -20,7 +21,7 @@
     position: relative;
     width: 80%;
     height: 80%;
-    margin-left: 5%;
+    margin-left: 20px;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -157,4 +158,269 @@
         &:hover{
             color: darkred;
         }
+}
+
+//======================Responsive============================ 
+@media (min-width: 2441px) {
+  #wrapper {
+    width: 90%;
+    height: 90%;
+  }
+  
+  #container {
+    height: 65%;
+    gap: 30px;
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2440px) {
+  #wrapper {
+    width: 85%;
+    height: 80%;
+    margin-left: 30px;
+  }
+  
+  #container {
+    width: 80%;
+    height: 60%;
+    margin-left: 30px;
+    gap: 25px;
+    font-size: 2.2rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #wrapper {
+    width: 70%;
+    height: 60%;
+    margin-left: 20px;
+  }
+  
+  #container {
+    width: 90%;
+    height: 65%;
+    margin-left: 20px;
+    gap: 20px;
+    font-size: 1.8rem;
+  }
+  
+  .back-icon {
+    margin-left: 30px;
+    margin-top: 8px;
+  }
+  
+  .popup-content {
+    width: 60%;
+    height: 200px;
+    font-size: 2.2rem;
+    padding: 18px;
+  }
+  
+  .popup-button {
+    gap: 25px;
+    
+    button {
+      font-size: 1.3rem;
+      padding: 12px 30px;
+    }
+  }
+  
+  .close-btn {
+    font-size: 1.3rem;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+  #wrapper {
+    width: 95%;
+    height: 70%;
+    margin-left: 15px;
+  }
+  
+  #container {
+    width: 90%;
+    height: 75%;
+    margin-left: 15px;
+    gap: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .back-icon {
+    margin-left: 20px;
+    margin-top: 5px;
+  }
+  
+  .popup-content {
+    width: 75%;
+    height: 180px;
+    font-size: 1.8rem;
+    padding: 15px;
+  }
+  
+  .popup-button {
+    gap: 20px;
+    padding: 0 15px;
+    
+    button {
+      font-size: 1.1rem;
+      padding: 10px 25px;
+      max-width: 120px;
+    }
+  }
+  
+  .close-btn {
+    font-size: 1.2rem;
+    padding: 6px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+@media (max-width: 425px) {
+  #wrapper {
+    width: 70%;
+    height: 75%;
+    margin-left: 10px;
+  }
+  
+  #container {
+    width: 75%;
+    height: 80%;
+    margin-left: 10px;
+    gap: 10px;
+    font-size: 1.2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+  
+  .level {
+    min-height: 60px;
+    
+    b {
+      margin-left: 4px;
+    }
+  }
+  
+  .popup-content {
+    width: 90%;
+    height: 160px;
+    font-size: 1.5rem;
+    padding: 12px;
+  }
+  
+  .popup-button {
+    gap: 15px;
+    padding: 0 10px;
+    flex-direction: column;
+    
+    button {
+      font-size: 1rem;
+      padding: 8px 20px;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+  
+  .close-btn {
+    font-size: 1rem;
+    padding: 5px;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 375px) {
+  #wrapper {
+    width: 100%;
+    height: 80%;
+    margin-left: 5px;
+  }
+  
+  #container {
+    width: 98%;
+    height: 75%;
+    margin-left: 5px;
+    gap: 8px;
+    font-size: 1rem;
+  }
+  
+  .back-icon {
+    margin-left: 10px;
+  }
+  
+  .level {
+    min-height: 50px;
+  }
+  
+  .popup-content {
+    width: 95%;
+    height: 140px;
+    font-size: 1.3rem;
+    padding: 10px;
+  }
+  
+  .popup-button {
+    gap: 10px;
+    
+    button {
+      font-size: 0.9rem;
+      padding: 6px 15px;
+    }
+  }
+  
+  .close-btn {
+    font-size: 0.9rem;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 320px) {
+  #wrapper {
+    width: 100%;
+    height: 75%;
+    margin-left: 2px;
+  }
+  
+  #container {
+    width: 100%;
+    height: 70%;
+    margin-left: 2px;
+    gap: 5px;
+    font-size: 0.9rem;
+  }
+  
+  .back-icon {
+    margin-left: 5px;
+  }
+  
+  .level {
+    min-height: 45px;
+    
+    b {
+      margin-left: 2px;
+    }
+  }
+  
+  .popup-content {
+    width: 98%;
+    height: 120px;
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+  
+  .popup-button {
+    gap: 8px;
+    
+    button {
+      font-size: 0.8rem;
+      padding: 5px 12px;
+    }
+  }
+  
+  .close-btn {
+    font-size: 0.8rem;
+    padding: 3px;
+  }
 }

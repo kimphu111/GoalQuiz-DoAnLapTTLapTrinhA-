@@ -51,6 +51,13 @@
                       <p class="date" ><span class="material-symbols-outlined">calendar_month</span>
                         {{quizDetail.createdAt | date:'dd/MM/yyyy'}}</p>
                       <p><strong>Question:</strong> {{quizDetail.question}}</p>
+
+                      @if(quizDetail.image){
+                        <div>
+                          <img [src]="quizDetail.image" alt="Quiz Image" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                        </div>
+                      }
+                      
                       <div class="options">
                         <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'A'}"><strong>A.</strong> {{quizDetail.answerA}}</p>
                         <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'B'}"><strong>B.</strong> {{quizDetail.answerB}}</p>
@@ -58,11 +65,6 @@
                         <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'D'}"><strong>D.</strong> {{quizDetail.answerD}}</p>
                       </div>
                       <!-- <p><strong>Correct Answer:</strong> {{quizDetail.correctAnswer}}</p> -->
-                    }
-                    @if(quizDetail.image){
-                      <div>
-                        <img [src]="quizDetail.image" alt="Quiz Image" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
-                      </div>
                     }
                   </div>
                 </div>

@@ -1,7 +1,8 @@
 :host {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    justify-content: center;
     height: 100%;
     overflow: hidden;
     position: relative;
@@ -11,8 +12,8 @@
     position: relative;
     top: 0;
     left: 0;
-    width: 90%;
-    height: 90%;
+    width: 79%;
+    height: 80%;
     background-color: white;
     margin-left: 15px;
     display: flex;
@@ -96,8 +97,7 @@
         align-items: center;
         justify-content: start;
         gap: 20px;
-        max-width: 800px;
-        max-width: 100%;
+        width: 100%;
         .square {
             width: 85px;
             height: 85px;
@@ -258,6 +258,653 @@
     }
     }
 
+}
+
+//======================Responsive============================ 
+@media (min-width: 2441px) {
+  :host {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  #wrapper {
+    width: 75%;
+    height: 80%;
+    margin-left: 30px;
+  }
+  
+  #container {
+    padding: 40px;
+    gap: 30px;
+    
+    h1 {
+      font-size: 3.5rem;
+    }
+    
+    .header {
+      margin-bottom: 40px;
+      
+      .header-info {
+        gap: 40px;
+        
+        .date, .result-time {
+          font-size: 1.5rem;
+          
+          .material-symbols-outline {
+            font-size: 2.2rem;
+          }
+        }
+      }
+      
+      .score {
+        img {
+          width: 180px;
+          height: 180px;
+        }
+        
+        .score-number {
+          font-size: 3rem;
+        }
+        
+        .quiz-level {
+          font-size: 2rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      gap: 25px;
+      
+      .square {
+        width: 100px;
+        height: 100px;
+        font-size: 2.3rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 40px;
+    left: 40px;
+    font-size: 2rem;
+  }
+  
+  .popup {
+    .popup-content {
+      width: 800px;
+      min-height: 600px;
+      padding: 40px 30px;
+      
+      .close-btn {
+        font-size: 2.5rem;
+        top: 25px;
+        right: 25px;
+      }
+    }
+    
+    .question-detail {
+      .question {
+        font-size: 1.4rem;
+      }
+      
+      .question-image {
+        max-width: 500px;
+        max-height: 250px;
+      }
+    }
+    
+    .answer-box {
+      gap: 20px;
+      
+      .answer {
+        font-size: 1.4rem;
+        padding: 15px 22px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2440px) {
+  :host {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  #wrapper {
+    width: 78%;
+    height: 82%;
+    margin-left: 20px;
+  }
+  
+  #container {
+    padding: 35px;
+    gap: 25px;
+    
+    h1 {
+      font-size: 3.2rem;
+    }
+    
+    .header {
+      margin-bottom: 35px;
+      
+      .header-info {
+        gap: 35px;
+        
+        .date, .result-time {
+          font-size: 1.4rem;
+          
+          .material-symbols-outline {
+            font-size: 2.1rem;
+          }
+        }
+      }
+      
+      .score {
+        img {
+          width: 160px;
+          height: 160px;
+        }
+        
+        .score-number {
+          font-size: 2.7rem;
+        }
+        
+        .quiz-level {
+          font-size: 1.8rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      gap: 22px;
+      
+      .square {
+        width: 90px;
+        height: 90px;
+        font-size: 2.1rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 35px;
+    left: 35px;
+    font-size: 1.8rem;
+  }
+  
+  .popup {
+    .popup-content {
+      width: 750px;
+      min-height: 550px;
+      padding: 36px 28px;
+      
+      .close-btn {
+        font-size: 2.4rem;
+        top: 22px;
+        right: 22px;
+      }
+    }
+    
+    .question-detail {
+      .question {
+        font-size: 1.3rem;
+      }
+      
+      .question-image {
+        max-width: 450px;
+        max-height: 225px;
+      }
+    }
+    
+    .answer-box {
+      gap: 18px;
+      
+      .answer {
+        font-size: 1.3rem;
+        padding: 14px 20px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :host {
+    padding-left: 40px;
+    padding-right: 40px;
+    height: 70vh;
+  }
+  
+  #wrapper {
+    width: 85%;
+    height: 80%;
+    margin-left: 20px;
+  }
+  
+  #container {
+    padding: 25px;
+    gap: 20px;
+    
+    h1 {
+      font-size: 2.5rem;
+    }
+    
+    .header {
+      margin-bottom: 25px;
+      
+      .header-info {
+        gap: 25px;
+        
+        .date, .result-time {
+          font-size: 1.1rem;
+          
+          .material-symbols-outline {
+            font-size: 1.7rem;
+          }
+        }
+      }
+      
+      .score {
+        img {
+          width: 120px;
+          height: 120px;
+        }
+        
+        .score-number {
+          font-size: 2.2rem;
+        }
+        
+        .quiz-level {
+          font-size: 1.4rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      grid-template-columns: repeat(6, 1fr); // Giảm từ 8 thành 6 cột
+      gap: 15px;
+      
+      .square {
+        width: 70px;
+        height: 70px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 25px;
+    left: 25px;
+    font-size: 1.5rem;
+  }
+  
+  .popup {
+    .popup-content {
+      width: 90%;
+      max-width: 600px;
+      min-height: 450px;
+      padding: 25px 20px;
+      
+      .close-btn {
+        font-size: 2rem;
+        top: 15px;
+        right: 15px;
+      }
+    }
+    
+    .question-detail {
+      .question {
+        font-size: 1.1rem;
+      }
+      
+      .question-image {
+        max-width: 350px;
+        max-height: 175px;
+      }
+    }
+    
+    .answer-box {
+      gap: 12px;
+      
+      .answer {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
+  }
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+  :host {
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 90vh;
+  }
+  
+  #wrapper {
+    width: 90%;
+    height: 75%;
+    margin-left: 15px;
+  }
+  
+  #container {
+    padding: 20px;
+    gap: 15px;
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    .header {
+      margin-bottom: 20px;
+      
+      .header-info {
+        gap: 20px;
+        
+        .date, .result-time {
+          font-size: 1rem;
+          
+          .material-symbols-outline {
+            font-size: 1.5rem;
+          }
+        }
+      }
+      
+      .score {
+        img {
+          width: 100px;
+          height: 100px;
+        }
+        
+        .score-number {
+          font-size: 1.8rem;
+        }
+        
+        .quiz-level {
+          font-size: 1.2rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      grid-template-columns: repeat(4, 1fr); // Giảm từ 8 thành 4 cột
+      gap: 12px;
+      
+      .square {
+        width: 60px;
+        height: 60px;
+        font-size: 1.3rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 20px;
+    left: 20px;
+    font-size: 1.3rem;
+  }
+  
+  .popup {
+    .popup-content {
+      width: 95%;
+      max-width: 500px;
+      min-height: 400px;
+      padding: 20px 15px;
+      
+      .close-btn {
+        font-size: 1.8rem;
+        top: 12px;
+        right: 12px;
+      }
+    }
+    
+    .question-detail {
+      .question {
+        font-size: 1rem;
+      }
+      
+      .question-image {
+        max-width: 300px;
+        max-height: 150px;
+      }
+    }
+    
+    .answer-box {
+      grid-template-columns: 1fr; // Chuyển từ 2x2 thành 1x4
+      grid-template-rows: repeat(4, 1fr);
+      gap: 10px;
+      
+      .answer {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  :host {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  #wrapper {
+    width: 95%;
+    height: 70%;
+    margin-left: 10px;
+  }
+  
+  #container {
+    padding: 15px;
+    gap: 12px;
+    
+    h1 {
+      font-size: 1.7rem;
+    }
+    
+    .header {
+      margin-bottom: 15px;
+      
+      .header-info {
+        gap: 15px;
+        
+        .date, .result-time {
+          font-size: 0.9rem;
+          
+          .material-symbols-outline {
+            font-size: 1.3rem;
+          }
+        }
+      }
+      
+      .score {
+        img {
+          width: 80px;
+          height: 80px;
+        }
+        
+        .score-number {
+          font-size: 1.5rem;
+        }
+        
+        .quiz-level {
+          font-size: 1rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      grid-template-columns: repeat(3, 1fr); // Giảm từ 8 thành 3 cột
+      gap: 8px;
+      
+      .square {
+        width: 50px;
+        height: 50px;
+        font-size: 1.1rem;
+      }
+    }
+  }
+  
+  .back-icon {
+    top: 15px;
+    left: 15px;
+    font-size: 1.1rem;
+  }
+  
+  .popup {
+    .popup-content {
+      width: 98%;
+      max-width: 400px;
+      min-height: 350px;
+      padding: 15px 12px;
+      
+      .close-btn {
+        font-size: 1.5rem;
+        top: 10px;
+        right: 10px;
+      }
+    }
+    
+    .question-detail {
+      .question {
+        font-size: 0.9rem;
+      }
+      
+      .question-image {
+        max-width: 250px;
+        max-height: 125px;
+      }
+    }
+    
+    .answer-box {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 8px;
+      
+      .answer {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  #wrapper {
+    width: 98%;
+    margin-left: 5px;
+  }
+  
+  #container {
+    padding: 12px;
+    gap: 10px;
+    
+    h1 {
+      font-size: 1.5rem;
+    }
+    
+    .header {
+      .score {
+        img {
+          width: 70px;
+          height: 70px;
+        }
+        
+        .score-number {
+          font-size: 1.3rem;
+        }
+        
+        .quiz-level {
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      gap: 6px;
+      
+      .square {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .popup {
+    .popup-content {
+      min-height: 300px;
+      padding: 12px 10px;
+    }
+    
+    .answer-box {
+      gap: 6px;
+      
+      .answer {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  #wrapper {
+    width: 100%;
+    margin-left: 2px;
+  }
+  
+  #container {
+    padding: 10px;
+    gap: 8px;
+    
+    h1 {
+      font-size: 1.3rem;
+    }
+    
+    .header {
+      .score {
+        img {
+          width: 60px;
+          height: 60px;
+        }
+        
+        .score-number {
+          font-size: 1.2rem;
+        }
+        
+        .quiz-level {
+          font-size: 0.8rem;
+        }
+      }
+    }
+    
+    .result-grid {
+      grid-template-columns: repeat(2, 1fr); // Giảm từ 3 thành 2 cột
+      gap: 5px;
+      
+      .square {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+  
+  .popup {
+    .popup-content {
+      min-height: 250px;
+      padding: 10px 8px;
+    }
+    
+    .answer-box {
+      gap: 5px;
+      
+      .answer {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+      }
+    }
+  }
 }
 
 

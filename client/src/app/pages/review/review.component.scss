@@ -1,7 +1,8 @@
 :host {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
+    justify-content: center;
     height: 100%; 
     overflow: hidden;
     position: relative;
@@ -11,7 +12,7 @@
     position: relative;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 79%;
     height: 90%;
     background-color: white;
     margin-left: 15px;
@@ -275,4 +276,518 @@
   inset: 0;
   //background: rgba(0,0,0,0.1);
   z-index: 9;
+}
+//======================Responsive============================ 
+@media (min-width: 2441px) {
+  #wrapper {
+    width: 78%;
+    height: 90%;
+    margin-left: 20px;
+    padding: 30px;
+  }
+  
+  .level-selector {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    
+    .level-buttons {
+      max-width: 1000px;
+      height: 60px;
+      
+      button {
+        min-width: 200px;
+        font-size: 1.3rem;
+        padding: 12px 25px;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 1.5rem;
+    
+    tr {
+      height: 70px;
+    }
+  }
+  
+  .date-filter-popup {
+    min-width: 800px;
+    max-width: 1000px;
+    padding: 30px 20px 20px 20px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 2.5rem;
+      }
+      
+      .button-background {
+        width: 42px;
+        height: 42px;
+        
+        button {
+          font-size: 1.8rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      gap: 6px;
+      
+      .weekday {
+        font-size: 1.3rem;
+      }
+      
+      .day {
+        min-width: 42px;
+        min-height: 42px;
+        line-height: 42px;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 2440px) {
+  #wrapper {
+    width: 78%;
+    height: 88%;
+    margin-left: 18px;
+    padding: 25px;
+  }
+  
+  .level-selector {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    
+    .level-buttons {
+      max-width: 850px;
+      height: 55px;
+      
+      button {
+        min-width: 180px;
+        font-size: 1.2rem;
+        padding: 11px 22px;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 1.3rem;
+    
+    tr {
+      height: 65px;
+    }
+  }
+  
+  .date-filter-popup {
+    min-width: 750px;
+    max-width: 950px;
+    padding: 28px 18px 18px 18px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 2.3rem;
+      }
+      
+      .button-background {
+        width: 40px;
+        height: 40px;
+        
+        button {
+          font-size: 1.7rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      gap: 5px;
+      
+      .weekday {
+        font-size: 1.2rem;
+      }
+      
+      .day {
+        min-width: 40px;
+        min-height: 40px;
+        line-height: 40px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #wrapper {
+    width: 80%;
+    height: 80vh;
+    margin-left: 15px;
+    padding: 20px;
+    margin-left: 30px;
+  }
+  
+  .level-selector {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    
+    .level-buttons {
+      max-width: 700px;
+      height: 50px;
+      
+      button {
+        min-width: 150px;
+        font-size: 1rem;
+        padding: 10px 18px;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 1.1rem;
+    
+    th:nth-child(1), td:nth-child(1) { width: 45%; }
+    th:nth-child(2), td:nth-child(2) { width: 18%; }
+    th:nth-child(3), td:nth-child(3) { width: 22%; }
+    th:nth-child(4), td:nth-child(4) { width: 15%; }
+    
+    tr {
+      height: 60px;
+    }
+  }
+  
+  .date-filter-popup {
+    left: 50%;
+    min-width: 600px;
+    max-width: 750px;
+    padding: 24px 16px 16px 16px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 2rem;
+      }
+      
+      .button-background {
+        width: 36px;
+        height: 36px;
+        
+        button {
+          font-size: 1.5rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      gap: 4px;
+      
+      .weekday {
+        font-size: 1.1rem;
+      }
+      
+      .day {
+        min-width: 36px;
+        min-height: 36px;
+        line-height: 36px;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 426px) and (max-width: 767px) {
+  #wrapper {
+    width: 95%;
+    height: 70vh;
+    margin-left: 10px;
+    padding: 15px;
+  }
+  
+  .level-selector {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    
+    .level-buttons {
+      width: 100% !important;
+      max-width: 300px;
+      height: 35px;
+      
+      button {
+        min-width: 70px !important;
+        max-width: 90px !important;
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        height: 100%;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 1rem;
+    
+    th:nth-child(1), td:nth-child(1) { width: 40%; }
+    th:nth-child(2), td:nth-child(2) { width: 20%; }
+    th:nth-child(3), td:nth-child(3) { width: 25%; }
+    th:nth-child(4), td:nth-child(4) { width: 15%; }
+    
+    tr {
+      height: 55px;
+    }
+  }
+  
+  .date-filter-popup {
+    left: 50%;
+    min-width: 90%;
+    max-width: 500px;
+    padding: 20px 12px 12px 12px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 1.7rem;
+      }
+      
+      .button-background {
+        width: 32px;
+        height: 32px;
+        
+        button {
+          font-size: 1.3rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      gap: 3px;
+      
+      .weekday {
+        font-size: 1rem;
+      }
+      
+      .day {
+        min-width: 32px;
+        min-height: 32px;
+        line-height: 32px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  #wrapper {
+    width: 98%;
+    height: 75%;
+    margin-left: 5px;
+    padding: 12px;
+  }
+  
+  .level-selector {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    .level-buttons {
+      max-width: 100%;
+      height: 35px;
+      
+      button {
+        min-width: 70px !important;
+        max-width: 90px !important;
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        height: 100%;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 0.9rem;
+    
+    th:nth-child(1), td:nth-child(1) { width: 35%; }
+    th:nth-child(2), td:nth-child(2) { width: 22%; }
+    th:nth-child(3), td:nth-child(3) { width: 28%; }
+    th:nth-child(4), td:nth-child(4) { width: 15%; }
+    
+    tr {
+      height: 50px;
+    }
+  }
+  
+  .date-filter-popup {
+    left: 50%;
+    top: 50%;
+    min-width: 95%;
+    max-width: 350px;
+    padding: 16px 10px 10px 10px;
+    
+    .calendar-header {
+      margin-bottom: 12px;
+      
+      .month-year {
+        font-size: 1.5rem;
+      }
+      
+      .button-background {
+        width: 28px;
+        height: 28px;
+        
+        button {
+          font-size: 1.1rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      gap: 2px;
+      
+      .weekday {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+      }
+      
+      .day {
+        min-width: 28px;
+        min-height: 28px;
+        line-height: 28px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    .clear-btn {
+      font-size: 0.9rem;
+      padding: 3px 10px;
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  #wrapper {
+    width: 100%;
+    margin-left: 2px;
+    padding: 10px;
+  }
+  
+  .level-selector {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    
+    .level-buttons {
+      height: 32px;
+      
+      button {
+        min-width: 65px !important;
+        max-width: 80px !important;
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        height: 100%;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 0.8rem;
+    
+    tr {
+      height: 45px;
+    }
+  }
+  
+  .date-filter-popup {
+    min-width: 98%;
+    max-width: 320px;
+    padding: 14px 8px 8px 8px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 1.3rem;
+      }
+      
+      .button-background {
+        width: 26px;
+        height: 26px;
+        
+        button {
+          font-size: 1rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      .day {
+        min-width: 26px;
+        min-height: 26px;
+        line-height: 26px;
+        font-size: 0.8rem;
+      }
+      
+      .weekday {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  #wrapper {
+    padding: 8px;
+  }
+  
+  .level-selector {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    
+    .level-buttons {
+      height: 32px;
+      
+      button {
+        min-width: 80px;
+        font-size: 0.65rem;
+        padding: 4px 8px;
+      }
+    }
+  }
+  
+  .quiz-table {
+    font-size: 0.7rem;
+    
+    tr {
+      height: 40px;
+    }
+  }
+  
+  .date-filter-popup {
+    min-width: 100%;
+    max-width: 300px;
+    padding: 12px 6px 6px 6px;
+    
+    .calendar-header {
+      .month-year {
+        font-size: 1.2rem;
+      }
+      
+      .button-background {
+        width: 24px;
+        height: 24px;
+        
+        button {
+          font-size: 0.9rem;
+        }
+      }
+    }
+    
+    .calendar-grid {
+      .day {
+        min-width: 24px;
+        min-height: 24px;
+        line-height: 24px;
+        font-size: 0.7rem;
+      }
+      
+      .weekday {
+        font-size: 0.7rem;
+      }
+    }
+    
+    .clear-btn {
+      font-size: 0.8rem;
+      padding: 2px 8px;
+    }
+  }
 }
