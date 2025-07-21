@@ -232,16 +232,18 @@ $light-highlight-color: #38a565;
   .profile-container {
     width: 100vw;
     height: 100vh;
-    .back-button{
+
+    .back-button {
       display: none;
     }
 
-    .avatar-section{
+    .avatar-section {
       width: 785px;
       padding: 16px;
       margin: 0;
     }
-    .profile-form{
+
+    .profile-form {
       width: 785px;
       padding: 16px;
       margin: 0;
@@ -376,7 +378,6 @@ $light-highlight-color: #38a565;
     }
 
 
-
     .back-button {
       position: absolute;
       top: 12px;
@@ -463,6 +464,7 @@ $light-highlight-color: #38a565;
             }
           }
         }
+
         // Nút quay lại (nếu dùng icon "<")
         .back-button {
           position: absolute;
@@ -485,10 +487,11 @@ $light-highlight-color: #38a565;
           z-index: -1;
         }
 
-        .mobile-sidebar{
+        .mobile-sidebar {
           display: none;
         }
       }
+
       .profile-form {
         background: transparent;
         border-radius: 16px;
@@ -545,55 +548,264 @@ $light-highlight-color: #38a565;
     }
   }
 
-    .profile-container {
-      padding: 16px;
-      margin-top: 110px;
-      width: 500px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  .profile-container {
+    padding: 16px;
+    margin-top: 110px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-info-card {
+    max-width: 500px;
+    height: 150px;
+    padding: 10px;
+    margin: 20px 50px 0 50px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    .avt_user {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #BBBBBB;
     }
 
-    .user-info-card {
-      max-width: 500px;
-      height: 150px;
-      padding: 10px;
-      margin: 20px 50px 0 50px;
-      background-color: #FFFFFF;
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #000000;
+    }
 
-      .avt_user {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 8px;
-        border: 1px solid #BBBBBB;
+    .username {
+      font-weight: bold;
+      color: #000000;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+    }
+  }
+}
+
+/* Small screens (Mobile) */
+@media (max-width: 425px) {
+  .profile-container {
+    padding: 10px;
+    width: 380px !important;
+
+    .desktop-profile.show-popup {
+      padding: 10px 8px 80px 8px;
+
+      .back-button {
+        top: 10px;
+        left: 10px;
+
+        .material-icons {
+          font-size: 24px;
+        }
       }
 
-      img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 8px;
-        border: 1px solid #000000;
+      .avatar-section {
+        padding: 12px;
+        max-width: 100%;
+
+        .avatar {
+          width: 70px;
+          height: 70px;
+        }
+
+        .avatar-buttons button {
+          height: 42px;
+          font-size: 14px;
+        }
       }
 
-      .username {
-        font-weight: bold;
-        color: #000000;
+      .profile-form {
+        padding: 12px;
+        max-width: 80% !important;
+
+        .form-row {
+          flex-direction: column;
+          gap: 8px;
+
+          .form-group {
+            width: 100%;
+          }
+        }
+
+        .form-group input {
+          height: 40px;
+          font-size: 14px;
+        }
+
+        .form-actions {
+          .save-button, .close-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    .mobile-profile-menu {
+      margin: 90px 0 0 0 !important;
+      width: 95%;
+
+      .user-info-card {
+        height: 130px;
+        margin: 10px auto;
+        width: 270px;
+
+        .avt_user {
+          width: 65px;
+          height: 65px;
+        }
+
+        img {
+          width: 55px;
+          height: 55px;
+        }
+
+        .username {
+          font-size: 12px;
+        }
+      }
+
+      .user-actions .btn {
+        width: 100%;
+        max-width: 250px;
         font-size: 13px;
-        font-family: Roboto, sans-serif;
+      }
+
+      .menu-section {
+        margin-top: 20px;
+        gap: 12px;
+
+        .menu-item {
+          padding: 12px;
+
+          .material-icons {
+            font-size: 16px;
+          }
+
+          .label {
+            font-size: 14px;
+            margin-left: 8px;
+          }
+        }
       }
     }
   }
+}
 
+/* Very small screens */
+@media (max-width: 320px) {
+  .profile-container {
+    padding: 8px;
 
+    .desktop-profile.show-popup {
+      padding: 8px 6px 70px 6px;
+
+      .avatar-section {
+        padding: 10px;
+
+        .avatar {
+          width: 60px;
+          height: 60px;
+        }
+
+        .avatar-buttons button {
+          height: 36px;
+          font-size: 12px;
+        }
+      }
+
+      .profile-form {
+        padding: 10px;
+
+        .form-group {
+          margin-bottom: 8px;
+
+          label {
+            font-size: 0.8rem;
+            margin-bottom: 3px;
+          }
+
+          input {
+            height: 36px;
+            padding: 6px 8px;
+            font-size: 13px;
+          }
+        }
+
+        .form-actions {
+          margin-top: 10px;
+
+          button {
+            padding: 8px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+
+    .mobile-profile-menu {
+      margin: 80px auto 0;
+      width: 100%;
+
+      .user-info-card {
+        height: 110px;
+
+        .avt_user {
+          width: 55px;
+          height: 55px;
+        }
+
+        img {
+          width: 45px;
+          height: 45px;
+        }
+
+        .username {
+          font-size: 11px;
+        }
+      }
+
+      .user-actions .btn {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      .menu-section {
+        margin-top: 15px;
+        gap: 10px;
+
+        .menu-item {
+          padding: 10px;
+
+          .material-icons {
+            font-size: 15px;
+          }
+
+          .label {
+            font-size: 12px;
+            margin-left: 6px;
+          }
+        }
+      }
+    }
+  }
+}
 

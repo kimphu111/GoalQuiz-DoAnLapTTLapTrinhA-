@@ -1,61 +1,63 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-#wrapper{
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 90%;
-    background-color: white;
-    margin-left: 15px;
+#wrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 90%;
+  background-color: white;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .level-selector {
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 10px;
-    margin-top: 20px;
-    padding: 20px;
-    box-sizing: border-box;
-    .level-selector {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .level-buttons {
       display: flex;
-      padding-top: 50px;
-      padding-bottom: 50px;
-      margin-bottom: 20px;
-      overflow-x:auto ;
+      overflow-x: auto;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
+      background-color: #2a4d43;
+      border-radius: 50px;
+      padding: 5px;
+      gap: 5px;
+      height: 50px;
+      width: 100%;
+      max-width: 800px;
+
       &::-webkit-scrollbar {
-          display: none;
-        }
-        overflow-y: hidden;
+        display: none;
+      }
 
-      .level-buttons {
-        display: flex;
-        overflow-x: auto;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch;
-        background-color: #2a4d43;
-        border-radius: 50px;
-        padding: 5px;
-        gap: 5px;
-        height: 50px;
-        width: 1200px;
-        max-width: 980px;
-
-        &::-webkit-scrollbar {
-          display: none;
-        }
-
-        button {
-          //flex: 0 0 auto;
-          min-width: 240px;
-        }
-
+      button {
+        min-width: 170px;
+      }
     }
 
     button {
@@ -83,40 +85,59 @@
     }
   }
 }
-//========================Quiz table==============================
-.content{
+
+.content {
   min-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
-
 }
-.quiz-table{
-    width: 1000px;
-    table-layout: fixed;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 1.2rem;
-    th:nth-child(1), td:nth-child(1) { width: 50%; text-align: left; } //Level
-    th:nth-child(2), td:nth-child(2) { width: 15%; text-align: center; } //Date created
-    th:nth-child(3), td:nth-child(3) { width: 20%; text-align: center; } //Score
-    th:nth-child(4), td:nth-child(4) { width: 15%; text-align: center; cursor: pointer; } // Calendar
-    color: black;
-    tr {
-        border-bottom: 1px solid #9e9e9e;
-        height: 60px;
-    }
-    .calendar, .show-detail{
-        &:hover {
-            background-color: #9e9e9e;
-            user-select: none;
-        }
-        &:active{
-            filter: brightness(0.7);
-        }
+
+.quiz-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: black;
+
+  th:nth-child(1), td:nth-child(1) {
+    width: 50%;
+    text-align: left;
+  }
+
+  th:nth-child(2), td:nth-child(2) {
+    width: 15%;
+    text-align: center;
+  }
+
+  th:nth-child(3), td:nth-child(3) {
+    width: 20%;
+    text-align: center;
+  }
+
+  th:nth-child(4), td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  tr {
+    border-bottom: 1px solid #9e9e9e;
+    height: 60px;
+  }
+
+  .calendar, .show-detail {
+    &:hover {
+      background-color: #9e9e9e;
+      user-select: none;
     }
 
+    &:active {
+      filter: brightness(0.7);
+    }
+  }
 }
-//====================================Calendar==============================
+
 .date-filter-popup {
   position: fixed;
   left: 57%;
@@ -124,12 +145,11 @@
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   padding: 24px 16px 16px 16px;
   min-width: 700px;
   max-width: 900px;
   margin: 0;
-
   z-index: 10;
 }
 
@@ -148,6 +168,7 @@
     border-radius: 50%;
     width: 36px;
     height: 36px;
+
     button {
       background: transparent;
       border: none;
@@ -203,22 +224,26 @@
     transition: background 0.2s, color 0.2s, transform 0.2s;
     cursor: pointer;
     user-select: none;
-    &:hover{
+
+    &:hover {
       background-color: #d8d8d8;
-      box-shadow: 0 2px 8px rgba(255,224,102,0.3);
+      box-shadow: 0 2px 8px rgba(255, 224, 102, 0.3);
       font-weight: 600;
     }
+
     &:active {
-      filter:brightness(0.80);
+      filter: brightness(0.80);
       transform: scale(0.95);
     }
+
     &.selected {
       background: #2a4d43;
       color: #fff;
       font-weight: 600;
     }
+
     &.today.selected {
-      background: #1e9e6a;   // Màu bạn muốn khi vừa là today vừa được chọn
+      background: #1e9e6a;
       color: #fff;
       font-weight: 700;
     }
@@ -233,7 +258,7 @@
       background: #ffe066;
       color: #222;
       font-weight: 600;
-      box-shadow: 0 2px 8px rgba(255,224,102,0.3);
+      box-shadow: 0 2px 8px rgba(255, 224, 102, 0.3);
       position: relative;
     }
 
@@ -257,13 +282,170 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
+
   &:hover {
     background: #f5f5f5;
   }
 }
+
 .overlay {
   position: fixed;
   inset: 0;
-  //background: rgba(0,0,0,0.1);
   z-index: 9;
+}
+
+@media (max-width: 768px) {
+  #wrapper {
+    width: 100%;
+    margin-left: 2.5%;
+    padding: 15px;
+    margin-top: 10px;
+
+    .level-selector {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      margin-bottom: 15px;
+
+      .level-buttons button {
+        min-width: 120px;
+      }
+
+      button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .quiz-table {
+    font-size: 1rem;
+
+    th {
+    }
+  }
+
+  .date-filter-popup {
+    min-width: 500px;
+    max-width: 600px;
+    left: 50%;
+    padding: 20px 12px 12px 12px;
+  }
+
+  .calendar-header .month-year {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 425px) {
+  #wrapper {
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 0;
+
+    .level-selector {
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 10px;
+
+      .level-buttons {
+        height: 40px;
+        gap: 3px;
+        padding: 3px;
+        border-radius: 25px;
+
+        button {
+          min-width: 90px;
+          font-size: 0.8rem;
+        }
+      }
+
+      button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .content {
+    overflow-x: auto;
+  }
+
+  .quiz-table {
+    font-size: 0.9rem;
+    min-width: 200px;
+
+    th:nth-child(1), td:nth-child(1) {
+      width: 10%;
+    }
+
+    th:nth-child(2), td:nth-child(2) {
+      width: 35%;
+    }
+
+    th:nth-child(3), td:nth-child(3) {
+      width: 25%;
+    }
+
+    tr {
+      height: 50px;
+    }
+  }
+
+  .date-filter-popup {
+    min-width: 320px;
+    max-width: 95vw;
+    left: 50%;
+    top: 50%;
+    padding: 16px 10px 10px 10px;
+    border-radius: 12px;
+  }
+
+  .calendar-header {
+    gap: 12px;
+    margin-bottom: 12px;
+
+    .button-background {
+      width: 32px;
+      height: 32px;
+
+      button {
+        font-size: 1.2rem;
+        line-height: 32px;
+      }
+    }
+
+    .month-year {
+      font-size: 1.4rem;
+    }
+  }
+
+  .calendar-grid {
+    gap: 2px;
+    margin-bottom: 8px;
+
+    .weekday {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .day {
+      min-width: 32px;
+      min-height: 32px;
+      line-height: 32px;
+      font-size: 0.9rem;
+
+      &.today .crown {
+        left: -12px;
+        top: -8px;
+        font-size: 1em;
+      }
+    }
+  }
+
+  .clear-btn {
+    padding: 6px 16px;
+    font-size: 0.9rem;
+  }
 }

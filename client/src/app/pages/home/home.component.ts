@@ -1,11 +1,11 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { NgChartsModule } from 'ng2-charts';
-import { ChartConfiguration, ChartData } from 'chart.js';
-import { AuthService } from '../../services/auth.service';
-import { QuizService } from '../../services/quiz/quiz.service';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {CommonModule, isPlatformBrowser} from '@angular/common';
+import {NgChartsModule} from 'ng2-charts';
+import {ChartConfiguration, ChartData} from 'chart.js';
+import {AuthService} from '../../services/auth.service';
+import {QuizService} from '../../services/quiz/quiz.service';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 interface QuizAttempt {
   quizLevel: string;
@@ -63,14 +63,14 @@ export class HomeComponent implements OnInit {
     scales: {
       y: {
         beginAtZero: true,
-        title: { display: true, text: 'Điểm' },
+        title: {display: true, text: 'Điểm'},
       },
       x: {
-        title: { display: true, text: 'Người chơi' },
+        title: {display: true, text: 'Người chơi'},
       },
     },
     plugins: {
-      legend: { display: true },
+      legend: {display: true},
       tooltip: {
         callbacks: {
           // Tùy chỉnh tooltip để hiển thị tên và level
@@ -305,6 +305,15 @@ export class HomeComponent implements OnInit {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',
+    });
+  }
+
+  goToQuizDetails(attempt: any): void {
+    this.router.navigate(['/quiz-result'], {
+      queryParams: {
+        level: attempt.quizLevel?.toLowerCase(),
+        dateDoQuiz: attempt.dateDoQuiz
+      }
     });
   }
 }

@@ -5,7 +5,7 @@
       <div class="content-row" *ngIf="!isLoading; else loadingTemplate">
         <!-- Card minh họa -->
         <div class="illustration-card">
-          <img src="assets/illustrationPiictureHome.png" alt="Minh họa Quiz" loading="lazy" />
+          <img src="assets/illustrationPiictureHome.png" alt="Minh họa Quiz" loading="lazy"/>
           <p>QUIZ BÓNG ĐÁ</p>
         </div>
 
@@ -49,12 +49,13 @@
     <!-- Thông tin user -->
     <div class="user-info-card">
       <div class="avt_user">
-        <img src="assets/admin.jpg" alt="User Avatar" />
+        <img src="assets/admin.jpg" alt="User Avatar"/>
       </div>
       <span class="username">{{ username }}</span>
 
-        <a class="button-profile" [routerLink]="['/profile']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">Thông tin cá nhân
-        </a>
+      <a class="button-profile" [routerLink]="['/profile']" routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: false }">Thông tin cá nhân
+      </a>
 
     </div>
 
@@ -67,10 +68,12 @@
       <div *ngFor="let attempt of recentAttempts" class="attempt">
         <span>Level: {{ attempt.quizLevel }}</span>
         <span class="info-center">Điểm: {{ attempt.totalScore }}</span>
-        <div class="timeDoQuiz">
-          {{ formatDate(attempt.dateDoQuiz) }}
+        <div class="attempt-actions">
+          <span class="view-icon material-icons" (click)="goToQuizDetails(attempt)">visibility</span>
+          <div class="timeDoQuiz">
+            {{ formatDate(attempt.dateDoQuiz) }}
+          </div>
         </div>
-      </div>
     </div>
   </div>
 

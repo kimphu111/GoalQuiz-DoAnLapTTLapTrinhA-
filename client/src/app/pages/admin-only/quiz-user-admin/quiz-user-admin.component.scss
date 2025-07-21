@@ -1,6 +1,6 @@
 .container-top {
   width: 1200px;
-  height: 525px;
+  height: 548px;
   background-color: #ffffff;
   border-radius: 10px;
 }
@@ -56,9 +56,8 @@
     cursor: pointer;
     font-weight: bold;
     font-size: 1rem;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
+    transition: background-color 0.3s,
+    color 0.3s;
     text-transform: uppercase;
     width: 100%;
     max-width: 200px;
@@ -93,6 +92,7 @@
     color: #2a4d43;
     font-family: "Leckerli One", cursive;
   }
+
   th,
   td {
     border-bottom: 1px solid #ddd;
@@ -156,15 +156,19 @@
     &:nth-child(1) {
       width: 10%;
     }
+
     &:nth-child(2) {
       width: 15%;
     }
+
     &:nth-child(3) {
       width: 30%;
     }
+
     &:nth-child(4) {
       width: 11%;
     }
+
     &:nth-child(5) {
       width: 10%;
     }
@@ -200,6 +204,7 @@
   padding-top: 20px;
   display: flex;
   justify-content: center;
+
   .modal-content {
     width: 100%;
     height: auto;
@@ -221,16 +226,16 @@
         color: #333;
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        transition:
-          background-color 0.7s,
-          color 0.3s,
-          transform 0.8s;
+        transition: background-color 0.7s,
+        color 0.3s,
+        transform 0.8s;
 
         &:hover {
           background-color: #52f399;
           color: #ffffff;
           //transform: rotate(360deg);
         }
+
         &:focus {
           outline: none;
         }
@@ -238,6 +243,7 @@
     }
   }
 }
+
 // Quiz bubbles
 .detail-quiz {
   width: 100%;
@@ -247,6 +253,7 @@
   background-color: #f0f4f8;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
   .quiz {
     // Container căn giữa toàn bộ phần quiz
     &-container {
@@ -353,6 +360,7 @@
       gap: 10px;
       margin-bottom: 35px;
     }
+
     .answer-option {
       padding: 20px;
       border-radius: 5px;
@@ -439,7 +447,7 @@
 //  font-style: italic;
 //}
 
-@media(max-width: 1440px){
+@media(max-width: 1440px) {
 
   .level-selector {
     .level-buttons {
@@ -465,7 +473,8 @@
     font-size: 24px; // Giảm kích thước chữ trong bubble
   }
 }
-@media(max-width: 1024px){
+
+@media(max-width: 1024px) {
   .level-selector {
     .level-buttons {
       width: 700px;
@@ -484,12 +493,15 @@
     height: 486px;
     font-size: 10px;
     padding: 0;
-    .results-container{
+
+    .results-container {
       padding: 0;
+
       .player-name-header {
         padding-left: 8px;
         font-size: 12px;
-        .player-name-cell{
+
+        .player-name-cell {
           width: 100px;
           height: 30px;
           font-size: 12px;
@@ -506,7 +518,7 @@
   }
 
 
-  .pagination{
+  .pagination {
     position: fixed;
 
     bottom: 20px;

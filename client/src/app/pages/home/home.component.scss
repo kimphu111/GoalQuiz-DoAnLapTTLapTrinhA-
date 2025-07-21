@@ -80,9 +80,8 @@ $light-highlighted-day-bg: #ff9999;
     background: $dark-card-bg;
     border-radius: 8px;
     padding: 15px;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+    transition: transform 0.3s ease,
+    box-shadow 0.3s ease;
     will-change: transform, box-shadow;
     flex: 1;
     text-align: center;
@@ -104,9 +103,8 @@ $light-highlighted-day-bg: #ff9999;
     max-width: 570px;
     background: $dark-card-bg;
     border-radius: 8px;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+    transition: transform 0.3s ease,
+    box-shadow 0.3s ease;
     will-change: transform, box-shadow;
     margin-left: 15px;
 
@@ -157,9 +155,8 @@ $light-highlighted-day-bg: #ff9999;
   height: 300px;
   margin-left: 40px;
 
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease,
+  box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
@@ -246,6 +243,7 @@ $light-highlighted-day-bg: #ff9999;
         background: #f08585; /* Màu hồng nhạt */
         color: $dark-text-color;
         font-weight: 400;
+
         &:hover {
           background: $dark-highlighted-day-bg; /* Giữ màu khi hover */
         }
@@ -414,10 +412,10 @@ $light-highlighted-day-bg: #ff9999;
 
         &:hover {
           background: rgba(
-            0,
-            0,
-            0,
-            0.05
+              0,
+              0,
+              0,
+              0.05
           ); /* Hiệu ứng hover nhẹ cho light mode */
           color: $light-text-color;
           transform: none;
@@ -618,7 +616,7 @@ $light-highlighted-day-bg: #ff9999;
 
     .chart-card {
       flex: none;
-      width: 540px;  // Giảm xuống chút từ 550 -> 540 cho vừa
+      width: 540px; // Giảm xuống chút từ 550 -> 540 cho vừa
       height: 220px;
       background: $dark-card-bg;
       border-radius: 8px;
@@ -690,14 +688,12 @@ $light-highlighted-day-bg: #ff9999;
   .main-content-mobile {
     display: flex !important;
   }
-
-  .home-container{
+  .home-container {
     width: 100%;
     height: 90vh;
     padding: 0;
     margin: 0;
   }
-
   .main-content-mobile {
     width: 600px;
     height: 100vh;
@@ -706,13 +702,12 @@ $light-highlighted-day-bg: #ff9999;
     flex-direction: column;
     margin-top: 90px;
   }
-
   .user-info-card {
     width: 100%;
     max-width: 500px;
     height: 200px;
     padding: 10px;
-    margin: 20px 50px 0 50px ;
+    margin: 20px 50px 0 50px;
     background-color: #FFFFFF;
     border-radius: 8px;
     display: flex;
@@ -721,7 +716,6 @@ $light-highlighted-day-bg: #ff9999;
     justify-content: center;
     text-align: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
 
     .avt_user {
       width: 70px;
@@ -749,19 +743,18 @@ $light-highlighted-day-bg: #ff9999;
       font-family: Roboto, sans-serif;
     }
 
-    .button-profile{
+    .button-profile {
       text-decoration: none;
       background-color: #0d8f20;
       width: 200px;
       height: 40px;
       font-size: 14px;
       display: flex;
-      text-align:  center;
+      text-align: center;
       justify-content: center;
       align-items: center;
       border-radius: 20px;
       color: white;
-
     }
   }
 
@@ -825,7 +818,6 @@ $light-highlighted-day-bg: #ff9999;
   }
 
 
-
   .recent-attempts {
     background-color: transparent;
     border-radius: 20px;
@@ -848,13 +840,15 @@ $light-highlighted-day-bg: #ff9999;
       color: #000000;
       background-color: white;
       width: 500px;
-      height:70px;
+      height: 70px;
       border-radius: 10px;
       display: flex;
       align-items: center;
       padding: 0 10px;
       font-family: Roboto, sans-serif;
       justify-content: space-between;
+      position: relative;
+
       span,
       .timeDoQuiz {
         flex: 1;
@@ -869,11 +863,169 @@ $light-highlighted-day-bg: #ff9999;
         text-align: right;
       }
 
+      .attempt-actions {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .view-icon {
+          cursor: pointer;
+          color: #38a565;
+          transition: transform 0.2s;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .home-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .main-content-mobile {
+    width: 100%;
+  }
+
+  .user-info-card {
+    width: 90%;
+    max-width: 400px;
+    height: 180px;
+    margin: 20px auto;
+    padding: 8px;
+
+    .avt_user {
+      width: 60px;
+      height: 60px;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .button-profile {
+      width: 180px;
+      height: 36px;
+      font-size: 13px;
     }
   }
 
+  .recent-attempts {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px 12px;
+
+    h3 {
+      font-size: 15px;
+    }
+
+    .attempt {
+      width: 90%;
+      height: 65px;
+      font-size: 14px;
+      padding: 0 8px;
+
+      span {
+        width: 20px !important;
+      }
+
+      .attempt-actions {
+        .view-icon {
+          font-size: 18px;
+        }
+      }
+    }
+  }
 }
 
+@media (max-width: 375px) {
+  .user-info-card {
+    max-width: 350px;
+    height: 170px;
+
+    .avt_user {
+      width: 55px;
+      height: 55px;
+    }
+
+    img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .username {
+      font-size: 12px;
+    }
+
+    .button-profile {
+      width: 160px;
+      height: 34px;
+      font-size: 12px;
+    }
+  }
+
+  .recent-attempts {
+    max-width: 350px;
+
+    h3 {
+      font-size: 14px;
+    }
+
+    .attempt {
+      height: 60px;
+      font-size: 13px;
+      padding: 0 6px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .user-info-card {
+    max-width: 300px;
+    height: 160px;
+
+    .avt_user {
+      width: 50px;
+      height: 50px;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .username {
+      font-size: 11px;
+    }
+
+    .button-profile {
+      width: 140px;
+      height: 32px;
+      font-size: 11px;
+    }
+  }
+
+  .recent-attempts {
+    max-width: 300px;
+
+    h3 {
+      font-size: 13px;
+    }
+
+    .attempt {
+      height: 55px;
+      font-size: 12px;
+      padding: 0 5px;
+    }
+  }
+}
 
 
 
