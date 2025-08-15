@@ -18,7 +18,7 @@
         class="avatar"
       />
 
-<!--      <img class="avatar" src="assets/admin.jpg" alt="User Avatar" />-->
+      <!--      <img class="avatar" src="assets/admin.jpg" alt="User Avatar" />-->
 
       <div class="avatar-buttons">
         <button class="upload-button" (click)="onUpload()">
@@ -137,7 +137,7 @@
     <!-- Hai nút phía trên -->
     <div class="user-info-card">
       <div class="avt_user">
-        <img src="assets/admin.jpg" alt="User Avatar" />
+        <img src="assets/admin.jpg" alt="User Avatar"/>
         <div class="username">{{ profile.firstName }}</div>
       </div>
     </div>
@@ -149,12 +149,13 @@
 
     <!-- Mục menu bên dưới -->
     <div class="menu-section">
-      <div class="menu-item">
+      <div class="menu-item" (click)="goToRanking()">
         <span class="material-icons">star</span>
         <span class="label">Top 10 on the leaderboard</span>
+        <span class="material-icons">chevron_right</span>
       </div>
 
-      <div class="menu-item">
+      <div class="menu-item" (click)="openPopup()">
         <span class="material-icons">settings</span>
         <span class="label">Setting</span>
         <span class="material-icons">chevron_right</span>

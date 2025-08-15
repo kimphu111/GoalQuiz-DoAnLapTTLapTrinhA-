@@ -1,14 +1,14 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {CommonModule, isPlatformBrowser} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit {
       this.profile.email = this.user.email || '';
       this.fetchUserProfile();
     } else {
-      this.user = { username: 'Guest', email: '', role: '' };
+      this.user = {username: 'Guest', email: '', role: ''};
       this.isLoading = false;
     }
   }
@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
   private fetchUserProfile() {
     const token = this.authService.getAccessToken();
     if (!token) {
-      this.user = { username: 'Guest', email: '', role: '' };
+      this.user = {username: 'Guest', email: '', role: ''};
       this.isLoading = false;
       this.router.navigate(['/auth']);
       return;
@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
     // Gọi endpoint GET /api/users/current
     this.http
       .get(this.apiUrl, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {Authorization: `Bearer ${token}`},
       })
       .subscribe({
         next: (response: any) => {
@@ -137,9 +137,6 @@ export class ProfileComponent implements OnInit {
     const nav = document.querySelector('.mobile-sidebar');
     if (nav) (nav as HTMLElement).style.display = 'flex'; // hoặc 'block'
   }
-
-
-
 
 
   onUpload() {
@@ -214,7 +211,7 @@ export class ProfileComponent implements OnInit {
     console.log('Gửi request tới:', this.updateApiUrl);
     this.http
       .post(this.updateApiUrl, formData, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {Authorization: `Bearer ${token}`},
       })
       .subscribe({
         next: (response: any) => {
@@ -240,5 +237,9 @@ export class ProfileComponent implements OnInit {
           this.isLoading = false;
         },
       });
+  }
+
+  goToRanking(): void {
+    this.router.navigate(['/ranking']);
   }
 }
