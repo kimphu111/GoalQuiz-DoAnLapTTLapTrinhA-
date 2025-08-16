@@ -1,0 +1,18 @@
+{
+  "routes": [
+    "/",
+    "/admin",
+    "/admin/create-question",
+    "/admin/question-management",
+    "/admin/quiz-history",
+    "/admin/quiz-user",
+    "/auth",
+    "/home",
+    "/profile",
+    "/quiz",
+    "/quiz-question",
+    "/quiz-result",
+    "/ranking",
+    "/review"
+  ]
+}
