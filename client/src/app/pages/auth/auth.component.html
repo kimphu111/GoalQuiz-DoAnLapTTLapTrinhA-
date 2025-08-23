@@ -1,132 +1,164 @@
 <div class="auth-container" [ngClass]="{'sign-up-active': !isSignIn, 'sign-in-active': isSignIn}">
   <div class="container">
     <div class="form-container">
-      <!-- Form Login -->
-      <div class="login-form">
+
+      <!-- ================= Login ================= -->
+      <div class="login-form" *ngIf="isSignIn">
         <div class="login-container">
           <div class="login-header">
             <img src="assets/ball3.png" alt="Soccer Ball" class="ball_img">
             <h2>Hello!</h2>
             <p class="textLogin">Please sign in to your account.</p>
           </div>
+
           <form #loginForm="ngForm" (ngSubmit)="onLogin($event, loginForm)">
+            <!-- Email -->
             <div class="form-group">
-              <label class="email">Sign in with Email</label>
+              <label>Email</label>
               <input
-                type="text"
-                class="email"
+                type="email"
                 name="email"
                 [(ngModel)]="email"
                 required
-                #usernameInput="ngModel"
+                email
+                #loginEmail="ngModel"
                 placeholder="Enter your email"
               />
+              <div *ngIf="loginEmail.invalid && loginEmail.touched" class="error-msg">
+                <small *ngIf="loginEmail.errors?.['required']">Email is required</small>
+                <small *ngIf="loginEmail.errors?.['email']">Invalid email format</small>
+              </div>
             </div>
 
+            <!-- Password -->
             <div class="form-group">
               <input
                 type="password"
-                class="password"
                 name="password"
                 [(ngModel)]="password"
                 required
-                #passwordInput="ngModel"
+                minlength="7"
+                #loginPassword="ngModel"
                 placeholder="Enter your password"
               />
+              <div *ngIf="loginPassword.invalid && loginPassword.touched" class="error-msg">
+                <small *ngIf="loginPassword.errors?.['required']">Password is required</small>
+                <small *ngIf="loginPassword.errors?.['minlength']">Min length is 7</small>
+              </div>
             </div>
 
             <div class="remember-me">
               <input type="checkbox" id="remember" name="remember" [(ngModel)]="rememberMe">
               <label for="remember">Remember me</label>
             </div>
+
             <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
           </form>
-          <!-- Thay đổi màu sắc của nút va spinner"Sign Up" -->
+
           <div class="message-container" *ngIf="message">
-            <p
-              [ngClass]="{
-           'success': isSuccess === true,
-           'error': isSuccess === false
-            }">
+            <p [ngClass]="{ 'success': isSuccess === true, 'error': isSuccess === false }">
               {{ message }}
             </p>
           </div>
+
           <p class="textLogin">
-            Don't have an account? <a href="#" (click)="toggleForm($event)">Sign Up</a>
+            Don't have an account?
+            <a href="#" (click)="toggleForm($event)">Sign Up</a>
           </p>
         </div>
-
       </div>
 
-      <!-- Form Register -->
-      <div class="register-form">
+      <!-- ================= Register ================= -->
+      <div class="register-form" *ngIf="!isSignIn">
         <div class="register-container">
           <div class="register-header">
             <img src="assets/ball3.png" alt="Soccer Ball" class="ball_img">
-            <h2>Hello!</h2>
+            <h2>Welcome!</h2>
             <p>Create your account!</p>
           </div>
+
           <form #registerForm="ngForm" (ngSubmit)="onRegister($event, registerForm)">
+            <!-- Full Name -->
+            <!-- Username -->
             <div class="form-group-register">
-              <label class="password">Sign Up</label>
+              <label>Username</label>
               <input
                 type="text"
-                class="username"
                 name="username"
                 [(ngModel)]="username"
                 required
-                #usernameInput="ngModel"
+                pattern="^(?=.*\d)[A-Za-z\d]{6,}$"
+                #registerUsername="ngModel"
                 placeholder="Enter your username"
               />
+              <div *ngIf="registerUsername.invalid && registerUsername.touched" class="error-msg">
+                <small *ngIf="registerUsername.errors?.['required']">Username is required</small>
+                <small *ngIf="registerUsername.errors?.['pattern']">
+                  Username must be at least 6 characters and contain at least 1 number
+                </small>
+              </div>
             </div>
 
+
+            <!-- Email -->
             <div class="form-group-register">
               <input
                 type="email"
-                class="email"
                 name="email"
                 [(ngModel)]="email"
                 required
-                #emailInput="ngModel"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$"
+                #registerEmail="ngModel"
                 placeholder="Enter your email"
               />
+              <div *ngIf="registerEmail.invalid && registerEmail.touched" class="error-msg">
+                <small *ngIf="registerEmail.errors?.['required']">Email is required</small>
+                <small *ngIf="registerEmail.errors?.['pattern']">Invalid email format</small>
+              </div>
             </div>
 
+            <!-- Password -->
             <div class="form-group-register">
               <input
                 type="password"
-                class="password"
                 name="password"
                 [(ngModel)]="password"
                 required
-                #passwordInput="ngModel"
+                minlength="7"
+                pattern="^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{7,}$"
+                #registerPassword="ngModel"
                 placeholder="Enter your password"
               />
+              <div *ngIf="registerPassword.invalid && registerPassword.touched" class="error-msg">
+                <small *ngIf="registerPassword.errors?.['required']">Password is required</small>
+                <small *ngIf="registerPassword.errors?.['minlength']">Min length is 7</small>
+                <small *ngIf="registerPassword.errors?.['pattern']">
+                  Must include at least 1 number and 1 special character
+                </small>
+              </div>
             </div>
 
             <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
           </form>
 
           <div class="message-container" *ngIf="message">
-            <p
-              [ngClass]="{
-           'success': isSuccess === true,
-           'error': isSuccess === false
-            }">
+            <p [ngClass]="{ 'success': isSuccess === true, 'error': isSuccess === false }">
               {{ message }}
             </p>
           </div>
+
           <p>
-            Already have an account? <a href="#" (click)="toggleForm($event)">Sign In</a>
+            Already have an account?
+            <a href="#" (click)="toggleForm($event)">Sign In</a>
           </p>
         </div>
       </div>
     </div>
 
-    <div class="image-container"></div> <!-- Hình ảnh bên phải va trai-->
+    <div class="image-container"></div>
 
     <div class="overlay" *ngIf="showSpinner">
-      <div class="spinner" *ngIf="showSpinner"></div>
+      <div class="spinner"></div>
     </div>
   </div>
 </div>
