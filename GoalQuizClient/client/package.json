@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:client2": "node dist/client2/server/server.mjs",
-    "deploy": "gh-pages -d dist/client2"
+    "deploy": "gh-pages -d dist/client2",
+    "build:client": "cd GoalQuizClient && npm install && npm run build",
+    "build:server": "cd GoalQuizCore && npm install && npm run build",
+    "build-all": "npm run build:client && npm run build:server"
   },
   "private": true,
   "dependencies": {
