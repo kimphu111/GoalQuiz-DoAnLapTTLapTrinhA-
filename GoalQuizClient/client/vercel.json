@@ -1,13 +1,13 @@
 {
   "functions": {
-    "dist/client2/server/main.js": {
-      "runtime": "nodejs18.x"
+    "dist/server/main.js": {
+      "runtime": "@vercel/node@18.17.1"
     }
   },
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/client2/server/main.js"
+      "dest": "dist/server/main.js"
     }
   ]
 }
