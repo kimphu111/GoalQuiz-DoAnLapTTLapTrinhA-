@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "dist/client2/server/main.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/client2/server/main.js"
+    }
+  ]
+}
