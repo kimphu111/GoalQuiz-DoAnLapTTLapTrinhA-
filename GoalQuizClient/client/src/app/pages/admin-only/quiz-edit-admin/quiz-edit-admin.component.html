@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="content">
+    <table class="quiz-table">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Level</th>
+          <th>Date Created</th>
+          <!-- <th></th> -->
+          <th [routerLink]="['/admin/create-question']"> <span class="create-question-btn">+</span></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for(quiz of quizzes; track quiz; let i = $index){
+        <tr>
+          <td>{{quiz.question}}</td>
+          <td>{{quiz.level}}</td>
+          <td>{{quiz.createdAt ? (quiz.createdAt | date:'dd/MM/yyyy') : '-'}}</td>
+          <!-- <td>
+            <div class="participant">
+              <p>{{quiz.participants || 0}}</p>
+            </div>
+          </td> -->
+          <td style="position: relative;">
+            <button (click)="openPopup(i)">...</button>
+
+             <!-- Popup -->
+            @if(showPopup && selectedIndex === i){
+              <div class="popup-overlay" (click)="closePopup()"></div>
+                  <div class="popup-inline" (click)="$event.stopPropagation()" >
+                    <div class="popup" >
+                      <button (click)="getQuizDetail(quiz.id)">Details</button>
+                      <button (click)="confirmDelete(quiz.id, i)">Delete</button>
+                      <button [routerLink]="['/admin/create-question']" [queryParams]="{id: quiz.id}">Edit</button>
+                    </div>
+                  </div>
+            }
+          </td>
+          <!-- Detail Popup -->
+          @if(showDetailPopup){
+              <div class="popup-overlay" (click)="closeDetailPopup()"></div>
+              <div class="popup-inline" (click)="$event.stopPropagation()">
+                <div class="detail-popup">
+                  <span class="close-btn" (click)="closeDetailPopup()">x</span>
+                  <h3>Quiz Detail</h3>
+                  <div class="detail-content">
+                    @if(quizDetail){
+                      <p class="level"><strong>Level:</strong> {{quizDetail.level}}</p>
+                      <p class="date" ><span class="material-symbols-outlined">calendar_month</span>
+                        {{quizDetail.createdAt | date:'dd/MM/yyyy'}}</p>
+                      <p><strong>Question:</strong> {{quizDetail.question}}</p>
+
+                      @if(quizDetail.image){
+                        <div>
+                          <img [src]="quizDetail.image" alt="Quiz Image" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                        </div>
+                      }
+                      
+                      <div class="options">
+                        <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'A'}"><strong>A.</strong> {{quizDetail.answerA}}</p>
+                        <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'B'}"><strong>B.</strong> {{quizDetail.answerB}}</p>
+                        <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'C'}"><strong>C.</strong> {{quizDetail.answerC}}</p>
+                        <p [ngClass]="{'correct-answer': quizDetail.correctAnswer === 'D'}"><strong>D.</strong> {{quizDetail.answerD}}</p>
+                      </div>
+                      <!-- <p><strong>Correct Answer:</strong> {{quizDetail.correctAnswer}}</p> -->
+                    }
+                  </div>
+                </div>
+              </div>
+          }
+
+          <!-- Delete Warning Popup  -->
+          @if(showDeleteWarningPopup){
+            <div class="popup-overlay" (click)="closeDeletePopup()"></div>
+            <div class="popup-inline" (click)="$event.stopPropagation()">
+              <div class="delete-popup">
+                <span class="close-btn" (click)="closeDeletePopup()">x</span>
+                <h3>Warning</h3>
+                <p>Are you sure you want to delete this quiz?</p>
+                <div class="option-btn">
+                  <button (click)="closeDeletePopup()">Cancel</button>
+                  <button class="danger" (click)="deleteQuiz(deleteQuizId, deleteQuizIndex)">Delete</button>
+                </div>
+              </div>
+            </div>
+          }
+
+        </tr>
+        }
+
+      </tbody>
+
+    </table>
+  </div>
+</div>
+

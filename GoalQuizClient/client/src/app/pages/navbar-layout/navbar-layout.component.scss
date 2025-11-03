@@ -1,0 +1,1027 @@
+/* Mã màu cho dark mode */
+$dark-bg-gradient: linear-gradient(135deg, #0f500d 0%, #1a3c34 100%);
+$dark-text-color: #fff;
+$dark-header-bg: rgba(0, 0, 0, 0.7);
+$dark-sidebar-bg: #2a2a2a;
+$dark-card-bg: #2a2a2a;
+$dark-card-gradient: linear-gradient(135deg, #2a2a2a, #333333);
+$dark-text-secondary: #c8c8c8;
+$dark-highlight-color: #38a565;
+$dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
+$dark-calendar-day-text: #d1d5db;
+$dark-highlighted-day-bg: #ff9999;
+
+/* Mã màu cho light mode */
+$light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+$light-text-color: #f5f5f5;
+$light-header-bg: rgba(255, 255, 255, 0.9);
+$light-sidebar-bg: #ffffff;
+$light-card-bg: #f5f5f5;
+$light-card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
+$light-text-secondary: #4f4f4f;
+$light-highlight-color: #38a565;
+$light-calendar-day-bg: #ffffff;
+$light-calendar-day-text: #000000;
+$light-highlighted-day-bg: #ff9999;
+
+/* Giao diện chung */
+.home-container {
+  width: 1300px;
+  height: 1024px;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  color: $dark-text-color;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.5s, color 0.5s;
+
+  .mobile-sidebar {
+    display: none;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 30px;
+  background: $dark-header-bg;
+  position: fixed;
+  top: 0;
+  width: 1240px;
+  height: 50px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: $dark-highlight-color;
+
+    img {
+      width: 150px;
+      height: 50px;
+      object-fit: cover;
+    }
+  }
+
+  .greeting {
+    font-family: "Leckerli One", cursive;
+    font-size: 24px;
+    color: #939393;
+  }
+
+  .theme-toggle-button {
+    background-color: #fdfdfd;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+
+    &:hover {
+      background-color: #b9b9b9;
+    }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .username {
+      font-size: 1rem;
+      font-weight: bold;
+      color: $dark-highlight-color;
+    }
+
+    .notification-icon {
+      font-size: 1rem;
+      cursor: pointer;
+      color: $dark-text-secondary;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .logout-button {
+      padding: 6px 18px;
+      background-color: #ff4444;
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #cc0000;
+      }
+    }
+  }
+}
+
+.main-content {
+  height: 100%;
+}
+
+.sidebar {
+  width: 220px;
+  background: $dark-sidebar-bg;
+  padding: 15px;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  overflow-y: auto;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 8px;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        svg {
+          width: 20px;
+          height: 20px;
+          fill: #ffffff;
+        }
+
+        &.active,
+        &:hover {
+          background-color: $dark-highlight-color;
+          color: $dark-text-color;
+        }
+      }
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  margin: 20px 0 0 250px;
+  flex: 1;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.calendar-card {
+  background: $dark-card-gradient;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 0 25px;
+  position: relative;
+  overflow: hidden;
+  width: 900px;
+  height: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  &::before {
+    display: none;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-button {
+      background: transparent;
+      border: none;
+      color: $dark-text-secondary;
+      font-size: 1.5rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s ease;
+
+      &:hover {
+        background: transparent;
+        color: $dark-highlight-color;
+      }
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: $dark-highlight-color;
+  font-size: 1rem;
+}
+
+.home-container .mobile-sidebar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 0;
+  z-index: 100;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  gap: 20px;
+  background-color: transparent;
+  margin-bottom: 20px;
+
+
+  @media (max-width: 768px) {
+    display: flex !important;
+  }
+
+  .mobile-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    border: none;
+
+
+    .material-symbols-outlined {
+      font-size: 24px;
+      margin-bottom: 2px;
+      transition: font-size 0.3s ease, color 0.3s ease;
+      color: #000;
+    }
+
+    &.active-link {
+      background-color: #F44336 !important; /* Màu đỏ cố định, tăng ưu tiên */
+      transform: scale(1.3);
+      margin-bottom: 20px;
+
+      .material-symbols-outlined {
+        font-size: 28px;
+        color: #fff;
+      }
+
+      font-size: 0.7rem;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+      color: #000;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .home-container {
+    width: 400px !important;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .header {
+    width: 400px !important;
+    padding: 6px 10px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    right: 0;
+
+    .logo img {
+      width: 60px;
+      height: 20px;
+    }
+
+    .greeting {
+      display: block;
+      font-size: 10px;
+      margin-left: 0 !important;
+      flex: 1;
+      text-align: center;
+    }
+
+    .user-info {
+      display: flex;
+      padding: 0;
+      margin-top: 0px;
+      width: 80px !important;
+      height: 60px;
+
+      .username {
+        font-size: 10px;
+      }
+
+      .notification-icon {
+        font-size: 0.8rem;
+      }
+
+      .logout-button {
+        width: 50px;
+        height: 24px;
+        font-size: 8px;
+        padding: 2px 4px;
+      }
+
+      .theme-toggle-button {
+        display: none;
+      }
+    }
+  }
+
+  .content {
+    margin-top: 50px;
+  }
+
+  .home-container .mobile-sidebar {
+    height: 70px;
+    gap: 12px;
+    padding: 4px 0;
+
+    .mobile-item {
+      width: 60px;
+      height: 60px;
+      font-size: 0.7rem;
+
+      .material-symbols-outlined {
+        font-size: 18px;
+      }
+
+      &.active-link {
+        transform: scale(1.2);
+        font-size: 0.55rem;
+
+        .material-symbols-outlined {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .home-container {
+    width: 375px !important;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .header {
+    width: 375px !important;
+    padding: 6px 10px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    right: 0;
+
+    .logo img {
+      width: 55px;
+      height: 18px;
+    }
+
+    .greeting {
+      display: block;
+      font-size: 9px;
+      margin-left: 0 !important;
+      flex: 1;
+      text-align: center;
+    }
+
+    .user-info {
+      display: flex;
+      padding: 0;
+      margin-top: 0px;
+      width: 75px !important;
+      height: 60px;
+
+      .username {
+        font-size: 9px;
+      }
+
+      .notification-icon {
+        font-size: 0.7rem;
+      }
+
+      .logout-button {
+        width: 45px;
+        height: 22px;
+        font-size: 7px;
+        padding: 2px 4px;
+      }
+
+      .theme-toggle-button {
+        display: none;
+      }
+    }
+  }
+
+  .content {
+    margin-top: 50px;
+    padding: 0 5px;
+    padding-bottom: 80px;
+  }
+
+  .home-container .mobile-sidebar {
+    height: 65px;
+    gap: 6px;
+    padding: 4px 0;
+
+    .mobile-item {
+      width: 40px;
+      height: 40px;
+      font-size: 0.45rem;
+
+      .material-symbols-outlined {
+        font-size: 16px;
+      }
+
+      &.active-link {
+        transform: scale(1.2);
+        font-size: 0.5rem;
+
+        .material-symbols-outlined {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .home-container {
+    width: 320px !important;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .header {
+    width: 320px !important;
+    padding: 6px 8px;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    left: 0;
+    right: 0;
+
+    .logo img {
+      width: 50px;
+      height: 16px;
+    }
+
+    .greeting {
+      display: block;
+      font-size: 8px;
+      margin-left: 0 !important;
+      flex: 1;
+      text-align: center;
+    }
+
+    .user-info {
+      display: flex;
+      padding: 0;
+      margin-top: 0px;
+      width: 70px !important;
+      height: 55px;
+
+      .username {
+        font-size: 8px;
+      }
+
+      .notification-icon {
+        font-size: 0.6rem;
+      }
+
+      .logout-button {
+        width: 40px;
+        height: 20px;
+        font-size: 6px;
+        padding: 2px 3px;
+      }
+
+      .theme-toggle-button {
+        display: none;
+      }
+    }
+  }
+
+  .content {
+    margin-top: 45px;
+    padding: 0 5px;
+    padding-bottom: 75px;
+  }
+
+  .home-container .mobile-sidebar {
+    height: 60px;
+    gap: 4px;
+    padding: 4px 0;
+
+    .mobile-item {
+      width: 35px;
+      height: 35px;
+      font-size: 0.4rem;
+
+      .material-symbols-outlined {
+        font-size: 14px;
+      }
+
+      &.active-link {
+        transform: scale(1.2);
+        font-size: 0.45rem;
+
+        .material-symbols-outlined {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+/* Light mode */
+:host-context(body.light-mode) {
+  .home-container {
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);;
+    color: $light-text-color;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .header {
+    background: $light-header-bg;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .greeting {
+      color: #c2c2c2;
+    }
+
+    .user-info {
+      .username {
+        color: $light-highlight-color;
+      }
+
+      .notification-icon {
+        color: $light-text-secondary;
+      }
+
+      .theme-toggle-button {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+        border-radius: 10px;
+        border: none;
+
+        &:hover {
+          background-color: #2e8b4f;
+        }
+      }
+
+      .logout-button {
+        background-color: #ff4444;
+
+        &:hover {
+          background-color: #cc0000;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    background: $light-sidebar-bg;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+
+    ul li a {
+      color: $light-text-secondary;
+
+      svg {
+        fill: $light-text-secondary;
+      }
+
+      &.active,
+      &:hover {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+      }
+    }
+  }
+
+  .mobile-sidebar {
+    background: transparent;
+    border: none;
+    margin: 0;
+
+    .mobile-item {
+
+      &.active-link,
+      &:hover {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+      }
+    }
+  }
+}
+
+/* Responsive cho màn hình lớn >= 1440px */
+@media (max-width: 1440px) {
+  .home-container {
+    width: 1200px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
+  }
+
+  .header {
+    width: 1120.5px;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sidebar {
+    width: 145px;
+    height: 1200px;
+  }
+
+  .content {
+    margin: 110px 0 0 170px;
+  }
+
+  .main-content {
+    margin-top: 0 !important;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .content {
+    margin: 70px 0 0 150px;
+  }
+
+  .home-container {
+    width: 1000px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .header {
+    width: 920px;
+    padding: 10px 40px;
+    display: flex;
+    justify-content: space-between;
+
+    .greeting {
+      font-size: 20px;
+    }
+
+    .logo {
+      img {
+        width: 125px;
+        height: 36px;
+      }
+    }
+  }
+
+  .sidebar {
+    width: 140px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 8px;
+
+        a {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px;
+          color: #ffffff;
+          text-decoration: none;
+          font-size: 15px;
+          font-weight: 450;
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+
+          svg {
+            width: 20px;
+            height: 20px;
+            fill: #ffffff;
+          }
+
+          &.active,
+          &:hover {
+            background-color: $dark-highlight-color;
+            color: $dark-text-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-container {
+    width: 600px;
+    height: auto;
+    padding: 0;
+  }
+
+  .header {
+    width: 560px;
+    padding: 10px 20px;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px;
+        height: 30px;
+      }
+    }
+
+    .greeting {
+      font-size: 15px;
+      margin-top: 5px;
+      margin-left: 40px;
+      width: 300px;
+    }
+
+    .user-info {
+      width: 130px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+
+      .logout-button {
+        width: 85px;
+        height: 30px;
+        font-size: 11px;
+      }
+
+      .username {
+        display: none;
+      }
+
+      .notification-icon {
+        display: none;
+      }
+
+      .theme-toggle-button {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    margin-top: 80px;
+    margin-left: 0;
+    padding-bottom: 80px; /* Đảm bảo nội dung không bị che bởi mobile-sidebar */
+    background: linear-gradient(to bottom, #9AC099 0%, #F2F2F2 90%);
+  }
+}
+
+/* Cho màn hình <= 425px */
+@media (max-width: 425px) {
+  .home-container {
+    width: 100%;
+    padding: 0 8px;
+    margin: 0 auto;
+  }
+
+  .main-content {
+    height: auto;
+  }
+
+  .content-row {
+    width: 370px;
+    margin: 30px 0 15px 0;
+    gap: 12px;
+
+    .illustration-card {
+      flex: 1 1 50%;
+      max-width: 50%;
+      height: auto;
+
+      img {
+        width: 100%;
+        height: 130px;
+        max-height: 150px;
+        object-fit: cover;
+      }
+    }
+
+    .chart-card {
+      max-width: 180px;
+      height: auto;
+
+      h3 {
+        font-size: 11px;
+        width: 150px;
+        height: 18px;
+      }
+
+      canvas {
+        height: auto !important;
+        width: 100% !important;
+      }
+    }
+  }
+
+  .calendar-card {
+    width: 400px;
+    height: 300px;
+
+    .calendar-header {
+      h3 {
+        font-size: 1rem;
+        width: 150px;
+        height: 25px;
+      }
+
+      .nav-button {
+        font-size: 1.1rem;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .calendar-grid {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+
+      .calendar-day {
+        width: 45px;
+        height: 45px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .mobile-sidebar {
+    .mobile-item {
+      width: 60px;
+      height: 60px;
+      font-size: 0.7rem;
+
+      .material-symbols-outlined {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+/* Cho màn hình <= 375px */
+@media (max-width: 375px) {
+  .content-row {
+    width: 330px;
+    gap: 10px;
+
+    .illustration-card {
+      img {
+        height: 120px;
+        max-height: 140px;
+      }
+    }
+
+    .chart-card {
+      max-width: 160px;
+
+      h3 {
+        font-size: 10px;
+        width: 130px;
+        height: 16px;
+      }
+    }
+  }
+
+  .calendar-card {
+    width: 340px;
+    height: 290px;
+
+    .calendar-grid {
+      .calendar-day {
+        width: 42px;
+        height: 42px;
+        font-size: 13px;
+      }
+    }
+  }
+  .mobile-sidebar {
+    .mobile-item {
+      width: 55px;
+      height: 55px;
+      font-size: 0.65rem;
+
+      .material-symbols-outlined {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+/* Cho màn hình <= 320px */
+@media (max-width: 320px) {
+  .content-row {
+    width: 280px;
+    gap: 8px;
+
+    .illustration-card {
+      img {
+        height: 110px;
+        max-height: 130px;
+      }
+    }
+
+    .chart-card {
+      max-width: 140px;
+
+      h3 {
+        font-size: 9px;
+        width: 120px;
+        height: 14px;
+      }
+    }
+  }
+
+  .calendar-card {
+    width: 300px;
+    height: 270px;
+
+    .calendar-grid {
+      .calendar-day {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .mobile-sidebar {
+    .mobile-item {
+      width: 60px;
+      height: 60px;
+      font-size: 0.6rem;
+
+      .material-symbols-outlined {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,1037 @@
+/* Mã màu cho dark mode */
+$dark-bg-gradient: linear-gradient(135deg, #0f500d 0%, #1a3c34 100%);
+$dark-text-color: #fff;
+$dark-header-bg: rgba(0, 0, 0, 0.7);
+$dark-sidebar-bg: #2a2a2a;
+$dark-card-bg: #2a2a2a;
+$dark-card-gradient: linear-gradient(135deg, #2a2a2a, #333333);
+$dark-text-secondary: #c8c8c8;
+$dark-highlight-color: #000000;
+$dark-calendar-day-bg: rgba(255, 255, 255, 0.08);
+$dark-calendar-day-text: #d1d5db;
+$dark-highlighted-day-bg: #ff9999; /* Màu hồng nhạt cho ngày được highlight */
+
+/* Mã màu cho light mode */
+$light-bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+$light-text-color: #f5f5f5;
+$light-header-bg: rgba(255, 255, 255, 0.9);
+$light-sidebar-bg: #ffffff;
+$light-card-bg: #f5f5f5;
+$light-card-gradient: linear-gradient(135deg, #ffffff, #ffffff);
+$light-text-secondary: #737373;
+$light-highlight-color: #38a565;
+$light-calendar-day-bg: #ffffff;
+$light-calendar-day-text: #000000;
+$light-highlighted-day-bg: #ff9999;
+
+.home-container {
+  width: 1300px;
+  height: 1024px;
+  margin-top: 90px;
+  top: 0;
+  left: 0;
+  background: $dark-bg-gradient;
+  color: $dark-text-color;
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100vh;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE và Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    //padding: 20px;
+  }
+
+  .main-content-mobile {
+    display: none;
+
+  }
+
+}
+
+.main-content {
+  display: flex;
+  height: calc(1024px - 60px);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.content-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  width: 1000px;
+  margin-left: 40px;
+  overflow: hidden;
+
+  .illustration-card {
+    max-height: 330px;
+    max-width: 300px;
+    background: $dark-card-bg;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.3s ease,
+    box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+    flex: 1;
+    text-align: center;
+
+    img {
+      width: 100%;
+      max-height: 240px;
+      border-radius: 5px;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .chart-card {
+    max-height: 330px;
+    max-width: 570px;
+    background: $dark-card-bg;
+    border-radius: 8px;
+    transition: transform 0.3s ease,
+    box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
+    margin-left: 15px;
+
+    h3 {
+      margin: 5px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .illustration-card {
+    p {
+      margin-top: 12px;
+      font-size: 1rem;
+      color: $dark-highlight-color;
+    }
+  }
+
+  .chart-card {
+    flex: 2;
+
+    canvas {
+      max-height: 260px;
+    }
+  }
+}
+
+.calendar-card {
+  background: $dark-card-gradient;
+  border-radius: 8px;
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+  width: 900px;
+  height: 300px;
+  margin-left: 40px;
+
+  transition: transform 0.3s ease,
+  box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  &::before {
+    display: none;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $dark-highlight-color;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-button {
+      background: transparent; /* Loại bỏ background */
+      border: none;
+      color: $dark-text-secondary;
+      font-size: 1.5rem; /* Tăng kích thước nút */
+      width: 30px;
+      height: 30px;
+      border-radius: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s ease;
+
+      &:hover {
+        background: transparent;
+        color: $dark-highlight-color;
+      }
+    }
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+
+    .calendar-day {
+      padding: 0;
+      width: 60px;
+      height: 60px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 4px;
+      background: $dark-calendar-day-bg;
+      color: $dark-calendar-day-text;
+      font-size: 20px;
+      font-weight: 400;
+      transition: background 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: $dark-text-color;
+        transform: none;
+        box-shadow: none;
+      }
+
+      &.highlighted {
+        background: #f08585; /* Màu hồng nhạt */
+        color: $dark-text-color;
+        font-weight: 400;
+
+        &:hover {
+          background: $dark-highlighted-day-bg; /* Giữ màu khi hover */
+        }
+      }
+
+      &.today {
+        background: #0eff00;
+        color: #000;
+        font-weight: 600;
+        border: 2px solid #ffffff;
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+
+        /* Hình huy hiệu tròn ở góc phải trên */
+        &::after {
+          content: "★"; /* Dùng biểu tượng ngôi sao để giống huy hiệu */
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 16px;
+          height: 16px;
+          background: #00f366; /* Màu vàng */
+          color: #000; /* Màu ngôi sao đen */
+          font-size: 12px;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 50%; /* Hình tròn */
+          border: 1px solid #ffffff; /* Viền trắng */
+          transform: translate(5px, -5px); /* Dịch nhẹ để nổi bật */
+        }
+
+        &:hover {
+          background: #51f594;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: $dark-highlight-color;
+  font-size: 1rem;
+}
+
+/* Light mode */
+:host-context(body.light-mode) {
+  .home-container {
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
+    color: $light-text-color;
+  }
+
+  .header {
+    background: $light-header-bg;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .greeting {
+      color: #c2c2c2;
+    }
+
+    .user-info {
+      .username {
+        color: $light-highlight-color;
+      }
+
+      .notification-icon {
+        color: $light-text-secondary;
+      }
+
+      .theme-toggle-button {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+        border-radius: 10px;
+        border: none;
+
+        &:hover {
+          background-color: #2e8b4f;
+        }
+      }
+
+      .logout-button {
+        background-color: #ff4444;
+
+        &:hover {
+          background-color: #cc0000;
+        }
+      }
+    }
+  }
+
+  .sidebar {
+    background: $light-sidebar-bg;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+
+    ul li a {
+      color: $light-text-secondary;
+
+      &.active,
+      &:hover {
+        background-color: $light-highlight-color;
+        color: $light-text-color;
+      }
+    }
+  }
+
+  .content-row {
+    .illustration-card {
+      background: $light-card-bg;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .chart-card {
+      background: $light-card-bg;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .illustration-card p {
+      color: $light-highlight-color;
+    }
+  }
+
+  .calendar-card {
+    background: $light-card-bg;
+    position: relative;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    &::before {
+      display: none;
+    }
+
+    .calendar-header {
+      h3 {
+        color: $light-highlight-color;
+        text-shadow: none;
+        background: none;
+        -webkit-background-clip: initial;
+        -webkit-text-fill-color: initial;
+      }
+
+      .nav-button {
+        background: transparent;
+        color: $light-text-secondary;
+
+        &:hover {
+          background: transparent;
+          color: $light-highlight-color;
+        }
+      }
+    }
+
+    .calendar-grid {
+      .calendar-day {
+        background: $light-calendar-day-bg;
+        color: $light-calendar-day-text;
+
+        &:hover {
+          background: rgba(
+              0,
+              0,
+              0,
+              0.05
+          ); /* Hiệu ứng hover nhẹ cho light mode */
+          color: $light-text-color;
+          transform: none;
+          box-shadow: none;
+        }
+
+        &.highlighted {
+          background: $light-highlighted-day-bg;
+          color: $light-text-color;
+
+          &:hover {
+            background: lightpink;
+          }
+        }
+
+        &.today {
+          background: #ffd700;
+          color: #000;
+          font-weight: 600;
+          border: 2px solid #000000;
+          box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+
+          /* Hình huy hiệu tròn ở góc phải trên */
+          &::after {
+            content: "★";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 16px;
+            height: 16px;
+            background: #ffca00;
+            color: #000;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            border-radius: 50%;
+            border: 1px solid #000000; /* Viền đen */
+            transform: translate(5px, -5px);
+          }
+
+          &:hover {
+            background: #f8eb8b;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  color: $light-highlight-color;
+}
+
+@media (max-width: 1440px) {
+  .home-container {
+    width: 1000px;
+    padding: 0 20px;
+    margin: 0 auto;
+    margin-left: 10px;
+
+  }
+
+  .main-content {
+    height: auto;
+  }
+
+  .content-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    margin: 20px 0 20px 0;
+
+    .illustration-card {
+      flex: none; /* Không cho flex can thiệp */
+      width: 280px;
+      height: 250px;
+      background: $dark-card-bg;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform, box-shadow;
+
+      img {
+        width: 100%;
+        height: 210px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+
+      p {
+        margin-top: 12px;
+        font-size: 1rem;
+        color: $dark-highlight-color;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .chart-card {
+      flex: none; /* Không cho flex can thiệp */
+      width: 700px;
+      height: 250px;
+      background: $dark-card-bg;
+      border-radius: 8px;
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform, box-shadow;
+
+      h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: $dark-highlight-color;
+        text-align: center;
+        width: 570px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+
+      canvas {
+        height: 220px !important;
+        width: 100% !important;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .calendar-card {
+    width: 907px;
+    height: 300px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .home-container {
+    width: 780px;
+    padding: 0 20px;
+    margin: 0 auto;
+    margin-left: 10px;
+  }
+
+  .main-content {
+    height: auto;
+  }
+
+  .content-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+
+    .illustration-card {
+      flex: none;
+      width: 200px;
+      height: 220px;
+      background: $dark-card-bg;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform, box-shadow;
+
+      img {
+        width: 100%;
+        height: 160px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+
+      p {
+        margin-top: 8px;
+        font-size: 0.9rem;
+        color: $dark-highlight-color;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .chart-card {
+      flex: none;
+      width: 540px; // Giảm xuống chút từ 550 -> 540 cho vừa
+      height: 220px;
+      background: $dark-card-bg;
+      border-radius: 8px;
+      padding: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform, box-shadow;
+
+      h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: $dark-highlight-color;
+        text-align: center;
+        width: 490px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      canvas {
+        height: 190px !important;
+        width: 500px !important;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  .calendar-card {
+    width: 750px;
+    height: 280px;
+    margin-left: 0;
+
+    .calendar-header {
+      margin-bottom: 10px;
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      .nav-button {
+        font-size: 1.2rem;
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+    .calendar-grid {
+      grid-template-columns: repeat(11, 1fr);
+      gap: 6px;
+
+      .calendar-day {
+        width: 60px;
+        height: 60px;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    display: none !important;
+  }
+
+  .main-content-mobile {
+    display: flex !important;
+  }
+  .home-container {
+    width: 100%;
+    height: 90vh;
+    padding: 0;
+    margin: 0;
+  }
+  .main-content-mobile {
+    width: 600px;
+    height: 100vh;
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
+    display: flex;
+    flex-direction: column;
+    margin-top: 90px;
+  }
+  .user-info-card {
+    width: 100%;
+    max-width: 500px;
+    height: 200px;
+    padding: 10px;
+    margin: 20px 50px 0 50px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    .avt_user {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #BBBBBB;
+
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border: 1px solid #000000;
+    }
+
+    .username {
+      font-weight: bold;
+      color: #000000;
+      font-size: 13px;
+      font-family: Roboto, sans-serif;
+    }
+
+    .button-profile {
+      text-decoration: none;
+      background-color: #0d8f20;
+      width: 200px;
+      height: 40px;
+      font-size: 14px;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      color: white;
+    }
+  }
+
+  .features-section {
+    background: transparent;
+    border-radius: 8px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+
+    h3 {
+      font-size: 16px;
+      margin: 0 0 0 10px;
+      color: #000000;
+      font-family: Roboto, sans-serif;
+      font-weight: 550;
+    }
+
+    .features-row {
+      display: flex;
+      gap: 30px;
+      margin-left: 25px;
+
+      .feature-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .feature-box {
+          background-color: #ffffff;
+          border-radius: 20px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 70px;
+          height: 70px;
+          transition: transform 0.2s;
+
+          &:hover {
+            transform: translateY(-4px);
+          }
+
+          .material-icons {
+            font-size: 40px;
+            color: #000000;
+          }
+        }
+
+        p {
+          font-size: 14px;
+          font-weight: 500;
+          color: #000000;
+          margin-top: 8px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+
+  .recent-attempts {
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 0;
+    margin: 0 auto;
+    width: 500px;
+    font-family: Roboto, sans-serif;
+
+    h3 {
+      font-size: 16px;
+      margin: 0 0 -10px 10px;
+      color: #000000;
+      font-family: Roboto, sans-serif;
+      font-weight: 550;
+    }
+
+    .attempt {
+      font-size: 20px;
+      margin: 6px 0px;
+      color: #000000;
+      background-color: white;
+      width: 500px;
+      height: 70px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-family: Roboto, sans-serif;
+      justify-content: space-between;
+      position: relative;
+
+      span,
+      .timeDoQuiz {
+        flex: 1;
+        text-align: center;
+      }
+
+      span:first-child {
+        text-align: left;
+      }
+
+      .timeDoQuiz {
+        text-align: right;
+      }
+
+      .attempt-actions {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .view-icon {
+          cursor: pointer;
+          color: #38a565;
+          transition: transform 0.2s;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .home-container {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .main-content-mobile {
+    width: 100%;
+  }
+
+  .user-info-card {
+    width: 90%;
+    max-width: 400px;
+    height: 180px;
+    margin: 20px auto;
+    padding: 8px;
+
+    .avt_user {
+      width: 60px;
+      height: 60px;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .button-profile {
+      width: 180px;
+      height: 36px;
+      font-size: 13px;
+    }
+  }
+
+  .recent-attempts {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px 12px;
+
+    h3 {
+      font-size: 15px;
+    }
+
+    .attempt {
+      width: 90%;
+      height: 65px;
+      font-size: 14px;
+      padding: 0 8px;
+
+      span {
+        width: 20px !important;
+      }
+
+      .attempt-actions {
+        .view-icon {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 375px) {
+  .user-info-card {
+    max-width: 350px;
+    height: 170px;
+
+    .avt_user {
+      width: 55px;
+      height: 55px;
+    }
+
+    img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .username {
+      font-size: 12px;
+    }
+
+    .button-profile {
+      width: 160px;
+      height: 34px;
+      font-size: 12px;
+    }
+  }
+
+  .recent-attempts {
+    max-width: 350px;
+
+    h3 {
+      font-size: 14px;
+    }
+
+    .attempt {
+      height: 60px;
+      font-size: 13px;
+      padding: 0 6px;
+    }
+  }
+}
+
+@media (max-width: 320px) {
+  .user-info-card {
+    max-width: 300px;
+    height: 160px;
+
+    .avt_user {
+      width: 50px;
+      height: 50px;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .username {
+      font-size: 11px;
+    }
+
+    .button-profile {
+      width: 140px;
+      height: 32px;
+      font-size: 11px;
+    }
+  }
+
+  .recent-attempts {
+    max-width: 300px;
+
+    h3 {
+      font-size: 13px;
+    }
+
+    .attempt {
+      height: 55px;
+      font-size: 12px;
+      padding: 0 5px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+

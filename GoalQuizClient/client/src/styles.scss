@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #d02323;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Gradient nền riêng cho mobile
+@media (max-width: 768px) {
+  body {
+    background: linear-gradient(135deg, #9AC099 0%, #F2F2F2 90%);
+  }
+}

@@ -1,0 +1,103 @@
+<div id="container">
+  <div class="left-panel">
+    <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
+
+    <div class="question-content">
+      <label for="questionContent">Question Content</label>
+      <textarea id="questionContent" [(ngModel)]="questionData.question" placeholder="Please enter content!"></textarea>
+    </div>
+
+    <div class="response-options">
+      <label>Response Options</label>
+      <div class="options">
+
+        <div class="option-row">
+          <input id="radioA" type="radio" [(ngModel)]="questionData.correctAnswer" value="A">
+          <label for="radioA">A.</label>
+          <input id="optionA" [(ngModel)]="questionData.optionA" type="text" placeholder="Enter option A" title="Option A">
+        </div>
+
+        <div class="option-row">
+          <input id="radioB" type="radio" [(ngModel)]="questionData.correctAnswer" value="B">
+          <label for="radioB">B.</label>
+          <input id="optionB" [(ngModel)]="questionData.optionB" type="text" placeholder="Enter option B" title="Option B">
+        </div>
+
+        <div class="option-row">
+          <input id="radioC" type="radio" [(ngModel)]="questionData.correctAnswer" value="C">
+          <label for="radioC">C.</label>
+          <input id="optionC" [(ngModel)]="questionData.optionC" type="text" placeholder="Enter option C" title="Option C">
+        </div>
+
+        <div class="option-row">
+          <input id="radioD" type="radio" [(ngModel)]="questionData.correctAnswer" value="D">
+          <label for="radioD">D.</label>
+          <input id="optionD" [(ngModel)]="questionData.optionD" type="text" placeholder="Enter option D" title="Option D">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="level">
+      <label>Level</label>
+      <div class="level-row">
+        <div class="level-buttons">
+          <button type="button" [class.selected]="questionData.level === 'easy'" (click)="questionData.level = 'easy'">
+            <b>Easy</b>
+          </button>
+
+          <button type="button" [class.selected]="questionData.level === 'medium'" (click)="questionData.level = 'medium'">
+            <b>Medium</b>
+          </button>
+
+          <button type="button" [class.selected]="questionData.level === 'hard'" (click)="questionData.level = 'hard'">
+            <b>Hard</b>
+          </button>
+        </div>
+
+        <div class="score">
+          <span>Score: {{ score }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="right-panel-top">
+      <div class="id-question">
+        <label for="questionId">ID Questions</label>
+        @if(showQuestionId){
+          <input id="questionId" type="text" [value]="questionId" readonly title="Question ID">
+        }@else{
+          <input id="questionId" type="text" readonly title="Question ID">
+        }
+      </div>
+
+      <div class="image-upload">
+        <label for="imageInput">Image</label>
+        <input id="imageInput" type="file" #fileInput style="display:none" (change)="onFileSelected($event)" title="Upload image">
+        <div class="upload-box" (click)="fileInput.click()">
+          @if(!selectedImage){
+            <span>+</span>
+          }@else{
+            <img [src]="selectedImage" alt="Preview">
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="create-button">
+      @if(isEdit){
+        <button (click)="updateQuiz()">Update</button>
+      }@else{
+        <button (click)="createQuestion()">Create</button>
+      }
+    </div>
+  </div>
+
+  @if(showPopup){
+    <div class="popup-message" [ngClass]="popupType === 'success' ? 'popup-success' : 'popup-failed'">
+      {{ popupMessage }}
+    </div>
+  }
+</div>

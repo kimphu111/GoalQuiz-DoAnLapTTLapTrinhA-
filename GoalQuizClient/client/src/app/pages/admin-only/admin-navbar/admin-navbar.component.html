@@ -1,0 +1,144 @@
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img class="logo" src="/assets/logo.png" alt="Logo" />
+    </div>
+
+    <!-- Trong .header-right -->
+    <button class="hamburger-btn" (click)="toggleSidebar()">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <ul class="sidebar-menu">
+      <li class="sidebar-item">
+        <a [routerLink]="['/home']" routerLinkActive="active">
+          <span class="material-symbols-outlined icon colored">home</span>
+          <span class="label">Home</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/question-management']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined icon colored">help</span>
+          <span class="label">Quiz Manage</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a
+          [routerLink]="['/admin/quiz-user']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: false }"
+        >
+          <span class="material-symbols-outlined icon colored">assignment</span>
+          <span class="label">User Manage</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header class="content-top">
+      <div class="header-left">
+
+        <div class="user-info">
+          <img src="/assets/admin.jpg" alt="Admin" class="rounded-full" />
+          <span>ADMIN</span>
+        </div>
+
+        <!-- Date Picker -->
+        <div class="date" (click)="toggleDateFilter()">
+          <button class="date-btn" type="button">
+            <div class="date-calender">
+              <span class="material-symbols-outlined calendar-icon"
+                >calendar_today</span
+              >
+              {{ currentDate | date: "d MMM" }}
+            </div>
+          </button>
+
+          <!-- Date Filter Popup -->
+          <div
+            class="date-filter-popup"
+            *ngIf="showDateFilter"
+            (click)="$event.stopPropagation()"
+          >
+            <div class="calendar-header">
+              <div class="button-background">
+                <button class="nav-btn" (click)="previousMonth()">&lt;</button>
+              </div>
+              <span class="month-year">{{
+                calendarMonth | date: "MMMM yyyy"
+              }}</span>
+              <div class="button-background">
+                <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+              </div>
+            </div>
+
+            <div class="calendar-grid">
+              <div
+                class="weekday"
+                *ngFor="
+                  let day of ['Mo', 'Tu', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                "
+              >
+                {{ day }}
+              </div>
+              <div
+                class="day"
+                *ngFor="let day of calendarDays"
+                [class.selected]="day.isSelected"
+                [class.disabled]="!day.isCurrentMonth"
+                [class.today]="day.isToday"
+                (click)="selectDay(day)"
+              >
+                <span class="crown" *ngIf="day.isToday">👑</span>
+                {{ day.day }}
+              </div>
+            </div>
+
+            <button class="clear-btn" (click)="clearDate()">Clear Date</button>
+          </div>
+        </div>
+
+        <div
+          class="overlay"
+          *ngIf="showDateFilter"
+          (click)="closeDateFilter()"
+        ></div>
+      </div>
+
+      <!-- Header Right -->
+      <div class="header-right">
+        <div class="search-bar">
+          <span class="material-symbols-outlined search-icon">search</span>
+          <input
+            #searchInput
+            type="text"
+            placeholder="Search by username..."
+            (input)="onSearch($event)"
+          />
+          <button
+            *ngIf="quizService.searchTerm$ | async"
+            (click)="clearSearch()"
+          >
+            X
+          </button>
+        </div>
+        <button class="notification-btn">
+          <span class="material-symbols-outlined">notifications</span>
+          <span class="notification-count">3</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Router Outlet -->
+    <div class="content-bot">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

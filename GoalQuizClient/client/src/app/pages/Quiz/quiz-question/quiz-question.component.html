@@ -1,0 +1,40 @@
+<div id="wrapper">
+  <span class="material-symbols-outlined back-icon" (click)="goBack()">arrow_back_ios</span>
+  <div id="container">
+    @if (currentQuestion) {
+      <div class="question">
+        <p>Question {{ currentIndex + 1 }}: {{ currentQuestion.question }}</p>
+
+      </div>
+      @if (currentQuestion.image) {
+        <img class="question-image" [src]="currentQuestion.image || 'assets/default.png'" alt="question image"/>
+      }
+    }
+
+    <div class="answer">
+      @if (currentQuestion) {
+        <!-- @for(option of currentQuestion.options; track option trackOption){ -->
+        @for (option of currentQuestion.options; track option.label; let i = $index) {
+          <button
+            [ngClass]="{
+                  'correct': answered && option.label === currentQuestion.answer,
+                  'wrong': answered && option.label === selectedOption && option.label !== currentQuestion.answer
+              }"
+            [disabled]="answered"
+            (click)="selectAnswer(option.label)">
+            <span class="option-label">{{ getOptionLabel(i) }}.  </span>
+            <span class="answer-text">{{ option.text }}</span>
+            @if (answered && option.label === currentQuestion.answer) {
+              <span class="material-symbols-outlined correct-icon"><b>check</b></span>
+            }
+            @if (answered && option.label === selectedOption && option.label !== currentQuestion.answer) {
+              <span class="material-symbols-outlined wrong-icon"><b>close</b></span>
+            }
+          </button>
+        }
+      }
+    </div>
+
+  </div>
+</div>
+
