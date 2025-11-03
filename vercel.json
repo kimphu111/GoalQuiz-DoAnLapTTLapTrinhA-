@@ -2,25 +2,25 @@
   "version": 2,
   "builds": [
     {
-      "src": "GoalQuizClient/client/package.json", 
+      "src": "GoalQuizClient/package.json", 
       "use": "@vercel/static-build",
       "config": {
         "distDir": "GoalQuizClient/client/dist/client2/browser"
       }
     },
     {
-      "src": "GoalQuizCore/server/server.js", 
+      "src": "GoalQuizCore/server/server.js",
       "use": "@vercel/node@18.17.1"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "GoalQuizCore/server/server.js" 
+      "dest": "GoalQuizCore/server/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "GoalQuizClient/client/dist/client2/server/main.js" 
+      "dest": "GoalQuizClient/client/dist/client2/server/main.js"
     }
   ]
 }
